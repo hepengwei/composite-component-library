@@ -32,6 +32,7 @@
     "@svgr/webpack": "^6.3.1",
     "@types/lodash-es": "^4.17.6",
     "@types/react": "^18.0.20",
+    "@types/react-beautiful-dnd": "^13.1.8",
     "@types/react-dom": "^18.0.6",
     "@types/webpack-env": "^1.18.0",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
@@ -78,6 +79,7 @@
     "dayjs": "^1.11.13",
     "lodash-es": "^4.17.21",
     "react": "^18.2.0",
+    "react-beautiful-dnd": "^13.1.1",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.4.2"
   }

@@ -1,0 +1,45 @@
+.draggableRow {
+  display: flex;
+  align-items: center;
+  padding: 8px 0;
+
+  $btnSize: 16px;
+  .defaultBtn:not(.disabled) {
+    cursor: pointer;
+    :global {
+      svg {
+        width: $btnSize;
+        height: $btnSize;
+        path {
+          fill: $globalPrimaryColor;
+        }
+      }
+    }
+  }
+
+  .removeBtn:not(.disabled) {
+    cursor: pointer;
+    :global {
+      svg {
+        width: $btnSize;
+        height: $btnSize;
+        path {
+          fill: $globalRedColor;
+        }
+      }
+    }
+  }
+
+  .disabled {
+    cursor: not-allowed !important;
+    :global {
+      svg {
+        width: $btnSize;
+        height: $btnSize;
+        path {
+          fill: $disabledColor;
+        }
+      }
+    }
+  }
+}
