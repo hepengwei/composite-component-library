@@ -1,0 +1,79 @@
+.container {
+  min-height: 100%;
+  box-sizing: border-box;
+  background-color: #fdfdfd;
+  overflow-x: hidden;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-right: 1px solid #f0f0f0;
+  z-index: 2;
+
+  .topBox {
+    display: flex;
+    flex-direction: column;
+    .top {
+      display: flex;
+      padding: 0 8px;
+      align-items: center;
+      height: 60px;
+      button {
+        margin-bottom: 0 !important;
+      }
+    }
+
+    .menuLabel {
+      width: 170px;
+      margin-bottom: 0;
+    }
+
+    :global {
+      .ant-menu {
+        .ant-menu-submenu-title {
+          border-radius: 0 !important;
+          padding-left: 12px !important;
+        }
+        .ant-menu-item {
+          border-radius: 0 !important;
+          padding-left: 12px !important;
+        }
+        .ant-menu-sub {
+          .ant-menu-item {
+            border-radius: 0 !important;
+            padding-left: 32px !important;
+          }
+        }
+      }
+      .ant-menu-inline {
+        width: auto !important;
+      }
+      .ant-menu-inline-collapsed {
+        width: 68px !important;
+      }
+    }
+  }
+
+  &::-webkit-scrollbar {
+    width: 8px;
+    border-radius: 4px;
+    background-color: #444444;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    width: 8px;
+    border-radius: 4px;
+    background-color: #999999;
+  }
+
+  .bottom {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    color: $globalRedColor;
+    font-weight: 400;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}

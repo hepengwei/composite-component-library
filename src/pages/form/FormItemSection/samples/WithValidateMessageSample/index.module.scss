@@ -1,0 +1,14 @@
+.container {
+  :global {
+    .ant-form-item {
+      .ant-form-item-label {
+        width: 94px;
+      }
+      .ant-form-item-control {
+        .ant-form-item-explain {
+          display: none !important;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,13 @@
+.container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  .checkbox {
+    display: flex;
+    align-items: center;
+    margin-left: 8px;
+    span {
+      word-break: keep-all;
+    }
+  }
+}

@@ -1,0 +1,95 @@
+.container {
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: $headHeight;
+  background-color: #ffffff;
+  color: #333333;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05),
+    0 1px 6px -1px rgba(0, 0, 0, 0.04), 0 2px 4px 0 rgba(0, 0, 0, 0.04);
+  z-index: 11;
+
+  .title {
+    margin-left: 16px;
+    font-size: 24px;
+    font-family: 'Poppins', 'Poppins-Medium';
+    font-weight: 600;
+    background-image: linear-gradient(to right, #d628fe, #35a2fd);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .right {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-right: 16px;
+    .btn {
+      width: 42px;
+      height: 42px;
+      border-radius: 4px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-left: 10px;
+      cursor: pointer;
+      :global {
+        svg {
+          width: 22px;
+          height: 22px;
+          path {
+            stroke: #fff;
+          }
+        }
+      }
+
+      &:hover {
+        background-color: rgba(200, 200, 200, 0.6);
+        :global {
+          svg {
+            path {
+              stroke: $globalPrimaryColor;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.rewardModal {
+  :global {
+    .ant-modal-content {
+      position: relative;
+      .ant-modal-body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        p {
+          margin-top: 10px;
+          color: #666;
+        }
+      }
+      .ant-modal-close {
+        display: none;
+      }
+    }
+  }
+  .closeBtn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
+    svg {
+      width: 22px;
+      height: 22px;
+    }
+  }
+}

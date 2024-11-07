@@ -1,0 +1,25 @@
+.container {
+  width: 100%;
+  display: flex;
+  $messageWidth: 26px;
+  .componentBox {
+    display: flex;
+    align-items: center;
+  }
+  .messageBox {
+    width: $messageWidth;
+    height: $messageWidth;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 3px;
+    margin-left: 2px;
+    svg {
+      width: 18px;
+      height: 18px;
+      path {
+        fill: $globalRedColor;
+      }
+    }
+  }
+}
