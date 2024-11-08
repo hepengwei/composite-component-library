@@ -25,7 +25,7 @@ type DatePickerAndCheckboxProps = {
 const DatePickerAndCheckbox = (props: DatePickerAndCheckboxProps) => {
   const {
     value,
-    checkboxLabel = '',
+    checkboxLabel = null,
     disabled = false,
     datePickerProps = {},
     checkboxProps = {},
@@ -67,7 +67,9 @@ const DatePickerAndCheckbox = (props: DatePickerAndCheckboxProps) => {
         onChange={onDatePickerChange}
       />
       <Checkbox
-        className={styles.checkbox}
+        className={`${styles.checkbox}${
+          !checkboxLabel ? ` ${styles.noLabel}` : ''
+        }`}
         checked={value && value.length >= 2 ? value[1] : undefined}
         disabled={disabled}
         {...checkboxProps}

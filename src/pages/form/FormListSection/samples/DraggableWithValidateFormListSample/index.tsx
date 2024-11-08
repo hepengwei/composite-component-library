@@ -1,17 +1,18 @@
 import React, { useRef } from 'react';
 import { Button, Form, Input, message, Select } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-import dayjs from 'dayjs';
 import SampleBox from '@/components/SampleBox';
 import DraggableFormListContext from '@/components/formLists/DraggableFormListContext';
 import useFixHeight from '@/components/formLists/DraggableFormListContext/hooks/useFixHeight';
+import WithValidateMessage from '@/components/formItems/WithValidateMessage';
 import InputAndCheckbox from '@/components/formItems/InputAndCheckbox';
 import RangePickerAndCheckbox from '@/components/formItems/RangePickerAndCheckbox';
 import styles from './index.module.scss';
 
 const DRAGGABLE_HEIGHT = 48;
+const REQUIRED_FORM_ITEM_RULES = [{ required: true, message: '必填项' }];
 
-const DraggableFormListSample = () => {
+const DraggableWithValidateFormListSample = () => {
   const [form] = Form.useForm();
   const containerRef = useRef<HTMLDivElement>(null);
   const { droppableHeight, onAdd, onRemove } = useFixHeight(
@@ -38,22 +39,22 @@ const DraggableFormListSample = () => {
     rows.current = rows.current - 1;
   };
 
+  // 点击提交
+  const onSubmit = async () => {
+    try {
+      const values = await form?.validateFields();
+      console.log('values:', values);
+    } catch (err) {}
+  };
+
   return (
-    <SampleBox title='可上下拖拽排序的Form.List的包装组件'>
+    <SampleBox title='可上下拖拽排序且显示自定义校验信息的Form.List'>
       <Form
         form={form}
         labelAlign='right'
         className={styles.container}
         initialValues={{
-          fieldList: [
-            {
-              id: '1',
-              field1: '默认值',
-              field2: 'workingDay',
-              field3: ['默认值', true],
-              field4: [dayjs(), dayjs(), false],
-            },
-          ],
+          fieldList: [{}],
         }}
       >
         <Form.List name='fieldList'>
@@ -94,35 +95,59 @@ const DraggableFormListSample = () => {
                         {...quote}
                         label='字段1'
                         name={[quote.name, 'field1']}
+                        rules={REQUIRED_FORM_ITEM_RULES}
                       >
-                        <Input />
+                        <WithValidateMessage
+                          form={form}
+                          style={{ width: '214px' }}
+                        >
+                          <Input />
+                        </WithValidateMessage>
                       </Form.Item>
                       <Form.Item
                         {...quote}
                         label='字段2'
                         name={[quote.name, 'field2']}
+                        rules={REQUIRED_FORM_ITEM_RULES}
                       >
-                        <Select
-                          options={[
-                            { label: '工作日', value: 'workingDay' },
-                            { label: '自然日', value: 'naturalDay' },
-                          ]}
-                          style={{ width: '200px' }}
-                        />
+                        <WithValidateMessage
+                          form={form}
+                          style={{ width: '214px' }}
+                        >
+                          <Select
+                            options={[
+                              { label: '工作日', value: 'workingDay' },
+                              { label: '自然日', value: 'naturalDay' },
+                            ]}
+                            style={{ width: '200px' }}
+                          />
+                        </WithValidateMessage>
                       </Form.Item>
                       <Form.Item
                         {...quote}
                         label='字段3'
                         name={[quote.name, 'field3']}
+                        rules={REQUIRED_FORM_ITEM_RULES}
                       >
-                        <InputAndCheckbox />
+                        <WithValidateMessage
+                          form={form}
+                          style={{ width: '214px' }}
+                        >
+                          <InputAndCheckbox />
+                        </WithValidateMessage>
                       </Form.Item>
                       <Form.Item
                         {...quote}
                         label='字段4'
                         name={[quote.name, 'field4']}
+                        rules={REQUIRED_FORM_ITEM_RULES}
                       >
-                        <RangePickerAndCheckbox />
+                        <WithValidateMessage
+                          form={form}
+                          style={{ width: '294px' }}
+                        >
+                          <RangePickerAndCheckbox />
+                        </WithValidateMessage>
                       </Form.Item>
                     </div>
                   )}
@@ -131,9 +156,19 @@ const DraggableFormListSample = () => {
             </>
           )}
         </Form.List>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'flex-end',
+          }}
+        >
+          <Button type='primary' onClick={onSubmit}>
+            提交
+          </Button>
+        </div>
       </Form>
     </SampleBox>
   );
 };
 
-export default DraggableFormListSample;
+export default DraggableWithValidateFormListSample;

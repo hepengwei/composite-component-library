@@ -10,4 +10,10 @@
       word-break: keep-all;
     }
   }
+  .noLabel {
+    span:not(.ant-checkbox) {
+      padding-inline-start: 0 !important;
+      padding-inline-end: 0 !important;
+    }
+  }
 }

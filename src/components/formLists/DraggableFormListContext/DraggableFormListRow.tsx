@@ -43,7 +43,7 @@ const DraggableFormListRow = (props: DraggableFormListRowProps) => {
                 className={`${styles.removeBtn}${
                   disabled ? ` ${styles.disabled}` : ''
                 }`}
-                style={{ marginLeft: '8px' }}
+                style={{ marginLeft: '10px' }}
                 onClick={() => {
                   if (disabled) return;
                   remove(index);
@@ -57,7 +57,7 @@ const DraggableFormListRow = (props: DraggableFormListRowProps) => {
                 className={`${styles.defaultBtn}${
                   disabled ? ` ${styles.disabled}` : ''
                 }`}
-                style={{ marginLeft: '8px' }}
+                style={{ marginLeft: '10px' }}
                 onClick={() => {
                   if (index === 0) return;
                   if (disabled) return;
