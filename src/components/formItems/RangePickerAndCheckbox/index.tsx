@@ -86,7 +86,9 @@ const RangePickerAndCheckbox = (props: RangePickerAndCheckboxProps) => {
         onChange={onRangePickerChange}
       />
       <Checkbox
-        className={styles.checkbox}
+        className={`${styles.checkbox}${
+          !checkboxLabel ? ` ${styles.noLabel}` : ''
+        }`}
         checked={value && value.length >= 3 ? value[2] : false}
         disabled={disabled}
         {...checkboxProps}

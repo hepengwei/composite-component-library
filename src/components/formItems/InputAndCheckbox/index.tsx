@@ -24,7 +24,7 @@ type InputAndCheckboxProps = {
 const InputAndCheckbox = (props: InputAndCheckboxProps) => {
   const {
     value,
-    checkboxLabel = '',
+    checkboxLabel = null,
     disabled = false,
     inputProps = {},
     checkboxProps = {},
@@ -65,7 +65,9 @@ const InputAndCheckbox = (props: InputAndCheckboxProps) => {
         onChange={onInputChange}
       />
       <Checkbox
-        className={styles.checkbox}
+        className={`${styles.checkbox}${
+          !checkboxLabel ? ` ${styles.noLabel}` : ''
+        }`}
         checked={value && value.length >= 2 ? value[1] : undefined}
         disabled={disabled}
         {...checkboxProps}
