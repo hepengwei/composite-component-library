@@ -8,8 +8,11 @@ const InputNumberAndSelectSample = () => {
   const [form] = Form.useForm();
 
   return (
-    <SampleBox title='左边数值输入框右边下拉框的复合组件'>
-      <Form form={form} labelAlign='right' className={styles.container}>
+    <SampleBox
+      className={styles.container}
+      title='左边数值输入框右边下拉框的复合组件'
+    >
+      <Form form={form} labelAlign='right'>
         <Row gutter={16}>
           <Col span={12}>
             <Form.Item label='字段标题' name='field1'>

@@ -7,8 +7,8 @@ import { ExclamationCircleOutlined } from '@ant-design/icons';
 import styles from './index.module.scss';
 
 type WithValidateMessageProps = {
-  form?: FormInstance | null; // form对象，neverValidate为true时可以不传
-  neverValidate?: boolean; // 是否绝对不会进行校验，该值为true时，组件后面不会有校验信息的图标，也不会占用空间
+  form?: FormInstance | null; // form对象，nevervalidate为true时可以不传
+  nevervalidate?: boolean; // 是否绝对不会进行校验，该值为true时，组件后面不会有校验信息的图标，也不会占用空间
   id?: string; // Form.Item组件自动传入
   'aria-invalid'?: string; // Form校验时会自动传入"true"
   children?: ReactElement | null; // children必须是支持value和onChange属性的组件
@@ -19,7 +19,7 @@ type WithValidateMessageProps = {
 const WithValidateMessage = (props: WithValidateMessageProps) => {
   const {
     form,
-    neverValidate = false,
+    nevervalidate = false,
     id = '',
     ['aria-invalid']: invalid,
     children,
@@ -31,7 +31,7 @@ const WithValidateMessage = (props: WithValidateMessageProps) => {
   // 获取校验信息
   const errorMessage = useMemo(() => {
     let str = '';
-    if (!neverValidate && form && id && invalid === 'true') {
+    if (!nevervalidate && form && id && invalid === 'true') {
       const namePath = id.split('_');
       let errorList = [];
       // 为了兼容Form.List
@@ -47,7 +47,7 @@ const WithValidateMessage = (props: WithValidateMessageProps) => {
       str = errorList[0];
     }
     return str;
-  }, [form, neverValidate, id, invalid]);
+  }, [form, nevervalidate, id, invalid]);
 
   return (
     <div
@@ -56,7 +56,7 @@ const WithValidateMessage = (props: WithValidateMessageProps) => {
     >
       <div
         className={styles.componentBox}
-        style={{ width: neverValidate ? '100%' : 'calc(100% - 28px)' }}
+        style={{ width: nevervalidate ? '100%' : 'calc(100% - 28px)' }}
       >
         {children
           ? React.cloneElement(children, {
@@ -66,7 +66,7 @@ const WithValidateMessage = (props: WithValidateMessageProps) => {
             })
           : null}
       </div>
-      {!neverValidate && !!errorMessage && (
+      {!nevervalidate && !!errorMessage && (
         <div className={styles.messageBox}>
           <Tooltip title={errorMessage}>
             <ExclamationCircleOutlined />
