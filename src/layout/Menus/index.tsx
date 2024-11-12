@@ -4,29 +4,30 @@ import React, {
   useState,
   useRef,
   useCallback,
-} from 'react';
-import ReactDOM from 'react-dom';
-import { useNavigate, useLocation } from 'react-router-dom';
+} from "react";
+import ReactDOM from "react-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
   FormOutlined,
   TableOutlined,
-} from '@ant-design/icons';
-import { useDebounceFn } from 'ahooks';
-import { Button, Menu } from 'antd';
-import type { MenuProps } from 'antd';
-import { useGlobalContext } from '@/hooks/useGlobalContext';
-import styles from './index.module.scss';
+  GatewayOutlined,
+} from "@ant-design/icons";
+import { useDebounceFn } from "ahooks";
+import { Button, Menu } from "antd";
+import type { MenuProps } from "antd";
+import { useGlobalContext } from "@/hooks/useGlobalContext";
+import styles from "./index.module.scss";
 
-type MenuItem = Required<MenuProps>['items'][number];
+type MenuItem = Required<MenuProps>["items"][number];
 
 function getItem(
   label: React.ReactNode,
   key: React.Key,
   icon?: React.ReactNode,
   children?: MenuItem[],
-  type?: 'group'
+  type?: "group"
 ): MenuItem {
   return {
     key,
@@ -45,11 +46,12 @@ const Menus: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const items: MenuItem[] = [
-    getItem('表单', 'form', <FormOutlined />, [
-      getItem('FormItem 部分', 'formItemSection'),
-      getItem('FormList 部分', 'formListSection'),
+    getItem("表单", "form", <FormOutlined />, [
+      getItem("FormItem 部分", "formItemSection"),
+      getItem("FormList 部分", "formListSection"),
     ]),
-    getItem('表格', 'table', <TableOutlined />),
+    getItem("表格", "table", <TableOutlined />),
+    getItem("分隔面板", "splitter", <GatewayOutlined />),
   ];
 
   const updateMenuWidth = useCallback(
@@ -76,7 +78,7 @@ const Menus: React.FC = () => {
     const routePath = keyPath.reduce((result, item) => {
       result = `/${item}${result}`;
       return result;
-    }, '');
+    }, "");
     navigate(routePath);
   };
 
@@ -84,7 +86,7 @@ const Menus: React.FC = () => {
     const { pathname } = location;
     const result = [];
     if (pathname) {
-      const arr = pathname.split('/');
+      const arr = pathname.split("/");
       const key = arr[arr.length - 1];
       if (key) {
         result.push(key);
@@ -96,12 +98,12 @@ const Menus: React.FC = () => {
   const defaultOpenKeys = useMemo(() => {
     const { pathname } = location;
     if (pathname) {
-      const arr = pathname.split('/');
+      const arr = pathname.split("/");
       if (arr.length >= 2 && arr[1]) {
         return [arr[1]];
       }
     }
-    return ['form'];
+    return ["form"];
   }, [location]);
 
   useEffect(() => {
@@ -109,10 +111,10 @@ const Menus: React.FC = () => {
   }, [collapsed]);
 
   useEffect(() => {
-    window.addEventListener('resize', updateMenuWidth);
+    window.addEventListener("resize", updateMenuWidth);
 
     return () => {
-      window.removeEventListener('resize', updateMenuWidth);
+      window.removeEventListener("resize", updateMenuWidth);
     };
   }, []);
 
@@ -121,7 +123,7 @@ const Menus: React.FC = () => {
       <div className={styles.topBox}>
         <div className={styles.top}>
           <Button
-            type='primary'
+            type="primary"
             onClick={toggleCollapsed}
             style={{ marginBottom: 16 }}
           >
@@ -132,7 +134,7 @@ const Menus: React.FC = () => {
         <Menu
           defaultOpenKeys={defaultOpenKeys}
           selectedKeys={selectedKeys}
-          mode='inline'
+          mode="inline"
           inlineCollapsed={collapsed}
           items={items}
           onClick={onMenu}
