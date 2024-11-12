@@ -1,0 +1,11 @@
+.editableTable {
+  :global {
+    .ant-form-item {
+      .ant-form-item-control {
+        .ant-form-item-explain {
+          display: none !important;
+        }
+      }
+    }
+  }
+}

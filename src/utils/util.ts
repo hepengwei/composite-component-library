@@ -1,4 +1,12 @@
 /**
+ * 返回随机ID
+ * @param {number} length 数据长度 默认6位
+ */
+export const getRandomId = (length = 6) => {
+  return `${Math.random()}`.slice(2, length + 2);
+};
+
+/**
  * 获取字符串的宽度
  * @text   将要被提取的原字符串
  * @fontSize  字符串显示时的字符大小，支持>=12
@@ -9,12 +17,12 @@ export const getTextWidth = (
   fontSize: number,
   fontWeight = 400
 ) => {
-  const span = document.createElement("span") as HTMLSpanElement;
-  span.style.visibility = "hidden";
-  span.style.padding = "0";
-  span.style.whiteSpace = "nowrap";
-  span.style.overflow = "visible";
-  span.style.fontSize = fontSize > 12 ? fontSize + "px" : "12px";
+  const span = document.createElement('span') as HTMLSpanElement;
+  span.style.visibility = 'hidden';
+  span.style.padding = '0';
+  span.style.whiteSpace = 'nowrap';
+  span.style.overflow = 'visible';
+  span.style.fontSize = fontSize > 12 ? fontSize + 'px' : '12px';
   span.style.fontWeight = fontWeight.toString();
   span.innerText = text;
   document.body.appendChild(span);
@@ -38,17 +46,17 @@ export const getFixedWidthText = (
   fontWeight = 400,
   isNeedEllipsis = true
 ) => {
-  let returnText = "";
-  let oldText = "";
-  let newText = "";
-  if (!text || width < fontSize || typeof text !== "string") return returnText;
-  const arr = text.split("");
-  const span = document.createElement("span") as HTMLSpanElement;
-  span.style.visibility = "hidden";
-  span.style.padding = "0";
-  span.style.whiteSpace = "nowrap";
-  span.style.overflow = "visible";
-  span.style.fontSize = fontSize > 12 ? fontSize + "px" : "12px";
+  let returnText = '';
+  let oldText = '';
+  let newText = '';
+  if (!text || width < fontSize || typeof text !== 'string') return returnText;
+  const arr = text.split('');
+  const span = document.createElement('span') as HTMLSpanElement;
+  span.style.visibility = 'hidden';
+  span.style.padding = '0';
+  span.style.whiteSpace = 'nowrap';
+  span.style.overflow = 'visible';
+  span.style.fontSize = fontSize > 12 ? fontSize + 'px' : '12px';
   span.style.fontWeight = fontWeight.toString();
   document.body.appendChild(span);
 
@@ -61,7 +69,7 @@ export const getFixedWidthText = (
     const nowWidth = span.offsetWidth;
     if (nowWidth > width) {
       if (isNeedEllipsis) {
-        returnText = oldText + "...";
+        returnText = oldText + '...';
       } else {
         returnText = oldText;
       }

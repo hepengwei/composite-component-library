@@ -48,11 +48,13 @@ const DraggableWithValidateFormListSample = () => {
   };
 
   return (
-    <SampleBox title='可上下拖拽排序且显示自定义校验信息的Form.List'>
+    <SampleBox
+      className={styles.container}
+      title='可上下拖拽排序且显示自定义校验信息的Form.List'
+    >
       <Form
         form={form}
         labelAlign='right'
-        className={styles.container}
         initialValues={{
           fieldList: [{}],
         }}

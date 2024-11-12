@@ -74,8 +74,11 @@ const WithValidateMessageSample = () => {
   };
 
   return (
-    <SampleBox title='用于显示自定义校验信息的FormItem组件的包装组件'>
-      <Form form={form} labelAlign='right' className={styles.container}>
+    <SampleBox
+      className={styles.container}
+      title='用于显示自定义校验信息的FormItem组件的包装组件'
+    >
+      <Form form={form} labelAlign='right'>
         <Row gutter={16}>
           <Col span={12}>
             <Form.Item

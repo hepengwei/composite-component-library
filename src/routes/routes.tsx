@@ -3,6 +3,7 @@ import { RouteObject } from 'react-router-dom';
 import Home from 'pages/Home';
 import FormItemSection from 'pages/form/FormItemSection';
 import FormListSection from 'pages/form/FormListSection';
+import TableSection from 'pages/table';
 import ComingSoon from '@/components/ComingSoon';
 
 export const contentRoutes: RouteObject[] = [
@@ -21,7 +22,7 @@ export const contentRoutes: RouteObject[] = [
   },
   {
     path: '/table',
-    element: <ComingSoon />,
+    element: <TableSection />,
   },
 ];
 

@@ -39,11 +39,13 @@ const DraggableFormListSample = () => {
   };
 
   return (
-    <SampleBox title='可上下拖拽排序的Form.List的包装组件'>
+    <SampleBox
+      title='可上下拖拽排序的Form.List的包装组件'
+      className={styles.container}
+    >
       <Form
         form={form}
         labelAlign='right'
-        className={styles.container}
         initialValues={{
           fieldList: [
             {

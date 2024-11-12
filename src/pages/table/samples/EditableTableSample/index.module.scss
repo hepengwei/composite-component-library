@@ -1,0 +1,16 @@
+.container {
+  .itemTitleRow {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+
+  .columnTitle {
+    display: flex;
+    align-items: center;
+    .requiredIcon {
+      color: $globalRedColor;
+      margin-right: 2px;
+    }
+  }
+}
