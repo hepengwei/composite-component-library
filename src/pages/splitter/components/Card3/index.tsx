@@ -2,7 +2,6 @@
 import React from "react";
 import { Select } from "antd";
 import { default as CheckboxModal } from "./modal";
-import mock from "./mock";
 
 const flattenDeep = (arr = [], result = []) => {
   arr.map((item) => {
@@ -16,7 +15,7 @@ const flattenDeep = (arr = [], result = []) => {
 export default ({
   value = [""],
   onChange = (checkedKeys: any) => {},
-  options = mock,
+  options = [],
   title = "示例测试",
   width = 200,
 }) => {
