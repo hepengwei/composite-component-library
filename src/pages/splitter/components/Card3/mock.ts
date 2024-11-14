@@ -1,4 +1,12 @@
-const mock = [
+export interface MockItem {
+  id: number;
+  label: string;
+  value: string;
+  type: number | null;
+  children: MockItem[] | null;
+}
+
+export const mock: MockItem[] = [
   {
     id: 999,
     label: "四川测试公司",
@@ -131,4 +139,3 @@ const mock = [
     ],
   },
 ];
-export default mock;

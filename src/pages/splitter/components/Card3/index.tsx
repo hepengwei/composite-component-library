@@ -3,6 +3,12 @@ import React from "react";
 import { Select } from "antd";
 import { default as CheckboxModal } from "./modal";
 
+interface Card3Props {
+  value: string[];
+  options: MockItem[];
+  onChange: (checkedKeys: string[]) => void;
+}
+
 const flattenDeep = (arr = [], result = []) => {
   arr.map((item) => {
     item?.children?.length > 0
@@ -12,7 +18,7 @@ const flattenDeep = (arr = [], result = []) => {
   return result;
 };
 
-export default ({
+export const Card3: React.FC<Card3Props> = ({
   value = [""],
   onChange = (checkedKeys: any) => {},
   options = [],
