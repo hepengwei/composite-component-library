@@ -5,6 +5,7 @@ import React, { useMemo } from 'react';
 import { DatePicker, Checkbox } from 'antd';
 import { CheckboxChangeEvent } from 'antd/es/checkbox';
 import { Dayjs } from 'dayjs';
+import useFormDisabled from 'hooks/useFormDisabled';
 import styles from './index.module.scss';
 
 type Value = [Dayjs | null | undefined, boolean | undefined];
@@ -26,7 +27,7 @@ const DatePickerAndCheckbox = (props: DatePickerAndCheckboxProps) => {
   const {
     value,
     checkboxLabel = null,
-    disabled = false,
+    disabled: selfDisabled,
     datePickerProps = {},
     checkboxProps = {},
     onChange,
@@ -34,6 +35,7 @@ const DatePickerAndCheckbox = (props: DatePickerAndCheckboxProps) => {
     setDatePickerStatus,
     style = {},
   } = props;
+  const disabled = useFormDisabled(selfDisabled);
 
   const onDatePickerChange = (date: Dayjs | null) => {
     const newValue: Value =

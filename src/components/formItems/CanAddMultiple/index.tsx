@@ -2,9 +2,10 @@
  * 可增加和删除多条数据的包装组件
  */
 import React, { useMemo, ReactElement } from 'react';
-import { PlusCircleOutlined, MinusCircleOutlined } from '@ant-design/icons';
-import styles from './index.module.scss';
 import { message } from 'antd';
+import { PlusCircleOutlined, MinusCircleOutlined } from '@ant-design/icons';
+import useFormDisabled from 'hooks/useFormDisabled';
+import styles from './index.module.scss';
 
 type Value = any[];
 
@@ -21,7 +22,7 @@ type CanAddMultipleProps = {
 const CanAddMultiple = (props: CanAddMultipleProps) => {
   const {
     value,
-    disabled = false,
+    disabled: selfDisabled,
     hideBtn = false,
     maxRows = -1,
     children,
@@ -29,6 +30,7 @@ const CanAddMultiple = (props: CanAddMultipleProps) => {
     style = {},
     ...restProrps
   } = props;
+  const disabled = useFormDisabled(selfDisabled);
 
   const onChildrenChange = (index: number, rowValue: any, restProps: any[]) => {
     if (value && value.length > 0) {

@@ -4,6 +4,7 @@
 import React, { useMemo } from 'react';
 import { Input, Checkbox } from 'antd';
 import { CheckboxChangeEvent } from 'antd/es/checkbox';
+import useFormDisabled from 'hooks/useFormDisabled';
 import styles from './index.module.scss';
 
 export type Value = [string | undefined, boolean | undefined];
@@ -25,7 +26,7 @@ const InputAndCheckbox = (props: InputAndCheckboxProps) => {
   const {
     value,
     checkboxLabel = null,
-    disabled = false,
+    disabled: selfDisabled,
     inputProps = {},
     checkboxProps = {},
     onChange,
@@ -33,6 +34,7 @@ const InputAndCheckbox = (props: InputAndCheckboxProps) => {
     setInputStatus,
     style = {},
   } = props;
+  const disabled = useFormDisabled(selfDisabled);
 
   const onInputChange = (e: any) => {
     const v = e?.target?.value;

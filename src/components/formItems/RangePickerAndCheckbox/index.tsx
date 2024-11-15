@@ -5,6 +5,7 @@ import React, { useMemo } from 'react';
 import { DatePicker, Checkbox } from 'antd';
 import { CheckboxChangeEvent } from 'antd/es/checkbox';
 import { Dayjs } from 'dayjs';
+import useFormDisabled from 'hooks/useFormDisabled';
 import styles from './index.module.scss';
 
 const { RangePicker } = DatePicker;
@@ -32,7 +33,7 @@ const RangePickerAndCheckbox = (props: RangePickerAndCheckboxProps) => {
   const {
     value,
     checkboxLabel = '',
-    disabled = false,
+    disabled: selfDisabled,
     rangePickerProps = {},
     checkboxProps = {},
     onChange,
@@ -40,6 +41,7 @@ const RangePickerAndCheckbox = (props: RangePickerAndCheckboxProps) => {
     setRangePickerStatus,
     style = {},
   } = props;
+  const disabled = useFormDisabled(selfDisabled);
 
   const onRangePickerChange = (dates: [Dayjs, Dayjs] | null) => {
     let newValue: Value =
