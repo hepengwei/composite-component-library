@@ -4,7 +4,6 @@
   flex-direction: column;
   border-radius: 8px;
   border: 1px solid rgba(5, 5, 5, 0.1);
-  overflow: hidden;
 
   .title {
     width: 100%;
@@ -22,5 +21,70 @@
   .content {
     width: 100%;
     padding: 24px 20px;
+  }
+
+  .actions {
+    width: 100%;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top: 1px dashed rgba(5, 5, 5, 0.1);
+
+    :global {
+      svg {
+        width: 18px;
+        height: 18px;
+        cursor: pointer;
+
+        path {
+          fill: #aaaaaa;
+        }
+      }
+    }
+  }
+
+  .codeBlockBox {
+    width: 100%;
+    border-top: 1px dashed rgba(5, 5, 5, 0.1);
+    .codeBlockContent {
+      border: 1px solid transparent;
+      position: relative;
+      &:hover {
+        border: 1px solid $globalPrimaryColor;
+      }
+
+      .copyBtn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        position: absolute;
+        top: 20px;
+        right: 30px;
+        cursor: pointer;
+
+        &:hover {
+          background-color: #eeeeee;
+        }
+
+        :global {
+          svg {
+            width: 16px;
+            height: 16px;
+          }
+        }
+      }
+    }
+
+    :global {
+      .ant-tabs {
+        .ant-tabs-nav {
+          margin: 0 !important;
+        }
+      }
+    }
   }
 }

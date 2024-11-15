@@ -7,6 +7,24 @@ export const getRandomId = (length = 6) => {
 };
 
 /**
+ * 保存文本到剪切板
+ * @param {string} text 文本
+ */
+export const saveTextToClip = (text: string) => {
+  if (!text) return;
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text);
+  } else {
+    const input = document.createElement('input');
+    input.setAttribute('value', text);
+    document.body.appendChild(input);
+    input.select();
+    document.execCommand('copy');
+    document.body.removeChild(input);
+  }
+};
+
+/**
  * 获取字符串的宽度
  * @text   将要被提取的原字符串
  * @fontSize  字符串显示时的字符大小，支持>=12

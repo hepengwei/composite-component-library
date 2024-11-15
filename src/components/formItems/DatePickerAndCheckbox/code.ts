@@ -1,4 +1,4 @@
-/**
+export const indexTextCode = `/**
  * 左边日期选择框右边复选框的复合组件
  */
 import React, { useMemo } from 'react';
@@ -7,7 +7,6 @@ import { CheckboxChangeEvent } from 'antd/es/checkbox';
 import { Dayjs } from 'dayjs';
 import useFormDisabled from 'hooks/useFormDisabled';
 import styles from './index.module.scss';
-import { indexTextCode, indexScssTextCode } from './code';
 
 type Value = [Dayjs | null | undefined, boolean | undefined];
 type Status = 'warning' | 'error' | '' | undefined;
@@ -70,9 +69,9 @@ const DatePickerAndCheckbox = (props: DatePickerAndCheckboxProps) => {
         onChange={onDatePickerChange}
       />
       <Checkbox
-        className={`${styles.checkbox}${
-          !checkboxLabel ? ` ${styles.noLabel}` : ''
-        }`}
+        className={\`\${styles.checkbox}\${
+          !checkboxLabel ? \` \${styles.noLabel}\` : ''
+        }\`}
         checked={value && value.length >= 2 ? value[1] : undefined}
         disabled={disabled}
         {...checkboxProps}
@@ -84,12 +83,24 @@ const DatePickerAndCheckbox = (props: DatePickerAndCheckboxProps) => {
   );
 };
 
-export default DatePickerAndCheckbox;
+export default DatePickerAndCheckbox;`;
 
-export const fileCodeList = [
-  { fileName: 'DatePickerAndCheckbox.tsx', code: indexTextCode },
-  {
-    fileName: 'DatePickerAndCheckbox.module.scss',
-    code: indexScssTextCode,
-  },
-];
+export const indexScssTextCode = `.container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  .checkbox {
+    display: flex;
+    align-items: center;
+    margin-left: 8px;
+    span {
+      word-break: keep-all;
+    }
+  }
+  .noLabel {
+    span:not(.ant-checkbox) {
+      padding-inline-start: 0 !important;
+      padding-inline-end: 0 !important;
+    }
+  }
+}`;
