@@ -3,6 +3,7 @@
  */
 import React, { useMemo } from 'react';
 import { InputNumber, Select } from 'antd';
+import useFormDisabled from 'hooks/useFormDisabled';
 import styles from './index.module.scss';
 
 export type Value = [number | string | null | undefined, string | undefined];
@@ -25,7 +26,7 @@ const InputNumberAndSelect = (props: InputNumberAndSelectProps) => {
   const {
     value,
     options = [],
-    disabled = false,
+    disabled: selfDisabled,
     inputNumberProps = {},
     selectProps = {},
     onChange,
@@ -34,6 +35,7 @@ const InputNumberAndSelect = (props: InputNumberAndSelectProps) => {
     setSelectStatus,
     style = {},
   } = props;
+  const disabled = useFormDisabled(selfDisabled);
 
   const onInputNumberChange = (v: number | string | null) => {
     const newValue: Value =

@@ -2,6 +2,7 @@
  * 可上下拖拽排序的Form.List的包装组件
  */
 import React, { useCallback, ReactNode } from 'react';
+import useFormDisabled from 'hooks/useFormDisabled';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import type { DroppableProvided } from 'react-beautiful-dnd';
 import DraggableFormListRow from './DraggableFormListRow';
@@ -24,8 +25,9 @@ const DraggableFormListContext = (props: DraggableFormListContextProps) => {
     children,
     remove,
     showToTop = false,
-    disabled = false,
+    disabled: selfDisabled,
   } = props;
+  const disabled = useFormDisabled(selfDisabled);
 
   const handleDragEnd = (result: DropResult) => {
     const { source, destination } = result;
