@@ -1,4 +1,4 @@
-import { useState, useEffect, RefObject } from 'react';
+import { useState, useEffect, RefObject } from "react";
 
 const useFixHeight = (
   containerRef: RefObject<HTMLElement>,

@@ -1,30 +1,30 @@
-import React, { useState } from 'react';
-import { Button, message } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
-import SampleBox from '@/components/SampleBox';
-import EditableTable from '@/components/EditableTable';
-import type { EditableTableColumnProps } from '@/components/EditableTable';
-import InputNumberAndSelect from '@/components/formItems/InputNumberAndSelect';
-import type { Value as InputNumberAndSelectValue } from '@/components/formItems/InputNumberAndSelect';
-import { getRandomId } from 'utils/util';
-import styles from './index.module.scss';
+import React, { useState } from "react";
+import { Button, message } from "antd";
+import { PlusOutlined } from "@ant-design/icons";
+import SampleBox from "@/components/SampleBox";
+import EditableTable from "@/components/EditableTable";
+import type { EditableTableColumnProps } from "@/components/EditableTable";
+import InputNumberAndSelect from "@/components/formItems/InputNumberAndSelect";
+import type { Value as InputNumberAndSelectValue } from "@/components/formItems/InputNumberAndSelect";
+import { getRandomId } from "utils/util";
+import styles from "./index.module.scss";
 
 const INPUTNUMBER_SELECT_RULES = [
   {
     validator: (_: Record<string, any>, value: InputNumberAndSelectValue) => {
       if (value && value.length > 0) {
         if (!value[0] && value[0] !== 0 && !value[1]) {
-          return Promise.reject('必填项');
+          return Promise.reject("必填项");
         } else {
           if (!value[0] && value[0] !== 0) {
-            return Promise.reject('两个都必填');
+            return Promise.reject("两个都必填");
           }
           if (!value[1]) {
-            return Promise.reject('两个都必填');
+            return Promise.reject("两个都必填");
           }
         }
       } else {
-        return Promise.reject('必填项');
+        return Promise.reject("必填项");
       }
       return Promise.resolve();
     },
@@ -36,7 +36,7 @@ const EditableTableSample = () => {
 
   const onAddClick = () => {
     if (tableData.length >= 5) {
-      message.warning('最多可增加5条数据');
+      message.warning("最多可增加5条数据");
       return;
     }
     const newDataSource = [...tableData, { id: `ROW_ID_${getRandomId()}` }];
@@ -51,7 +51,7 @@ const EditableTableSample = () => {
           <span>邮箱</span>
         </div>
       ),
-      dataIndex: 'email',
+      dataIndex: "email",
       width: 160,
       editable: true,
       ruleOptions: {
@@ -66,40 +66,40 @@ const EditableTableSample = () => {
           <span>日期</span>
         </div>
       ),
-      dataIndex: 'date',
+      dataIndex: "date",
       width: 140,
       editable: true,
-      editType: 'datePicker',
+      editType: "datePicker",
       ruleOptions: {
         isRequired: true,
       },
     },
     {
-      title: '日期类型',
-      dataIndex: 'dateType',
+      title: "日期类型",
+      dataIndex: "dateType",
       width: 120,
       editable: true,
-      editType: 'select',
+      editType: "select",
       editProps: {
         options: [
-          { label: '年', value: 'year' },
-          { label: '月', value: 'month' },
-          { label: '天', value: 'day' },
+          { label: "年", value: "year" },
+          { label: "月", value: "month" },
+          { label: "天", value: "day" },
         ],
         allowClear: true,
         nevervalidate: true,
       },
     },
     {
-      title: '是否提交',
-      dataIndex: 'isSubmit',
+      title: "是否提交",
+      dataIndex: "isSubmit",
       width: 120,
       editable: true,
-      editType: 'radioGroup',
+      editType: "radioGroup",
       editProps: {
         options: [
-          { label: '是', value: '1' },
-          { label: '否', value: '0' },
+          { label: "是", value: "1" },
+          { label: "否", value: "0" },
         ],
         nevervalidate: true,
       },
@@ -111,36 +111,36 @@ const EditableTableSample = () => {
           <span>交易日</span>
         </div>
       ),
-      dataIndex: 'field',
+      dataIndex: "field",
       width: 240,
       editable: true,
       component: (
         <InputNumberAndSelect
           options={[
-            { label: '工作日', value: 'workingDay' },
-            { label: '自然日', value: 'naturalDay' },
+            { label: "工作日", value: "workingDay" },
+            { label: "自然日", value: "naturalDay" },
           ]}
           inputNumberProps={{
-            addonAfter: '个',
+            addonAfter: "个",
           }}
           setInputNumberStatus={(
             value: InputNumberAndSelectValue | undefined
           ) => {
             if (!value || (!value[0] && value[0] !== 0)) {
-              return 'error';
+              return "error";
             }
-            return '';
+            return "";
           }}
           setSelectStatus={(value: InputNumberAndSelectValue | undefined) => {
             if (!value || !value[1]) {
-              return 'error';
+              return "error";
             }
-            return '';
+            return "";
           }}
         />
       ),
       editProps: {
-        validateStatus: '',
+        validateStatus: "",
       },
       ruleOptions: {
         isRequired: true,

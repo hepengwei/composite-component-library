@@ -1,4 +1,4 @@
-/**
+export const indexTextCode = `/**
  * 可增加和删除多条数据的包装组件
  */
 import React, { useMemo, ReactElement } from "react";
@@ -6,7 +6,6 @@ import { message } from "antd";
 import { PlusCircleOutlined, MinusCircleOutlined } from "@ant-design/icons";
 import useFormDisabled from "hooks/useFormDisabled";
 import styles from "./index.module.scss";
-import { indexTextCode, indexScssTextCode } from "./code";
 
 type Value = any[];
 
@@ -54,7 +53,7 @@ const CanAddMultiple = (props: CanAddMultipleProps) => {
     let newValue: Value = [undefined, undefined];
     if (value && value.length > 0) {
       if (maxRows > 0 && value.length >= maxRows) {
-        message.warning(`最多可添加${maxRows}个`);
+        message.warning(\`最多可添加\${maxRows}个\`);
         return;
       }
       newValue = [...value, undefined];
@@ -96,9 +95,9 @@ const CanAddMultiple = (props: CanAddMultipleProps) => {
               <>
                 {index === 0 && (
                   <div
-                    className={`${styles.addBtn}${
-                      disabled ? ` ${styles.disabled}` : ""
-                    }`}
+                    className={\`\${styles.addBtn}\${
+                      disabled ? \` \${styles.disabled}\` : ""
+                    }\`}
                     onClick={onAdd}
                   >
                     <PlusCircleOutlined />
@@ -106,9 +105,9 @@ const CanAddMultiple = (props: CanAddMultipleProps) => {
                 )}
                 {index > 0 && (
                   <div
-                    className={`${styles.deleteBtn}${
-                      disabled ? ` ${styles.disabled}` : ""
-                    }`}
+                    className={\`\${styles.deleteBtn}\${
+                      disabled ? \` \${styles.disabled}\` : ""
+                    }\`}
                     onClick={() => onDelete(index)}
                   >
                     <MinusCircleOutlined />
@@ -123,12 +122,66 @@ const CanAddMultiple = (props: CanAddMultipleProps) => {
   );
 };
 
-export default CanAddMultiple;
+export default CanAddMultiple;`;
 
-export const fileCodeList = [
-  { fileName: "CanAddMultiple.tsx", code: indexTextCode },
-  {
-    fileName: "CanAddMultiple.module.scss",
-    code: indexScssTextCode,
-  },
-];
+export const indexScssTextCode = `.container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  .row {
+    display: flex;
+    align-items: center;
+    &:not(:first-child) {
+      margin-top: 8px;
+    }
+
+    $btnSize: 16px;
+    .addBtn:not(.disabled) {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      :global {
+        svg {
+          width: $btnSize;
+          height: $btnSize;
+          path {
+            fill: $globalPrimaryColor;
+          }
+        }
+      }
+    }
+
+    .deleteBtn:not(.disabled) {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      :global {
+        svg {
+          width: $btnSize;
+          height: $btnSize;
+          path {
+            fill: $globalRedColor;
+          }
+        }
+      }
+    }
+
+    .disabled {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: not-allowed;
+      :global {
+        svg {
+          width: $btnSize;
+          height: $btnSize;
+          path {
+            fill: $disabledColor;
+          }
+        }
+      }
+    }
+  }
+}`;

@@ -1,11 +1,10 @@
-/**
+export const indexTextCode = `/**
  * 左边数值输入框右边下拉框的复合组件
  */
 import React, { useMemo } from "react";
 import { InputNumber, Select } from "antd";
 import useFormDisabled from "hooks/useFormDisabled";
 import styles from "./index.module.scss";
-import { indexTextCode, indexScssTextCode } from "./code";
 
 export type Value = [number | string | null | undefined, string | undefined];
 type Status = "warning" | "error" | "" | undefined;
@@ -87,12 +86,19 @@ const InputNumberAndSelect = (props: InputNumberAndSelectProps) => {
   );
 };
 
-export default InputNumberAndSelect;
+export default InputNumberAndSelect;`;
 
-export const fileCodeList = [
-  { fileName: "InputNumberAndSelect.tsx", code: indexTextCode },
-  {
-    fileName: "InputNumberAndSelect.module.scss",
-    code: indexScssTextCode,
-  },
-];
+export const indexScssTextCode = `.container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  .inputNumber {
+    display: flex;
+    flex: 1;
+  }
+  .select {
+    display: flex;
+    flex: 1;
+    margin-left: 8px;
+  }
+}`;

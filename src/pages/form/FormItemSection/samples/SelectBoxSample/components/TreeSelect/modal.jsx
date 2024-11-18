@@ -351,7 +351,7 @@ class ModalComponent extends React.Component {
         centered={true}
         maskClosable={true}
         title={
-          <div key="title" className={styles.modal_title}>
+          <div key='title' className={styles.modal_title}>
             {title}
           </div>
         }
@@ -364,7 +364,7 @@ class ModalComponent extends React.Component {
           <div className={styles.treebox}>
             <div className={styles.box_header}>
               <Input
-                placeholder="搜索"
+                placeholder='搜索'
                 suffix={<SearchOutlined />}
                 allowClear={true}
                 onChange={this._onSearch}

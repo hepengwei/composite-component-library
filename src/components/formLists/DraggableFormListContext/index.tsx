@@ -1,11 +1,11 @@
 /**
  * 可上下拖拽排序的Form.List的包装组件
  */
-import React, { useCallback, ReactNode } from 'react';
-import useFormDisabled from 'hooks/useFormDisabled';
-import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
-import type { DroppableProvided } from 'react-beautiful-dnd';
-import DraggableFormListRow from './DraggableFormListRow';
+import React, { useCallback, ReactNode } from "react";
+import useFormDisabled from "hooks/useFormDisabled";
+import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
+import type { DroppableProvided } from "react-beautiful-dnd";
+import DraggableFormListRow from "./DraggableFormListRow";
 
 type DraggableFormListContextProps = {
   droppableId: string;
@@ -19,7 +19,7 @@ type DraggableFormListContextProps = {
 
 const DraggableFormListContext = (props: DraggableFormListContextProps) => {
   const {
-    droppableId = '',
+    droppableId = "",
     fields,
     move,
     children,

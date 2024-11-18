@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Tooltip, Modal, Alert } from 'antd';
-import { CoffeeOutlined, CloseCircleOutlined } from '@ant-design/icons';
-import { useGlobalContext } from '@/hooks/useGlobalContext';
-import collectionCode from 'images/collectionCode.jpeg';
-import styles from './index.module.scss';
+import React, { useState, useEffect, useRef } from "react";
+import { Tooltip, Modal, Alert } from "antd";
+import { CoffeeOutlined, CloseCircleOutlined } from "@ant-design/icons";
+import { useGlobalContext } from "@/hooks/useGlobalContext";
+import collectionCode from "images/collectionCode.jpeg";
+import styles from "./index.module.scss";
 
 const Header: React.FC = () => {
   const { setHeadHeight } = useGlobalContext();

@@ -1,7 +1,7 @@
 /**
  * 可进行编辑的表格组件
  */
-import React, { ReactNode, useEffect, useContext, useMemo } from 'react';
+import React, { ReactNode, useEffect, useContext, useMemo } from "react";
 import {
   Form,
   Table,
@@ -14,30 +14,30 @@ import {
   Cascader,
   Button,
   Popconfirm,
-} from 'antd';
-import type { TableProps, TableColumnProps, GetRef, FormRule } from 'antd';
-import { omit } from 'lodash-es';
-import WithValidateMessage from '@/components/formItems/WithValidateMessage';
-import styles from './index.module.scss';
+} from "antd";
+import type { TableProps, TableColumnProps, GetRef, FormRule } from "antd";
+import { omit } from "lodash-es";
+import WithValidateMessage from "@/components/formItems/WithValidateMessage";
+import styles from "./index.module.scss";
 
 const { RangePicker } = DatePicker;
 const EMAIL_PATTERN =
   /^([\w+-.%]+@[\w-.]+\.[A-Za-z]{2,4})(;[\w+-.]+@[\w-.]+\.[A-Za-z]{2,4})*$/;
 
 export type EditType =
-  | 'input'
-  | 'inputNumber'
-  | 'select'
-  | 'datePicker'
-  | 'rangePicker'
-  | 'radioGroup'
-  | 'checkboxGroup'
-  | 'cascader';
+  | "input"
+  | "inputNumber"
+  | "select"
+  | "datePicker"
+  | "rangePicker"
+  | "radioGroup"
+  | "checkboxGroup"
+  | "cascader";
 
 type EditProps =
   | ({
       nevervalidate?: boolean;
-      validateStatus?: 'warning' | 'error' | '';
+      validateStatus?: "warning" | "error" | "";
     } & Record<string, any>)
   | ((record: Record<string, any>) => Record<string, any>);
 
@@ -76,7 +76,7 @@ type EditableTableCellProps = {
   editProps?: EditProps;
   component?: ReactNode | null;
   handleSave: (event: any) => void;
-} & Omit<EditableTableColumnProps, 'dataIndex'>;
+} & Omit<EditableTableColumnProps, "dataIndex">;
 
 type EditableTableProps = {
   dataSource: Record<string, any>[];
@@ -115,45 +115,45 @@ const renderItem = ({
   const onChange = (cellValue?: any, option?: Record<string, any>) => {
     if (
       (!editType && !component) ||
-      ['input', 'inputNumber'].includes(editType)
+      ["input", "inputNumber"].includes(editType)
     )
       return;
-    if (editType === 'radioGroup') {
+    if (editType === "radioGroup") {
       save?.(dataIndex, cellValue?.target?.value || undefined);
       return;
     }
-    const newValue = cellValue?.target ? '' : cellValue;
+    const newValue = cellValue?.target ? "" : cellValue;
     save?.(dataIndex, newValue);
     (editProps as Record<string, any>).onChange?.(newValue, option, record);
   };
 
   let itemComponent: any = (
-    <Input style={{ width: '100%' }} onBlur={onBlur} {...restProps} />
+    <Input style={{ width: "100%" }} onBlur={onBlur} {...restProps} />
   );
 
   switch (editType) {
-    case 'inputNumber':
+    case "inputNumber":
       itemComponent = (
-        <InputNumber style={{ width: '100%' }} onBlur={onBlur} {...restProps} />
+        <InputNumber style={{ width: "100%" }} onBlur={onBlur} {...restProps} />
       );
       break;
-    case 'select':
-      itemComponent = <Select style={{ width: '100%' }} {...restProps} />;
+    case "select":
+      itemComponent = <Select style={{ width: "100%" }} {...restProps} />;
       break;
-    case 'datePicker':
-      itemComponent = <DatePicker style={{ width: '100%' }} {...restProps} />;
+    case "datePicker":
+      itemComponent = <DatePicker style={{ width: "100%" }} {...restProps} />;
       break;
-    case 'rangePicker':
-      itemComponent = <RangePicker style={{ width: '100%' }} {...restProps} />;
+    case "rangePicker":
+      itemComponent = <RangePicker style={{ width: "100%" }} {...restProps} />;
       break;
-    case 'radioGroup':
+    case "radioGroup":
       itemComponent = <Radio.Group {...restProps} />;
       break;
-    case 'checkboxGroup':
+    case "checkboxGroup":
       itemComponent = <Checkbox.Group {...restProps} />;
       break;
-    case 'cascader':
-      itemComponent = <Cascader style={{ width: '100%' }} {...restProps} />;
+    case "cascader":
+      itemComponent = <Cascader style={{ width: "100%" }} {...restProps} />;
       break;
   }
 
@@ -174,9 +174,9 @@ const renderItem = ({
 
 const EditableTableCell = React.memo((props: EditableTableCellProps) => {
   const {
-    rowKey = 'id',
+    rowKey = "id",
     editable = false,
-    editType = 'input',
+    editType = "input",
     editProps,
     component,
     disabled,
@@ -191,7 +191,7 @@ const EditableTableCell = React.memo((props: EditableTableCellProps) => {
   const form = useContext(EditableContext);
 
   let finalComponentProps: Record<string, any> = editProps || {};
-  if (typeof editProps === 'function') {
+  if (typeof editProps === "function") {
     finalComponentProps = editProps(record) || {};
   }
 
@@ -201,12 +201,12 @@ const EditableTableCell = React.memo((props: EditableTableCellProps) => {
       finalRulesArr = rules;
     } else {
       if (ruleOptions?.isRequired) {
-        finalRulesArr.push({ required: true, message: '必填项' });
+        finalRulesArr.push({ required: true, message: "必填项" });
       }
       if (ruleOptions?.isEmail) {
         finalRulesArr.push({
           pattern: EMAIL_PATTERN,
-          message: '请输入正确邮箱格式',
+          message: "请输入正确邮箱格式",
         });
       }
     }
@@ -260,7 +260,7 @@ const EditableTableCell = React.memo((props: EditableTableCellProps) => {
   }
 
   return (
-    <td title={disabled ? record?.[dataIndex] : ''} {...restProps}>
+    <td title={disabled ? record?.[dataIndex] : ""} {...restProps}>
       {childNode}
     </td>
   );
@@ -270,7 +270,7 @@ class TableCellWrapper extends React.PureComponent {
   render() {
     return (
       <EditableTableCell
-        {...omit(this.props, ['onMouseEnter', 'onMouseLeave'])}
+        {...omit(this.props, ["onMouseEnter", "onMouseLeave"])}
       />
     );
   }
@@ -289,7 +289,7 @@ const EditableTableRow = ({
   ) => {
     onFromaValuesChange?.(changedValues, form, {
       ...allValues,
-      [rowKey]: restProps['data-row-key'],
+      [rowKey]: restProps["data-row-key"],
     });
   };
 
@@ -303,7 +303,7 @@ const EditableTableRow = ({
 };
 
 const EditableTable = ({
-  rowKey = 'id',
+  rowKey = "id",
   dataSource,
   columns,
   setDataSource,
@@ -373,12 +373,12 @@ const EditableTable = ({
   const finalColumns = [
     ...newColumns,
     {
-      title: '操作',
-      key: 'action',
-      dataIndex: 'action',
-      align: 'center',
+      title: "操作",
+      key: "action",
+      dataIndex: "action",
+      align: "center",
       width: 80,
-      fixed: 'right',
+      fixed: "right",
       render: (_: any, record: Record<string, any>) => {
         return (
           <div style={{ padding: 0 }}>
@@ -395,7 +395,7 @@ const EditableTable = ({
               >
                 <Button style={{ padding: 0 }} type='link' danger>
                   删除
-                </Button>{' '}
+                </Button>{" "}
               </Popconfirm>
             )}
           </div>

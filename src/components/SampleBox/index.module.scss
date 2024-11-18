@@ -1,8 +1,10 @@
 .container {
+  $borderRadius: 8px;
+
   width: 100%;
   display: flex;
   flex-direction: column;
-  border-radius: 8px;
+  border-radius: $borderRadius;
   border: 1px solid rgba(5, 5, 5, 0.1);
 
   .title {
@@ -16,6 +18,8 @@
     font-weight: 600;
     background-color: #fcfcfc;
     padding: 0 20px;
+    border-top-left-radius: $borderRadius;
+    border-top-right-radius: $borderRadius;
   }
 
   .content {
@@ -48,7 +52,10 @@
     width: 100%;
     border-top: 1px dashed rgba(5, 5, 5, 0.1);
     .codeBlockContent {
-      border: 1px solid transparent;
+      border-bottom: 1px solid rgba(5, 5, 5, 0.1);
+      border-top: 1px solid transparent;
+      border-left: 1px solid transparent;
+      border-right: 1px solid transparent;
       position: relative;
       &:hover {
         border: 1px solid $globalPrimaryColor;
@@ -62,8 +69,8 @@
         height: 34px;
         border-radius: 50%;
         position: absolute;
-        top: 20px;
-        right: 30px;
+        top: 16px;
+        right: 20px;
         cursor: pointer;
 
         &:hover {
@@ -79,10 +86,35 @@
       }
     }
 
+    .footer {
+      width: 100%;
+      height: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 14px;
+      color: $greyTextColor;
+      font-weight: 300;
+      cursor: pointer;
+
+      &:hover {
+        color: $globalPrimaryColor;
+      }
+
+      :global {
+        svg {
+          width: 14px;
+          height: 14px;
+          margin-right: 4px;
+        }
+      }
+    }
+
     :global {
       .ant-tabs {
         .ant-tabs-nav {
           margin: 0 !important;
+          padding: 0 8px !important;
         }
       }
     }

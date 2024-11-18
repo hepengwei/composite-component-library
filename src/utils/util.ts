@@ -15,11 +15,11 @@ export const saveTextToClip = (text: string) => {
   if (navigator.clipboard) {
     navigator.clipboard.writeText(text);
   } else {
-    const input = document.createElement('input');
-    input.setAttribute('value', text);
+    const input = document.createElement("input");
+    input.setAttribute("value", text);
     document.body.appendChild(input);
     input.select();
-    document.execCommand('copy');
+    document.execCommand("copy");
     document.body.removeChild(input);
   }
 };
@@ -35,12 +35,12 @@ export const getTextWidth = (
   fontSize: number,
   fontWeight = 400
 ) => {
-  const span = document.createElement('span') as HTMLSpanElement;
-  span.style.visibility = 'hidden';
-  span.style.padding = '0';
-  span.style.whiteSpace = 'nowrap';
-  span.style.overflow = 'visible';
-  span.style.fontSize = fontSize > 12 ? fontSize + 'px' : '12px';
+  const span = document.createElement("span") as HTMLSpanElement;
+  span.style.visibility = "hidden";
+  span.style.padding = "0";
+  span.style.whiteSpace = "nowrap";
+  span.style.overflow = "visible";
+  span.style.fontSize = fontSize > 12 ? fontSize + "px" : "12px";
   span.style.fontWeight = fontWeight.toString();
   span.innerText = text;
   document.body.appendChild(span);
@@ -64,17 +64,17 @@ export const getFixedWidthText = (
   fontWeight = 400,
   isNeedEllipsis = true
 ) => {
-  let returnText = '';
-  let oldText = '';
-  let newText = '';
-  if (!text || width < fontSize || typeof text !== 'string') return returnText;
-  const arr = text.split('');
-  const span = document.createElement('span') as HTMLSpanElement;
-  span.style.visibility = 'hidden';
-  span.style.padding = '0';
-  span.style.whiteSpace = 'nowrap';
-  span.style.overflow = 'visible';
-  span.style.fontSize = fontSize > 12 ? fontSize + 'px' : '12px';
+  let returnText = "";
+  let oldText = "";
+  let newText = "";
+  if (!text || width < fontSize || typeof text !== "string") return returnText;
+  const arr = text.split("");
+  const span = document.createElement("span") as HTMLSpanElement;
+  span.style.visibility = "hidden";
+  span.style.padding = "0";
+  span.style.whiteSpace = "nowrap";
+  span.style.overflow = "visible";
+  span.style.fontSize = fontSize > 12 ? fontSize + "px" : "12px";
   span.style.fontWeight = fontWeight.toString();
   document.body.appendChild(span);
 
@@ -87,7 +87,7 @@ export const getFixedWidthText = (
     const nowWidth = span.offsetWidth;
     if (nowWidth > width) {
       if (isNeedEllipsis) {
-        returnText = oldText + '...';
+        returnText = oldText + "...";
       } else {
         returnText = oldText;
       }

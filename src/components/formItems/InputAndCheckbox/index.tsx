@@ -1,14 +1,15 @@
 /**
  * 左边输入框右边复选框的复合组件
  */
-import React, { useMemo } from 'react';
-import { Input, Checkbox } from 'antd';
-import { CheckboxChangeEvent } from 'antd/es/checkbox';
-import useFormDisabled from 'hooks/useFormDisabled';
-import styles from './index.module.scss';
+import React, { useMemo } from "react";
+import { Input, Checkbox } from "antd";
+import { CheckboxChangeEvent } from "antd/es/checkbox";
+import useFormDisabled from "hooks/useFormDisabled";
+import styles from "./index.module.scss";
+import { indexTextCode, indexScssTextCode } from "./code";
 
 export type Value = [string | undefined, boolean | undefined];
-type Status = 'warning' | 'error' | '' | undefined;
+type Status = "warning" | "error" | "" | undefined;
 
 type InputAndCheckboxProps = {
   value?: Value;
@@ -17,7 +18,7 @@ type InputAndCheckboxProps = {
   inputProps?: Record<string, any>; // 传递给输入框的属性值
   checkboxProps?: Record<string, any>; // 传递给复选框的属性值
   onChange?: (value: Value) => void;
-  'aria-invalid'?: string; // Form校验时会自动传入"true"
+  "aria-invalid"?: string; // Form校验时会自动传入"true"
   setInputStatus?: (value: Value | undefined) => Status; // 当form校验时，设置输入框的status属性值。当使用该属性时，要给外层的Form.Item设置validateStatus为''
   style?: Record<string, any>;
 };
@@ -30,7 +31,7 @@ const InputAndCheckbox = (props: InputAndCheckboxProps) => {
     inputProps = {},
     checkboxProps = {},
     onChange,
-    ['aria-invalid']: invalid,
+    ["aria-invalid"]: invalid,
     setInputStatus,
     style = {},
   } = props;
@@ -51,7 +52,7 @@ const InputAndCheckbox = (props: InputAndCheckboxProps) => {
   };
 
   const inputStatus = useMemo(() => {
-    if (setInputStatus && invalid === 'true') {
+    if (setInputStatus && invalid === "true") {
       return setInputStatus(value);
     }
     return undefined;
@@ -68,7 +69,7 @@ const InputAndCheckbox = (props: InputAndCheckboxProps) => {
       />
       <Checkbox
         className={`${styles.checkbox}${
-          !checkboxLabel ? ` ${styles.noLabel}` : ''
+          !checkboxLabel ? ` ${styles.noLabel}` : ""
         }`}
         checked={value && value.length >= 2 ? value[1] : undefined}
         disabled={disabled}
@@ -82,3 +83,11 @@ const InputAndCheckbox = (props: InputAndCheckboxProps) => {
 };
 
 export default InputAndCheckbox;
+
+export const fileCodeList = [
+  { fileName: "InputAndCheckbox.tsx", code: indexTextCode },
+  {
+    fileName: "InputAndCheckbox.module.scss",
+    code: indexScssTextCode,
+  },
+];

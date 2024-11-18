@@ -1,48 +1,45 @@
-/**
- * 左边日期选择框右边复选框的复合组件
+export const indexTextCode = `/**
+ * 左边输入框右边复选框的复合组件
  */
 import React, { useMemo } from "react";
-import { DatePicker, Checkbox } from "antd";
+import { Input, Checkbox } from "antd";
 import { CheckboxChangeEvent } from "antd/es/checkbox";
-import { Dayjs } from "dayjs";
 import useFormDisabled from "hooks/useFormDisabled";
 import styles from "./index.module.scss";
-import { indexTextCode, indexScssTextCode } from "./code";
 
-type Value = [Dayjs | null | undefined, boolean | undefined];
+export type Value = [string | undefined, boolean | undefined];
 type Status = "warning" | "error" | "" | undefined;
 
-type DatePickerAndCheckboxProps = {
+type InputAndCheckboxProps = {
   value?: Value;
   checkboxLabel?: string;
   disabled?: boolean;
-  datePickerProps?: Record<string, any>; // 传递给日期选择框的属性值
+  inputProps?: Record<string, any>; // 传递给输入框的属性值
   checkboxProps?: Record<string, any>; // 传递给复选框的属性值
   onChange?: (value: Value) => void;
   "aria-invalid"?: string; // Form校验时会自动传入"true"
-  setDatePickerStatus?: (value: Value | undefined) => Status; // 当form校验时，设置日期选择框的status属性值。当使用该属性时，要给外层的Form.Item设置validateStatus为''
+  setInputStatus?: (value: Value | undefined) => Status; // 当form校验时，设置输入框的status属性值。当使用该属性时，要给外层的Form.Item设置validateStatus为''
   style?: Record<string, any>;
 };
 
-const DatePickerAndCheckbox = (props: DatePickerAndCheckboxProps) => {
+const InputAndCheckbox = (props: InputAndCheckboxProps) => {
   const {
     value,
     checkboxLabel = null,
     disabled: selfDisabled,
-    datePickerProps = {},
+    inputProps = {},
     checkboxProps = {},
     onChange,
     ["aria-invalid"]: invalid,
-    setDatePickerStatus,
+    setInputStatus,
     style = {},
   } = props;
   const disabled = useFormDisabled(selfDisabled);
 
-  const onDatePickerChange = (date: Dayjs | null) => {
+  const onInputChange = (e: any) => {
+    const v = e?.target?.value;
     const newValue: Value =
-      value && value.length >= 2
-        ? [date || undefined, value[1]]
-        : [date || undefined, undefined];
+      value && value.length >= 2 ? [v, value[1]] : [v, undefined];
     onChange?.(newValue);
   };
 
@@ -53,26 +50,26 @@ const DatePickerAndCheckbox = (props: DatePickerAndCheckboxProps) => {
     onChange?.(newValue);
   };
 
-  const datePickerStatus = useMemo(() => {
-    if (setDatePickerStatus && invalid === "true") {
-      return setDatePickerStatus(value);
+  const inputStatus = useMemo(() => {
+    if (setInputStatus && invalid === "true") {
+      return setInputStatus(value);
     }
     return undefined;
   }, [invalid, value]);
 
   return (
     <div className={styles.container} style={style}>
-      <DatePicker
+      <Input
         value={value && value.length >= 1 ? value[0] : undefined}
         disabled={disabled}
-        status={datePickerStatus}
-        {...datePickerProps}
-        onChange={onDatePickerChange}
+        status={inputStatus}
+        {...inputProps}
+        onChange={onInputChange}
       />
       <Checkbox
-        className={`${styles.checkbox}${
-          !checkboxLabel ? ` ${styles.noLabel}` : ""
-        }`}
+        className={\`\${styles.checkbox}\${
+          !checkboxLabel ? \` \${styles.noLabel}\` : ""
+        }\`}
         checked={value && value.length >= 2 ? value[1] : undefined}
         disabled={disabled}
         {...checkboxProps}
@@ -84,12 +81,24 @@ const DatePickerAndCheckbox = (props: DatePickerAndCheckboxProps) => {
   );
 };
 
-export default DatePickerAndCheckbox;
+export default InputAndCheckbox;`;
 
-export const fileCodeList = [
-  { fileName: "DatePickerAndCheckbox.tsx", code: indexTextCode },
-  {
-    fileName: "DatePickerAndCheckbox.module.scss",
-    code: indexScssTextCode,
-  },
-];
+export const indexScssTextCode = `.container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  .checkbox {
+    display: flex;
+    align-items: center;
+    margin-left: 8px;
+    span {
+      word-break: keep-all;
+    }
+  }
+  .noLabel {
+    span:not(.ant-checkbox) {
+      padding-inline-start: 0 !important;
+      padding-inline-end: 0 !important;
+    }
+  }
+}`;

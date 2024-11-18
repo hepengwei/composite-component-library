@@ -1,15 +1,15 @@
 /**
  * 可增加和删除多条数据的包装组件
  */
-import React, { ReactNode } from 'react';
-import { Draggable } from 'react-beautiful-dnd';
-import type { DraggableProvided } from 'react-beautiful-dnd';
+import React, { ReactNode } from "react";
+import { Draggable } from "react-beautiful-dnd";
+import type { DraggableProvided } from "react-beautiful-dnd";
 import {
   HolderOutlined,
   VerticalAlignTopOutlined,
   MinusCircleOutlined,
-} from '@ant-design/icons';
-import styles from './index.module.scss';
+} from "@ant-design/icons";
+import styles from "./index.module.scss";
 
 type DraggableFormListRowProps = {
   quote: Record<string, any>;
@@ -31,9 +31,9 @@ const DraggableFormListRow = (props: DraggableFormListRowProps) => {
             <div
               {...(!disabled ? provided.dragHandleProps : {})}
               className={`${styles.defaultBtn}${
-                disabled ? ` ${styles.disabled}` : ''
+                disabled ? ` ${styles.disabled}` : ""
               }`}
-              style={{ marginRight: '8px' }}
+              style={{ marginRight: "8px" }}
             >
               <HolderOutlined />
             </div>
@@ -41,9 +41,9 @@ const DraggableFormListRow = (props: DraggableFormListRowProps) => {
             {remove && (
               <div
                 className={`${styles.removeBtn}${
-                  disabled ? ` ${styles.disabled}` : ''
+                  disabled ? ` ${styles.disabled}` : ""
                 }`}
-                style={{ marginLeft: '10px' }}
+                style={{ marginLeft: "10px" }}
                 onClick={() => {
                   if (disabled) return;
                   remove(index);
@@ -55,9 +55,9 @@ const DraggableFormListRow = (props: DraggableFormListRowProps) => {
             {onToTop && (
               <div
                 className={`${styles.defaultBtn}${
-                  disabled ? ` ${styles.disabled}` : ''
+                  disabled ? ` ${styles.disabled}` : ""
                 }`}
-                style={{ marginLeft: '10px' }}
+                style={{ marginLeft: "10px" }}
                 onClick={() => {
                   if (index === 0) return;
                   if (disabled) return;

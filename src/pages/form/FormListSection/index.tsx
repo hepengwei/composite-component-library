@@ -1,10 +1,10 @@
 /**
  * FormList部分 菜单页
  */
-import React from 'react';
-import DraggableFormListSample from './samples/DraggableFormListSample';
-import DraggableWithValidateFormListSample from './samples/DraggableWithValidateFormListSample';
-import styles from './index.module.scss';
+import React from "react";
+import DraggableFormListSample from "./samples/DraggableFormListSample";
+import DraggableWithValidateFormListSample from "./samples/DraggableWithValidateFormListSample";
+import styles from "./index.module.scss";
 
 const sampleList = [
   <DraggableFormListSample />,

@@ -1,7 +1,7 @@
-export const contentTextCode = `import React from 'react';
-import { Form, Row, Col } from 'antd';
-import DatePickerAndCheckbox from '@/components/formItems/DatePickerAndCheckbox';
-import styles from './index.module.scss';
+export const contentTextCode = `import React from "react";
+import { Form, Row, Col } from "antd";
+import DatePickerAndCheckbox from "@/components/formItems/DatePickerAndCheckbox";
+import styles from "./index.module.scss";
 
 const Content = () => {
   const [form] = Form.useForm();
@@ -16,7 +16,7 @@ const Content = () => {
         </Col>
         <Col span={12}>
           <Form.Item label='字段标题' name='field2'>
-            <DatePickerAndCheckbox datePickerProps={{ format: 'YYYY/MM/DD' }} />
+            <DatePickerAndCheckbox datePickerProps={{ format: "YYYY/MM/DD" }} />
           </Form.Item>
         </Col>
       </Row>
@@ -24,4 +24,4 @@ const Content = () => {
   );
 };
 
-export default Content;`
+export default Content;`;
