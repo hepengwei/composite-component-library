@@ -4,7 +4,6 @@ import Home from "pages/Home";
 import FormItemSection from "pages/form/FormItemSection";
 import FormListSection from "pages/form/FormListSection";
 import TableSection from "pages/table";
-import SplitterSection from "pages/splitter";
 import ComingSoon from "@/components/ComingSoon";
 
 export const contentRoutes: RouteObject[] = [
@@ -24,10 +23,6 @@ export const contentRoutes: RouteObject[] = [
   {
     path: "/table",
     element: <TableSection />,
-  },
-  {
-    path: "/splitter",
-    element: <SplitterSection />,
   },
 ];
 
