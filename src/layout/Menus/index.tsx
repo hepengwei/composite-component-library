@@ -121,7 +121,7 @@ const Menus: React.FC = () => {
       <div className={styles.topBox}>
         <div className={styles.top}>
           <Button
-            type="primary"
+            type='primary'
             onClick={toggleCollapsed}
             style={{ marginBottom: 16 }}
           >
@@ -132,7 +132,7 @@ const Menus: React.FC = () => {
         <Menu
           defaultOpenKeys={defaultOpenKeys}
           selectedKeys={selectedKeys}
-          mode="inline"
+          mode='inline'
           inlineCollapsed={collapsed}
           items={items}
           onClick={onMenu}

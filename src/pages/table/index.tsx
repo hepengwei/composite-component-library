@@ -1,9 +1,9 @@
 /**
  * 表格 菜单页
  */
-import React from 'react';
-import EditableTableSample from './samples/EditableTableSample';
-import styles from './index.module.scss';
+import React from "react";
+import EditableTableSample from "./samples/EditableTableSample";
+import styles from "./index.module.scss";
 
 const sampleList = [<EditableTableSample />];
 

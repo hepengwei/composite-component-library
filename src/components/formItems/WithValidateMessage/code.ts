@@ -1,11 +1,10 @@
-/**
+export const indexTextCode = `/**
  * 用于显示自定义校验信息的FormItem组件的包装组件(注意：如果子组件需要传onChange属性，则必须由该包装组件进行传递，不能写在子组件里；要在外层组件中将.ant-form-item-explain类样式的display属性覆盖为none)
  */
 import React, { useMemo, ReactElement } from "react";
 import { Tooltip, type FormInstance } from "antd";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import styles from "./index.module.scss";
-import { indexTextCode, indexScssTextCode } from "./code";
 
 type WithValidateMessageProps = {
   form?: FormInstance | null; // form对象，nevervalidate为true时可以不传
@@ -52,7 +51,7 @@ const WithValidateMessage = (props: WithValidateMessageProps) => {
 
   return (
     <div
-      className={`${styles.container}${className ? ` ${className}` : ""}`}
+      className={\`\${styles.container}\${className ? \` \${className}\` : ""}\`}
       style={style}
     >
       <div
@@ -78,12 +77,30 @@ const WithValidateMessage = (props: WithValidateMessageProps) => {
   );
 };
 
-export default WithValidateMessage;
+export default WithValidateMessage;`;
 
-export const fileCodeList = [
-  { fileName: "WithValidateMessage.tsx", code: indexTextCode },
-  {
-    fileName: "WithValidateMessage.module.scss",
-    code: indexScssTextCode,
-  },
-];
+export const indexScssTextCode = `.container {
+  width: 100%;
+  display: flex;
+  $messageWidth: 26px;
+  .componentBox {
+    display: flex;
+    align-items: center;
+  }
+  .messageBox {
+    width: $messageWidth;
+    height: $messageWidth;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 3px;
+    margin-left: 2px;
+    svg {
+      width: 18px;
+      height: 18px;
+      path {
+        fill: $globalRedColor;
+      }
+    }
+  }
+}`;

@@ -1,10 +1,10 @@
 /**
  * 显示代码文本的组件
  */
-import React from 'react';
-import { Highlight, themes } from 'prism-react-renderer';
-import type { PrismTheme } from 'prism-react-renderer';
-import styles from './index.module.scss';
+import React from "react";
+import { Highlight, themes } from "prism-react-renderer";
+import type { PrismTheme } from "prism-react-renderer";
+import styles from "./index.module.scss";
 
 type CodeBlockProps = {
   code: string;
@@ -13,7 +13,7 @@ type CodeBlockProps = {
 };
 
 const CodeBlock = (props: CodeBlockProps) => {
-  const { code, language = 'tsx', theme = themes.oneLight } = props;
+  const { code, language = "tsx", theme = themes.oneLight } = props;
 
   return (
     <Highlight theme={theme} code={code} language={language}>

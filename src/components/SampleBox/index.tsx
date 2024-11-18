@@ -1,9 +1,9 @@
-import React, { useState, ReactNode, useMemo } from 'react';
-import { message, Tabs, Tooltip } from 'antd';
-import { CodeOutlined, CopyOutlined } from '@ant-design/icons';
-import CodeBlock from 'components/CodeBlock';
-import { saveTextToClip } from 'utils/util';
-import styles from './index.module.scss';
+import React, { useState, ReactNode, useMemo } from "react";
+import { message, Tabs, Tooltip } from "antd";
+import { CodeOutlined, CopyOutlined, UpOutlined } from "@ant-design/icons";
+import CodeBlock from "components/CodeBlock";
+import { saveTextToClip } from "utils/util";
+import styles from "./index.module.scss";
 
 type SampleBoxProps = {
   title?: string;
@@ -30,7 +30,7 @@ const SampleBox = (props: SampleBoxProps) => {
               className={styles.copyBtn}
               onClick={() => {
                 saveTextToClip(item.code);
-                message.success('复制成功');
+                message.success("复制成功");
               }}
             >
               <Tooltip title='复制'>
@@ -45,12 +45,12 @@ const SampleBox = (props: SampleBoxProps) => {
   }, [codeParams]);
 
   return (
-    <div className={`${styles.container}${className ? ` ${className}` : ''}`}>
+    <div className={`${styles.container}${className ? ` ${className}` : ""}`}>
       {title && <div className={styles.title}>{title}</div>}
       <div className={styles.content}>{children}</div>
       {codeParams && (
         <div className={styles.actions}>
-          <Tooltip title={showCodeBlock ? '收起代码' : '显示代码'}>
+          <Tooltip title={showCodeBlock ? "收起代码" : "显示代码"}>
             <CodeOutlined onClick={() => setShowCodeBlock(!showCodeBlock)} />
           </Tooltip>
         </div>
@@ -62,6 +62,13 @@ const SampleBox = (props: SampleBoxProps) => {
           ) : (
             <CodeBlock code={(codeParams as CodeParam).code} />
           )}
+          <div
+            className={styles.footer}
+            onClick={() => setShowCodeBlock(false)}
+          >
+            <UpOutlined />
+            收起
+          </div>
         </div>
       )}
     </div>
