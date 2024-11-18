@@ -1,7 +1,7 @@
 // 弹窗复选
 import React from "react";
 import { Modal, Checkbox, Tree, Input } from "antd";
-import TRNotification from "./noctification.tsx";
+import TRNotification from "./noctification";
 import { CloseOutlined, SearchOutlined } from "@ant-design/icons";
 import _ from "lodash";
 import styles from "./index.module.scss";

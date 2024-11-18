@@ -12,7 +12,6 @@ import {
   MenuUnfoldOutlined,
   FormOutlined,
   TableOutlined,
-  GatewayOutlined,
 } from "@ant-design/icons";
 import { useDebounceFn } from "ahooks";
 import { Button, Menu } from "antd";
@@ -51,7 +50,6 @@ const Menus: React.FC = () => {
       getItem("FormList 部分", "formListSection"),
     ]),
     getItem("表格", "table", <TableOutlined />),
-    getItem("分隔面板", "splitter", <GatewayOutlined />),
   ];
 
   const updateMenuWidth = useCallback(

@@ -3,7 +3,7 @@ import React from "react";
 import { Select } from "antd";
 import { default as CheckboxModal } from "./modal";
 
-interface Card3Props {
+interface TreeSelectProps {
   value: string[];
   options: MockItem[];
   onChange: (checkedKeys: string[]) => void;
@@ -18,7 +18,7 @@ const flattenDeep = (arr = [], result = []) => {
   return result;
 };
 
-export const Card3: React.FC<Card3Props> = ({
+const TreeSelect: React.FC<TreeSelectProps> = ({
   value = [""],
   onChange = (checkedKeys: any) => {},
   options = [],
@@ -54,3 +54,5 @@ export const Card3: React.FC<Card3Props> = ({
     />
   );
 };
+
+export default TreeSelect;

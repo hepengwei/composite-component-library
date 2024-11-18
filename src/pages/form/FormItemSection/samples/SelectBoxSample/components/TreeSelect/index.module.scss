@@ -32,7 +32,7 @@ $border_dark: #868686;
     font-weight: 500;
     font-size: 18px;
     line-height: 1;
-    background-image: url("../../../../images/plan_icon.png");
+    background-image: url("../../../../../../../images/plan_icon.png");
     background-repeat: no-repeat;
     background-size: 30px 30px;
   }
@@ -122,7 +122,7 @@ html[data-type-color="dark"] {
     @include modalDefault();
 
     .modal_title {
-      background-image: url("../../../../images/plan_icon_dark.png");
+      background-image: url("../../../../../../../images/plan_icon_dark.png");
     }
 
     .modal_body {
