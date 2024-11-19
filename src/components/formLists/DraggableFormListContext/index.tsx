@@ -6,6 +6,11 @@ import useFormDisabled from "hooks/useFormDisabled";
 import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 import type { DroppableProvided } from "react-beautiful-dnd";
 import DraggableFormListRow from "./DraggableFormListRow";
+import {
+  indexTextCode,
+  draggableFormListRowTextCode,
+  indexScssTextCode,
+} from "./code";
 
 type DraggableFormListContextProps = {
   droppableId: string;
@@ -75,3 +80,12 @@ const DraggableFormListContext = (props: DraggableFormListContextProps) => {
 };
 
 export default DraggableFormListContext;
+
+export const fileCodeList = [
+  { fileName: "DraggableFormListContext.tsx", code: indexTextCode },
+  { fileName: "DraggableFormListRow.tsx", code: draggableFormListRowTextCode },
+  {
+    fileName: "DraggableFormListContext.module.scss",
+    code: indexScssTextCode,
+  },
+];
