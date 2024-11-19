@@ -1,4 +1,4 @@
-/**
+export const indexTextCode = `/**
  * 可进行编辑的表格组件
  */
 import React, { ReactNode, useEffect, useContext, useMemo } from "react";
@@ -19,7 +19,6 @@ import type { TableProps, TableColumnProps, GetRef, FormRule } from "antd";
 import { omit } from "lodash-es";
 import WithValidateMessage from "@/components/formItems/WithValidateMessage";
 import styles from "./index.module.scss";
-import { indexTextCode, indexScssTextCode } from "./code";
 
 const { RangePicker } = DatePicker;
 const EMAIL_PATTERN =
@@ -422,11 +421,16 @@ const EditableTable = ({
 };
 
 export default EditableTable;
+`;
 
-export const fileCodeList = [
-  { fileName: "EditableTable.tsx", code: indexTextCode },
-  {
-    fileName: "EditableTable.module.scss",
-    code: indexScssTextCode,
-  },
-];
+export const indexScssTextCode = `.editableTable {
+  :global {
+    .ant-form-item {
+      .ant-form-item-control {
+        .ant-form-item-explain {
+          display: none !important;
+        }
+      }
+    }
+  }
+}`;
