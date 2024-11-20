@@ -1,16 +1,230 @@
-// 弹窗复选
+export const indexTextCode = `/**
+ * 下拉选择框的复合组件
+ */
 import React from "react";
-import { Modal, Checkbox, Tree, Input } from "antd";
-import TRNotification from "./notification";
-import { CloseOutlined, SearchOutlined } from "@ant-design/icons";
-import _ from "lodash";
-import styles from "./index.module.scss";
+import { Select } from "antd";
+import { MockItem } from "./mock";
+import { default as CheckboxModal } from "./modal";
 
+interface TreeSelectProps {
+  defaultValue?: string[];
+  options: MockItem[];
+  onChange: (checkedKeys: string[]) => void;
+  title: string;
+  width?: number;
+}
+
+const flattenDeep = (arr: any = [], result: any = []) => {
+  arr.map((item: any) => {
+    item?.children?.length > 0
+      ? flattenDeep(item.children, result)
+      : result.push(item);
+  });
+  return result;
+};
+
+const TreeSelect: React.FC<TreeSelectProps> = ({
+  defaultValue = [],
+  onChange = (checkedKeys: any) => {},
+  options = [],
+  title = "示例测试",
+  width = 200,
+}) => {
+  const stations = flattenDeep(options, []);
+  const len = defaultValue.length;
+  const allLen = stations.length;
+  const onClickSelect = async () => {
+    // 点击下拉
+    const { index, checkedKeys } = await CheckboxModal.show({
+      title,
+      value: defaultValue,
+      treeData: options,
+    });
+    index === 1 && !!checkedKeys.length && onChange(checkedKeys);
+  };
+
+  return (
+    <Select
+      style={{ width: width }}
+      value={
+        !options.length
+          ? "请联系管理员开通权限"
+          : \`\${len === allLen ? "全部" : \`\${len}/\${allLen}项\`}\${title}\`
+      }
+      disabled={!options.length}
+      options={[]}
+      open={false}
+      showArrow
+      onClick={onClickSelect}
+    />
+  );
+};
+
+export default TreeSelect;
+`;
+
+export const indexScssTextCode = `$space: 24px;
+$border_light: #d9d9d9;
+$border_dark: #868686;
+
+@mixin modalDefault() {
+  .ant-modal-header {
+    padding-top: 18px;
+    padding-bottom: 0;
+    border-bottom: 0;
+  }
+  .ant-modal-body {
+    padding: $space;
+  }
+  .ant-modal-footer {
+    padding: $space;
+    padding-top: 0;
+    border-top: 0;
+  }
+  .ant-btn + .ant-btn:not(.ant-dropdown-trigger) {
+    margin-left: 16px;
+  }
+}
+
+.modal {
+  @include modalDefault();
+
+  .modal_title {
+    display: flex;
+    align-items: center;
+    height: 30px;
+    padding-left: 37px;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 1;
+    background-image: url("../../../../../../../images/plan_icon.png");
+    background-repeat: no-repeat;
+    background-size: 30px 30px;
+  }
+
+  .modal_body {
+    display: flex;
+    width: 100%;
+    height: 328px;
+    overflow: hidden;
+    border: 1px solid $border_light;
+    border-radius: 4px;
+
+    .treebox,
+    .choosebox {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      padding: 16px 0;
+      overflow: hidden;
+    }
+    .treebox {
+      border-right: 1px solid $border_light;
+    }
+    .box_header {
+      height: 32px;
+      margin-bottom: 8px;
+      padding: 0 16px;
+    }
+    .box_content {
+      flex: 1;
+      padding: 0 16px;
+      overflow-y: auto;
+    }
+    .choosebox {
+      .box_header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+    }
+    .chooseList {
+      margin: 0;
+      padding: 0;
+      color: #595959;
+      list-style: none;
+
+      > li {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 8px;
+
+        .chooseName {
+          flex: 1;
+        }
+      }
+    }
+    .close {
+      width: 16px;
+      height: 16px;
+      color: #bfbfbf;
+    }
+    .clear {
+      color: #8c8c8c;
+      cursor: pointer;
+    }
+  }
+
+  .foot {
+    width: 80px;
+    font-weight: 500;
+    font-size: 12px;
+    border-radius: 5px;
+  }
+
+  .search_act {
+    color: #18a0fb;
+  }
+}
+
+html[data-type-color="dark"] {
+  .modal {
+    .ant-btn-primary {
+      background: #18a0fb !important;
+    }
+
+    @include modalDefault();
+
+    .modal_title {
+      background-image: url("../../../../../../../images/plan_icon_dark.png");
+    }
+
+    .modal_body {
+      border-color: $border_dark;
+
+      .treebox {
+        border-color: $border_dark;
+      }
+
+      .chooseList {
+        color: #fff;
+      }
+      .close {
+        color: #d8d8d8;
+      }
+      .clear {
+        color: #fff;
+      }
+    }
+  }
+}
+`;
+
+export const modalTextCode = `
 /**
  * title: 顶部名称
  * value: 选中值
  * treeData: 树形结构
  */
+
+import React from "react";
+import { Modal, Checkbox, Tree, Input } from "antd";
+import TRNotification from "./noctification";
+import { CloseOutlined, SearchOutlined } from "@ant-design/icons";
+import _ from "lodash";
+import styles from "./index.module.scss";
+
 class ModalComponent extends React.Component {
   constructor(props) {
     super(props);
@@ -396,7 +610,7 @@ class ModalComponent extends React.Component {
 
           <div className={styles.choosebox}>
             <div className={styles.box_header}>
-              <div>{`已选${checkedNodes.length}项`}</div>
+              <div>{\`\已选\${checkedNodes.length}项\`\}</div>
               {!disabled && (
                 <div className={styles.clear} onClick={this._onClearAll}>
                   清空
@@ -460,3 +674,59 @@ class TRCheckboxModal {
 }
 
 export default new TRCheckboxModal();
+`;
+
+export const notificationTextCode = `
+/* （版本---"rc-notification": "4.4.0"） */
+
+// @ts-nocheck
+import Notification from "rc-notification";
+
+class TRNotificationSinge {
+  notification = null;
+  keyMap = new Map();
+  constructor() {
+    this.keys = [];
+    Notification.newInstance({}, (n) => (this.notification = n));
+  }
+
+  /**
+   * 添加方法
+   * @param key  唯一值
+   * @param content
+   * @param duration
+   * @param {function} dismiss 销毁方法
+   */
+  add({ key, content, duration = null, dismiss }) {
+    this.keyMap.set(key, dismiss);
+    this.notification.notice({
+      key,
+      content,
+      duration,
+    });
+  }
+  remove(key) {
+    this.notification.removeNotice(key);
+    this.keyMap.delete(key);
+  }
+
+  clear() {
+    this.keyMap.forEach((fuc, key) => {
+      fuc ? fuc() : this.remove(key);
+    });
+    this.keyMap.clear();
+  }
+}
+
+TRNotificationSinge.getInstance = (function () {
+  let instance;
+  return function () {
+    instance = instance ? instance : new TRNotificationSinge();
+    return instance;
+  };
+})();
+
+const TRNotification = TRNotificationSinge.getInstance();
+
+export default TRNotification;
+`;

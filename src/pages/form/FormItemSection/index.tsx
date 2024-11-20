@@ -7,7 +7,7 @@ import RangePickerAndCheckboxSample from "./samples/RangePickerAndCheckboxSample
 import InputAndCheckboxSample from "./samples/InputAndCheckboxSample";
 import InputNumberAndSelectSample from "./samples/InputNumberAndSelectSample";
 import CanAddMultipleSample from "./samples/CanAddMultipleSample";
-import SelectBoxSample from "./samples/SelectBoxSample";
+import SelectBoxSample from "./samples/SelectBoxSample/index";
 import WithValidateMessageSample from "./samples/WithValidateMessageSample";
 import styles from "./index.module.scss";
 
