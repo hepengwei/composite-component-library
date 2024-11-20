@@ -19,7 +19,7 @@ type CustomRangePickerProps = {
   datePickerProps?: Record<string, any>;
   onChange?: (value: Value) => void;
   "aria-invalid"?: string; // Form校验时会自动传入"true"
-  setDatePickerStatus?: (value: Value | undefined) => Status; // 当form校验时，设置日期选择框的status属性值。当使用该属性时，要给外层的Form.Item设置validateStatus为''
+  setDatePickerStatus?: (value: Value | undefined) => [Status, Status]; // 当form校验时，设置日期选择框的status属性值。当使用该属性时，要给外层的Form.Item设置validateStatus为''
   style?: Record<string, any>;
 };
 
@@ -189,7 +189,7 @@ const CustomRangePicker = (props: CustomRangePickerProps) => {
     if (setDatePickerStatus && invalid === "true") {
       return setDatePickerStatus(value);
     }
-    return undefined;
+    return [undefined, undefined];
   }, [invalid, value]);
 
   const finalPlaceholder = useMemo(() => {
@@ -207,7 +207,7 @@ const CustomRangePicker = (props: CustomRangePickerProps) => {
         disabledDate={startDisabledDate}
         disabledTime={datePickerProps?.showTime ? startDisabledTime : undefined}
         disabled={disabled}
-        status={datePickerStatus}
+        status={datePickerStatus[0]}
         onChange={onStartDateChange}
         {...datePickerProps}
       />
@@ -219,7 +219,7 @@ const CustomRangePicker = (props: CustomRangePickerProps) => {
         disabledDate={endDisabledDate}
         disabledTime={datePickerProps?.showTime ? endDisabledTime : undefined}
         disabled={disabled}
-        status={datePickerStatus}
+        status={datePickerStatus[1]}
         onChange={onEndDateChange}
         {...datePickerProps}
       />
