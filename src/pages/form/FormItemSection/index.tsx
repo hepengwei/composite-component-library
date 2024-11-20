@@ -1,9 +1,10 @@
 /**
  * FormItem部分 菜单页
  */
-import React, { useState } from "react";
+import React from "react";
 import DatePickerAndCheckboxSample from "./samples/DatePickerAndCheckboxSample";
 import RangePickerAndCheckboxSample from "./samples/RangePickerAndCheckboxSample";
+import CustomRangePickerSample from "./samples/CustomRangePickerSample";
 import InputAndCheckboxSample from "./samples/InputAndCheckboxSample";
 import InputNumberAndSelectSample from "./samples/InputNumberAndSelectSample";
 import CanAddMultipleSample from "./samples/CanAddMultipleSample";
@@ -14,6 +15,7 @@ import styles from "./index.module.scss";
 const sampleList = [
   <DatePickerAndCheckboxSample />,
   <RangePickerAndCheckboxSample />,
+  <CustomRangePickerSample />,
   <InputAndCheckboxSample />,
   <InputNumberAndSelectSample />,
   <CanAddMultipleSample />,
