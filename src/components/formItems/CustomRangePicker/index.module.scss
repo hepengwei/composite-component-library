@@ -1,0 +1,12 @@
+.container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  .datePicker {
+    display: flex;
+    flex: 1;
+  }
+  .center {
+    padding: 0 8px;
+  }
+}
