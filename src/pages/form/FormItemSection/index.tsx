@@ -7,6 +7,7 @@ import RangePickerAndCheckboxSample from "./samples/RangePickerAndCheckboxSample
 import CustomRangePickerSample from "./samples/CustomRangePickerSample";
 import InputAndCheckboxSample from "./samples/InputAndCheckboxSample";
 import InputNumberAndSelectSample from "./samples/InputNumberAndSelectSample";
+import RadioGroupAndSelectSample from "./samples/RadioGroupAndSelectSample";
 import CanAddMultipleSample from "./samples/CanAddMultipleSample";
 import SelectBoxSample from "./samples/SelectBoxSample/index";
 import WithValidateMessageSample from "./samples/WithValidateMessageSample";
@@ -18,6 +19,7 @@ const sampleList = [
   <CustomRangePickerSample />,
   <InputAndCheckboxSample />,
   <InputNumberAndSelectSample />,
+  <RadioGroupAndSelectSample />,
   <CanAddMultipleSample />,
   <SelectBoxSample />,
   <WithValidateMessageSample />,

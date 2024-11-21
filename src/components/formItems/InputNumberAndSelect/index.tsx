@@ -19,7 +19,7 @@ type InputNumberAndSelectProps = {
   onChange?: (value: Value, option?: Record<string, any>) => void; // 如果修改下拉框则onChange的第二个参数会返回option
   "aria-invalid"?: string; // Form校验时会自动传入"true"
   setInputNumberStatus?: (value: Value | undefined) => Status; // 当form校验时，设置数值输入框的status属性值。当使用该属性时，要给外层的Form.Item设置validateStatus为''
-  setSelectStatus?: (value: Value | undefined) => Status; // 当form校验时，设置日期选择框的status属性值。当使用该属性时，要给外层的Form.Item设置validateStatus为''
+  setSelectStatus?: (value: Value | undefined) => Status; // 当form校验时，设置下拉框的status属性值。当使用该属性时，要给外层的Form.Item设置validateStatus为''
   style?: Record<string, any>;
 };
 
