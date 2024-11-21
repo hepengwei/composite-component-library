@@ -1,0 +1,16 @@
+.container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  .radioGroup {
+    display: flex;
+  }
+  .selectBox {
+    display: flex;
+    flex: 1;
+    .select {
+      display: flex;
+      flex: 1;
+    }
+  }
+}
