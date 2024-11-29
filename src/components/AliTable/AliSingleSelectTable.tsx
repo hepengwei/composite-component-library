@@ -1,17 +1,13 @@
-import React, { useMemo, useRef, useEffect } from "react";
-import { ArtColumn } from "ali-react-table";
+import React, { useEffect, useRef, useMemo } from "react";
 import { PaginationProps } from "antd/lib/pagination";
-import AliTable from "./AliTable";
-import { AliTableProps } from "./AliTable";
-import { createPagination } from "./AliTable/TablePagination";
+import { ArtColumn } from "ali-react-table";
+import AliTable from "./index";
+import type { ArtColumn2, AliTableProps } from "./index";
+import { createPagination } from "./TablePagination";
 import { getRandomId } from "utils/util";
 
-export interface ArtColumn2 extends Omit<ArtColumn, "lock"> {
-  ellipsis?: boolean;
-  lock?: boolean | "left" | "right";
-}
-
-interface AliMainTableProps extends Omit<AliTableProps, "rowKey" | "columns"> {
+interface AliSingleSelectTableProps
+  extends Omit<AliTableProps, "rowKey" | "columns"> {
   rowKey?: string;
   columns: ArtColumn2[] | ArtColumn[];
   dataSource: Record<string, any>[];
@@ -22,7 +18,7 @@ interface AliMainTableProps extends Omit<AliTableProps, "rowKey" | "columns"> {
   setPagination?: (pagination: Record<string, any>) => void;
 }
 
-const AliMainTable = (props: AliMainTableProps) => {
+const AliSingleSelectTable = (props: AliSingleSelectTableProps) => {
   const {
     rowKey = "randomId",
     columns,
@@ -33,10 +29,9 @@ const AliMainTable = (props: AliMainTableProps) => {
     setSelectedRows,
     pagination,
     setPagination,
-    multiSelectOptions,
     ...restProps
   } = props;
-  const multiSelectOptionsRef = useRef<any>(null);
+  const singleSelectOptionsRef = useRef<any>(null);
 
   const paginationWitchMemo = useMemo(() => {
     if (pagination && setPagination) {
@@ -51,33 +46,31 @@ const AliMainTable = (props: AliMainTableProps) => {
     return undefined;
   }, [pagination, setPagination]);
 
-  const proMultiSelectOptions = useMemo(() => {
-    if (multiSelectOptions) {
-      return {
-        ...multiSelectOptions,
-        ref: multiSelectOptionsRef,
-      };
-    }
-    return {};
-  }, [multiSelectOptions]);
+  const singleSelectOptions = useMemo(() => {
+    return {
+      value: selectedRows?.[0]?.[rowKey] || "",
+      onChange: (selectedRowKey: string) => {
+        const newSelectedRows = dataSource.filter(
+          (item: Record<string, any>) => item[rowKey] === selectedRowKey
+        );
+        setSelectedRows(newSelectedRows);
+      },
+      sotpClickEventPropagation: true,
+      ref: singleSelectOptionsRef,
+    };
+  }, [selectedRows]);
 
   useEffect(() => {
-    isLoading && multiSelectOptionsRef?.current?.clear();
+    isLoading && singleSelectOptionsRef.current?.clear();
   }, [isLoading]);
 
   const onRowClick = (record: Record<string, any>) => {
     const clickRowKey = record[rowKey];
-    const isSelected = selectedRows?.find(
-      (item) => item[rowKey] === clickRowKey
-    );
-    // 当前行已被选中且只选中了这一条，则取消选中
-    if (isSelected && selectedRows?.length === 1) {
-      setSelectedRows?.([]);
-      multiSelectOptionsRef?.current?.clear();
-      return;
-    }
 
-    multiSelectOptionsRef?.current?.setSelectedRows([record]);
+    // 当前行已被选中则不进行任何操作
+    if (selectedRows && selectedRows[0]?.[rowKey] === clickRowKey) return;
+
+    singleSelectOptionsRef.current?.setSelectedRow(record);
     setSelectedRows?.([record]);
   };
 
@@ -97,20 +90,19 @@ const AliMainTable = (props: AliMainTableProps) => {
 
   return (
     <AliTable
+      rowKey={rowKey}
       resize
-      autoHeight
-      recalculateHeight
+      singleSelect
       isLoading={isLoading}
       columns={columns as ArtColumn[]}
       dataSource={proDataSoure}
-      pagination={paginationWitchMemo}
-      rowKey={rowKey}
       selectedRowKeys={selectedRowKeys}
+      pagination={paginationWitchMemo}
+      singleSelectOptions={singleSelectOptions}
       onRowClick={onRowClick}
-      multiSelectOptions={proMultiSelectOptions}
       {...restProps}
     />
   );
 };
 
-export default AliMainTable;
+export default AliSingleSelectTable;

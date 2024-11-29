@@ -3,9 +3,10 @@
  */
 import React from "react";
 import AliMainTableSample from "./samples/AliMainTableSample";
+import SingleSelectTableSample from "./samples/SingleSelectTableSample";
 import styles from "./index.module.scss";
 
-const sampleList = [<AliMainTableSample />];
+const sampleList = [<AliMainTableSample />, <SingleSelectTableSample />];
 
 const TableSection = () => {
   return (

@@ -8,11 +8,11 @@ import styles from "./index.module.scss";
 //   fileCodeList
 // );
 
-const AliMainTableSample = () => {
+const SingleSelectTableSample = () => {
   return (
     <SampleBox
       className={styles.container}
-      title='基于ali-react-table封装的表格组件'
+      title='单选表格'
       //   codeParams={codeParams}
     >
       <Content />
@@ -20,4 +20,4 @@ const AliMainTableSample = () => {
   );
 };
 
-export default AliMainTableSample;
+export default SingleSelectTableSample;

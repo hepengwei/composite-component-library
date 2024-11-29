@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { Button, message } from "antd";
-import AliMainTable from "@/components/AliTable/AliMainTable";
-import type { ArtColumn2 } from "@/components/AliTable";
+import AliSingleSelectTable from "@/components/AliTable/AliSingleSelectTable";
+import { ArtColumn2 } from "@/components/AliTable";
 import { requestTableData } from "utils/util";
 import styles from "./index.module.scss";
 
@@ -130,7 +130,9 @@ const Content = () => {
         </Button>
       </div>
       <div className={styles.content}>
-        <AliMainTable
+        <AliSingleSelectTable
+          rowKey='id'
+          autoHeight
           isLoading={loading}
           columns={columns}
           dataSource={tableData}
