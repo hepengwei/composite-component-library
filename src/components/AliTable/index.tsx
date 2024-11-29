@@ -9,6 +9,7 @@ import {
   BaseTableProps,
   TablePipeline,
 } from "ali-react-table";
+import type { ArtColumn } from "ali-react-table";
 import { Checkbox, Radio } from "antd";
 import { PaginationProps } from "antd/lib/pagination";
 import AliBaseTable from "./AliBaseTable";
@@ -21,6 +22,21 @@ import useMultiSelect from "./useMultiSelect";
 import useSingleSelect from "./useSingleSelect";
 import styles from "./index.module.scss";
 
+export interface ArtColumn2 extends Omit<ArtColumn, "lock"> {
+  ellipsis?: boolean;
+  lock?: boolean | "left" | "right";
+}
+
+export type MultiSelectOptions = features.MultiSelectFeatureOptions & {
+  Checkbox?: ReactElement;
+  ref?: Ref<any>;
+};
+
+export type SingleSelectOptions = features.SingleSelectFeatureOptions & {
+  Radio?: ReactElement;
+  ref?: Ref<any>;
+};
+
 export interface AliTableProps extends BaseTableProps {
   rowKey: string;
   // 是否支持排序
@@ -31,16 +47,10 @@ export interface AliTableProps extends BaseTableProps {
   resizeOptions?: features.ColumnResizeFeatureOptions;
   // 是否支持多选
   multiSelect?: boolean;
-  multiSelectOptions?: features.MultiSelectFeatureOptions & {
-    Checkbox?: ReactElement;
-    ref?: Ref<any>;
-  };
+  multiSelectOptions?: MultiSelectOptions;
   // 是否显示单选框
   singleSelect?: boolean;
-  singleSelectOptions?: features.SingleSelectFeatureOptions & {
-    Radio?: ReactElement;
-    ref?: Ref<any>;
-  };
+  singleSelectOptions?: SingleSelectOptions;
   // 分页
   pagination?: PaginationProps;
   // 操作区按钮

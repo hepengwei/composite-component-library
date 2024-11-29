@@ -34,7 +34,7 @@ const useSingleSelect = (props: UseSingleSelectProps) => {
 
   const selectMethods = {
     clear: clearSelect,
-    setSelectedRows: (row: Record<string, any>) => {
+    setSelectedRow: (row: Record<string, any>) => {
       if (row) {
         setSelectValue(row[rowKey]);
       } else {
