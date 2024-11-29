@@ -3,8 +3,8 @@ import { RouteObject } from "react-router-dom";
 import Home from "pages/Home";
 import FormItemSection from "pages/form/FormItemSection";
 import FormListSection from "pages/form/FormListSection";
-import TableSection from "pages/table";
-import ComingSoon from "@/components/ComingSoon";
+import AntdTableSection from "pages/table/AntdTableSection";
+import AliTableSection from "pages/table/AliTableSection";
 
 export const contentRoutes: RouteObject[] = [
   {
@@ -22,7 +22,16 @@ export const contentRoutes: RouteObject[] = [
   },
   {
     path: "/table",
-    element: <TableSection />,
+    children: [
+      {
+        path: "/table/antdTableSection",
+        element: <AntdTableSection />,
+      },
+      {
+        path: "/table/aliTableSection",
+        element: <AliTableSection />,
+      },
+    ],
   },
 ];
 
