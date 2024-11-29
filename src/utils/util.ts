@@ -98,3 +98,26 @@ export const getFixedWidthText = (
   document.body.removeChild(span);
   return returnText;
 };
+
+export const requestTableData = (params: Record<string, any>) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const { pageNum = 1, pageSize = 10 } = params || {};
+      const data = [];
+      for (let i = 0; i < pageSize; i++) {
+        data.push({
+          id: (pageNum - 1) * pageSize + i + 1,
+          email: "123456789@qq.com",
+          date: "2024-11-22 15:24:48",
+          dateType: Math.random() > 0.5 ? "workingDay" : "naturalDay",
+          remark: new Array(10).fill("这是备注").join(""),
+        });
+      }
+      resolve({
+        data,
+        pageNum,
+        total: 200,
+      });
+    }, 1200);
+  });
+};

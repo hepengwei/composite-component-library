@@ -5,7 +5,10 @@ const useFormDisabled = (selfDisabled?: boolean) => {
   const formDisabled = useContext(DisabledContext);
 
   const disabled = useMemo(() => {
-    return !!selfDisabled || !!formDisabled;
+    if (selfDisabled !== undefined && selfDisabled !== null) {
+      return !!selfDisabled;
+    }
+    return !!formDisabled;
   }, [selfDisabled, formDisabled]);
 
   return disabled;

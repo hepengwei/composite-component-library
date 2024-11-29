@@ -49,7 +49,10 @@ const Menus: React.FC = () => {
       getItem("FormItem 部分", "formItemSection"),
       getItem("FormList 部分", "formListSection"),
     ]),
-    getItem("表格", "table", <TableOutlined />),
+    getItem("表格", "table", <TableOutlined />, [
+      getItem("Antd表格 部分", "antdTableSection"),
+      getItem("Ali表格 部分", "aliTableSection"),
+    ]),
   ];
 
   const updateMenuWidth = useCallback(
