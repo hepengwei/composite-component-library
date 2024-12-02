@@ -32,20 +32,29 @@ const useMultiSelect = (props: UseMultiSelectProps) => {
   }, [dataSource]);
 
   const selectAll = () => {
-    setSelectValue(union(selectValue, dataSourceRowKeys));
+    const newSelectValue = union(selectValue, dataSourceRowKeys);
+    setSelectValue(newSelectValue);
   };
 
   const clearSelect = () => {
+    selectRowsRef.current = [];
     setSelectValue([]);
   };
 
   const clearCurrentSelect = () => {
-    setSelectValue(difference(selectValue, dataSourceRowKeys));
+    const newSelectValue = difference(selectValue, dataSourceRowKeys);
+    setSelectValue(newSelectValue);
   };
 
   const onChange = (nextValue: string[]) => {
     setSelectValue(nextValue);
   };
+
+  useMemo(() => {
+    const allDataSource = [...selectRowsRef.current, ...dataSource];
+    const keysObj = keyBy(allDataSource, (row) => row[rowKey]);
+    selectRowsRef.current = selectValue.map((key) => keysObj[key]);
+  }, [selectValue, dataSource]);
 
   const proMutiSelectOptions = {
     ...multiSelectOptions,
@@ -75,12 +84,6 @@ const useMultiSelect = (props: UseMultiSelectProps) => {
       setSelectValue(noPassDataSource.map((item) => item[rowKey]));
     },
   };
-
-  useMemo(() => {
-    const allDataSource = [...selectRowsRef.current, ...dataSource];
-    const keysObj = keyBy(allDataSource, (row) => row[rowKey]);
-    selectRowsRef.current = selectValue.map((key) => keysObj[key]);
-  }, [selectValue, dataSource]);
 
   useEffect(() => {
     // 将方法暴露出去，让外面使用

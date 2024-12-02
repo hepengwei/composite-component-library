@@ -28,10 +28,14 @@ const AliMainTable = (props: AliMainTableProps) => {
     setSelectedRows,
     pagination,
     setPagination,
+    multiSelect,
     multiSelectOptions,
+    singleSelect,
+    singleSelectOptions,
     ...restProps
   } = props;
   const multiSelectOptionsRef = useRef<any>(null);
+  const singleSelectOptionsRef = useRef<any>(null);
 
   const paginationWitchMemo = useMemo(() => {
     if (pagination && setPagination) {
@@ -47,17 +51,46 @@ const AliMainTable = (props: AliMainTableProps) => {
   }, [pagination, setPagination]);
 
   const proMultiSelectOptions = useMemo(() => {
-    if (multiSelectOptions) {
+    if (multiSelect) {
       return {
-        ...multiSelectOptions,
+        value: selectedRows?.map((item: Record<string, any>) => item[rowKey]),
+        onChange: (selectedRowKeys: string) => {
+          const newSelectedRows = dataSource.filter(
+            (item: Record<string, any>) =>
+              selectedRowKeys.includes(item[rowKey])
+          );
+          setSelectedRows(newSelectedRows);
+        },
+        sotpClickEventPropagation: true,
         ref: multiSelectOptionsRef,
+        ...(multiSelectOptions || {}),
       };
     }
     return {};
-  }, [multiSelectOptions]);
+  }, [multiSelect, selectedRows, multiSelectOptions, dataSource]);
+
+  const proSingleSelectOptions = useMemo(() => {
+    if (singleSelect) {
+      return {
+        value: selectedRows?.[0]?.[rowKey] || "",
+        onChange: (selectedRowKey: string) => {
+          const newSelectedRows = dataSource.filter(
+            (item: Record<string, any>) => item[rowKey] === selectedRowKey
+          );
+          setSelectedRows(newSelectedRows);
+        },
+        ref: singleSelectOptionsRef,
+        ...(singleSelectOptions || {}),
+      };
+    }
+    return {};
+  }, [singleSelect, selectedRows, singleSelectOptions, dataSource]);
 
   useEffect(() => {
-    isLoading && multiSelectOptionsRef?.current?.clear();
+    if (isLoading) {
+      multiSelectOptionsRef?.current?.clear();
+      singleSelectOptionsRef?.current?.clear();
+    }
   }, [isLoading]);
 
   const onRowClick = (record: Record<string, any>) => {
@@ -65,14 +98,19 @@ const AliMainTable = (props: AliMainTableProps) => {
     const isSelected = selectedRows?.find(
       (item) => item[rowKey] === clickRowKey
     );
-    // 当前行已被选中且只选中了这一条，则取消选中
-    if (isSelected && selectedRows?.length === 1) {
-      setSelectedRows?.([]);
-      multiSelectOptionsRef?.current?.clear();
-      return;
+    if (singleSelect) {
+      // 当前行已被选中则不进行任何操作
+      if (selectedRows && selectedRows[0]?.[rowKey] === clickRowKey) return;
+      singleSelectOptionsRef.current?.setSelectedRow(record);
+    } else {
+      // 当前行已被选中且只选中了这一条，则取消选中
+      if (isSelected && selectedRows?.length === 1) {
+        setSelectedRows?.([]);
+        multiSelectOptionsRef?.current?.clear();
+        return;
+      }
+      multiSelectOptionsRef?.current?.setSelectedRows([record]);
     }
-
-    multiSelectOptionsRef?.current?.setSelectedRows([record]);
     setSelectedRows?.([record]);
   };
 
@@ -102,7 +140,10 @@ const AliMainTable = (props: AliMainTableProps) => {
       pagination={paginationWitchMemo}
       selectedRowKeys={selectedRowKeys}
       onRowClick={onRowClick}
+      multiSelect={multiSelect}
       multiSelectOptions={proMultiSelectOptions}
+      singleSelect={singleSelect}
+      singleSelectOptions={proSingleSelectOptions}
       {...restProps}
     />
   );

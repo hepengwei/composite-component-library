@@ -104,6 +104,30 @@ const useProTablePipeline = (
   pipeline = pipeline.use(supportEllipsis);
   pipeline = pipeline.use(tableFilter);
 
+  if (multiSelect) {
+    pipeline = pipeline.use(
+      features.multiSelect({
+        highlightRowWhenSelected: true,
+        clickArea: "cell",
+        checkboxColumn: { lock: true },
+        stopClickEventPropagation: true,
+        ...multiSelectOptions,
+      })
+    );
+  }
+
+  if (singleSelect) {
+    pipeline = pipeline.use(
+      features.singleSelect({
+        highlightRowWhenSelected: true,
+        clickArea: "cell",
+        radioColumn: { lock: true },
+        stopClickEventPropagation: true,
+        ...singleSelectOptions,
+      })
+    );
+  }
+
   if (sort) {
     pipeline = pipeline.use(
       features.sort({
@@ -124,28 +148,6 @@ const useProTablePipeline = (
     );
   }
 
-  if (multiSelect) {
-    pipeline = pipeline.use(
-      features.multiSelect({
-        highlightRowWhenSelected: true,
-        clickArea: "cell",
-        checkboxColumn: { lock: true },
-        ...multiSelectOptions,
-      })
-    );
-  }
-
-  if (singleSelect) {
-    pipeline = pipeline.use(
-      features.singleSelect({
-        highlightRowWhenSelected: true,
-        clickArea: "cell",
-        radioColumn: { lock: true },
-        ...singleSelectOptions,
-      })
-    );
-  }
-
   if (getRowProps) {
     pipeline.appendRowPropsGetter(getRowProps);
   }
@@ -157,7 +159,7 @@ const AliTable = (props: AliTableProps) => {
   const {
     dataSource,
     columns,
-    rowKey = "id",
+    rowKey,
     sort,
     sortOptions,
     resize,

@@ -4,9 +4,14 @@
 import React from "react";
 import AliMainTableSample from "./samples/AliMainTableSample";
 import SingleSelectTableSample from "./samples/SingleSelectTableSample";
+import MultiSelectTableSample from "./samples/MultiSelectTableSample";
 import styles from "./index.module.scss";
 
-const sampleList = [<AliMainTableSample />, <SingleSelectTableSample />];
+const sampleList = [
+  <AliMainTableSample />,
+  <SingleSelectTableSample />,
+  <MultiSelectTableSample />,
+];
 
 const TableSection = () => {
   return (
