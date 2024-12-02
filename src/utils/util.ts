@@ -106,7 +106,7 @@ export const requestTableData = (params: Record<string, any>) => {
       const data = [];
       for (let i = 0; i < pageSize; i++) {
         data.push({
-          id: (pageNum - 1) * pageSize + i + 1,
+          id: ((pageNum - 1) * pageSize + i + 1).toString(),
           email: "123456789@qq.com",
           date: "2024-11-22 15:24:48",
           dateType: Math.random() > 0.5 ? "workingDay" : "naturalDay",

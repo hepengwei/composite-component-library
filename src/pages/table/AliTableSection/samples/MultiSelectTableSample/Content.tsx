@@ -1,7 +1,7 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, message } from "antd";
 import AliMainTable from "@/components/AliTable/AliMainTable";
-import { ArtColumn2 } from "@/components/AliTable";
+import type { ArtColumn2 } from "@/components/AliTable";
 import { requestTableData } from "utils/util";
 import styles from "./index.module.scss";
 
@@ -47,7 +47,9 @@ const Content = () => {
       message.warning("请先选择一条数据");
       return;
     }
-    message.success(`当前选择的数据序号为: ${selectedRows[0].id}`);
+    message.success(
+      `当前选择的数据序号为: ${selectedRows.map((item) => item.id).join(",")}`
+    );
   };
 
   const columns: ArtColumn2[] = [
@@ -132,7 +134,6 @@ const Content = () => {
       <div className={styles.content}>
         <AliMainTable
           rowKey='id'
-          autoHeight
           isLoading={loading}
           columns={columns}
           dataSource={tableData}
@@ -141,7 +142,7 @@ const Content = () => {
           setSelectedRows={setSelectedRows}
           pagination={pagination}
           setPagination={setPagination}
-          singleSelect
+          multiSelect
         />
       </div>
     </>
