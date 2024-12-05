@@ -1,0 +1,9 @@
+.container {
+  :global {
+    .ant-form-item {
+      .ant-form-item-label {
+        width: 94px;
+      }
+    }
+  }
+}

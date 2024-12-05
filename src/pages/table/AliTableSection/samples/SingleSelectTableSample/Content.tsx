@@ -2,7 +2,7 @@ import React, { useEffect, useState, useMemo } from "react";
 import { Button, message } from "antd";
 import AliMainTable from "@/components/AliTable/AliMainTable";
 import { ArtColumn2 } from "@/components/AliTable";
-import { requestTableData } from "utils/util";
+import { requestMockData } from "utils/util";
 import styles from "./index.module.scss";
 
 const INIT_PAGINATION = {
@@ -24,7 +24,7 @@ const Content = () => {
   const getTableData = async (pain?: Record<string, any>) => {
     setLoading(true);
     pain = pain || pagination;
-    const res = await requestTableData({
+    const res = await requestMockData({
       pageNum: pain.pageNum,
       pageSize: pain.pageSize,
     });
@@ -33,9 +33,9 @@ const Content = () => {
     if (res) {
       setPagination({
         ...pain,
-        total: (res as Record<string, any>).total,
+        total: res.total,
       });
-      setTableData((res as Record<string, any>).data);
+      setTableData(res.data);
     } else {
       setPagination({ ...pain, total: 0 });
       setTableData([]);

@@ -99,17 +99,22 @@ export const getFixedWidthText = (
   return returnText;
 };
 
-export const requestTableData = (params: Record<string, any>) => {
+export const requestMockData = (
+  params?: Record<string, any>
+): Promise<Record<string, any>> => {
   return new Promise((resolve) => {
     setTimeout(() => {
       const { pageNum = 1, pageSize = 10 } = params || {};
       const data = [];
       for (let i = 0; i < pageSize; i++) {
+        const id = ((pageNum - 1) * pageSize + i + 1).toString();
         data.push({
-          id: ((pageNum - 1) * pageSize + i + 1).toString(),
+          id,
           email: "123456789@qq.com",
           date: "2024-11-22 15:24:48",
           dateType: Math.random() > 0.5 ? "workingDay" : "naturalDay",
+          name: `名字${id}`,
+          code: `code${id}`,
           remark: new Array(10).fill("这是备注").join(""),
         });
       }
