@@ -9,6 +9,7 @@ import InputAndCheckboxSample from "./samples/InputAndCheckboxSample";
 import InputNumberAndSelectSample from "./samples/InputNumberAndSelectSample";
 import RadioGroupAndSelectSample from "./samples/RadioGroupAndSelectSample";
 import CanAddMultipleSample from "./samples/CanAddMultipleSample";
+import CustomMultiSelectSample from "./samples/CustomMultiSelectSample";
 import SelectBoxSample from "./samples/SelectBoxSample/index";
 import WithValidateMessageSample from "./samples/WithValidateMessageSample";
 import styles from "./index.module.scss";
@@ -21,6 +22,7 @@ const sampleList = [
   <InputNumberAndSelectSample />,
   <RadioGroupAndSelectSample />,
   <CanAddMultipleSample />,
+  <CustomMultiSelectSample />,
   <SelectBoxSample />,
   <WithValidateMessageSample />,
 ];
