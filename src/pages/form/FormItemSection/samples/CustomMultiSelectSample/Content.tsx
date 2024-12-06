@@ -1,6 +1,7 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Form, Row, Col, Checkbox } from "antd";
 import CustomMultiSelect from "@/components/formItems/CustomMultiSelect";
+import TablePanelMultiSelect from "./TablePanelMultiSelect";
 import { requestMockData } from "utils/util";
 
 const Content = () => {
@@ -96,6 +97,15 @@ const Content = () => {
               fieldNames={{ label: "name", value: "code" }}
               searchKeys={["name"]}
               popupMatchSelectWidth={false}
+            />
+          </Form.Item>
+        </Col>
+        <Col span={12}>
+          <Form.Item label='字段标题' name='field4'>
+            <TablePanelMultiSelect
+              options={options}
+              loading={loading}
+              showSimplePlaceholder
             />
           </Form.Item>
         </Col>
