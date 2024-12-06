@@ -12,7 +12,7 @@ import { Select, Popover, Checkbox, Spin } from "antd";
 import type { SelectProps } from "antd";
 import styles from "./index.module.scss";
 
-type CustomMultiSelectProps = {
+export type CustomMultiSelectProps = {
   value?: string[];
   options?: Record<string | symbol, any>[];
   customOptionLabel?: (
@@ -31,7 +31,7 @@ type CustomMultiSelectProps = {
     record: Record<string | symbol, any>
   ) => boolean; // 自定义模糊搜索
   maxTagCount?: number;
-  showSimplePlaceholder?: boolean; // 已选中的是否只简单显示 label1,label2
+  showSimplePlaceholder?: boolean; // 已选中的是否只简单显示 label1, label2
   onDropdownVisibleChange?: (openState?: boolean) => void; // 下拉面板显示隐藏时的回调
   fieldNames?: Record<string, any>;
   loading?: boolean;
@@ -292,7 +292,7 @@ const CustomMultiSelect = (props: CustomMultiSelectProps) => {
       mode='multiple'
       options={finalOptions as any}
       fieldNames={finalFieldNames}
-      dropdownRender={dropdownRender}
+      dropdownRender={dropdownRenderContent || dropdownRender}
       onSearch={handleSearch}
     />
   );
