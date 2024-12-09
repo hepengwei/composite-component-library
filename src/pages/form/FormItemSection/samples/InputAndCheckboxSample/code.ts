@@ -2,24 +2,29 @@ export const contentTextCode = `import React from "react";
 import { Form, Row, Col, Select } from "antd";
 import InputAndCheckbox from "@/components/formItems/InputAndCheckbox";
 
-const { Option } = Select;
-
 const Content = () => {
   const [form] = Form.useForm();
 
   const selectBefore = (
-    <Select defaultValue='http://'>
-      <Option value='http://'>http://</Option>
-      <Option value='https://'>https://</Option>
-    </Select>
+    <Select
+      style={{ width: 90 }}
+      defaultValue='http://'
+      options={[
+        { label: "http://", value: "http://" },
+        { label: "https://", value: "https://" },
+      ]}
+    />
   );
   const selectAfter = (
-    <Select defaultValue='.com'>
-      <Option value='.com'>.com</Option>
-      <Option value='.jp'>.jp</Option>
-      <Option value='.cn'>.cn</Option>
-      <Option value='.org'>.org</Option>
-    </Select>
+    <Select
+      style={{ width: 80 }}
+      defaultValue='.com'
+      options={[
+        { label: ".com", value: ".com" },
+        { label: ".cn", value: ".cn" },
+        { label: ".org", value: ".org" },
+      ]}
+    />
   );
 
   return (

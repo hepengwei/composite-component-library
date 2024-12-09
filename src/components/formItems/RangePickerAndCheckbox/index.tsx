@@ -5,6 +5,7 @@ import React, { useMemo } from "react";
 import { DatePicker, Checkbox } from "antd";
 import { CheckboxChangeEvent } from "antd/es/checkbox";
 import { Dayjs } from "dayjs";
+import classnams from "classnames";
 import useFormDisabled from "hooks/useFormDisabled";
 import styles from "./index.module.scss";
 import { indexTextCode, indexScssTextCode } from "./code";
@@ -89,9 +90,10 @@ const RangePickerAndCheckbox = (props: RangePickerAndCheckboxProps) => {
         onChange={onRangePickerChange}
       />
       <Checkbox
-        className={`${styles.checkbox}${
-          !checkboxLabel ? ` ${styles.noLabel}` : ""
-        }`}
+        className={classnams({
+          [styles.checkbox]: true,
+          [styles.noLabel]: !checkboxLabel,
+        })}
         checked={value && value.length >= 3 ? value[2] : false}
         disabled={disabled}
         {...checkboxProps}

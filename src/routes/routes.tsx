@@ -1,22 +1,24 @@
 import React from "react";
 import { RouteObject } from "react-router-dom";
 import Home from "pages/Home";
-import FormItemSection from "pages/form/FormItemSection";
-import FormListSection from "pages/form/FormListSection";
-import AntdTableSection from "pages/table/AntdTableSection";
-import AliTableSection from "pages/table/AliTableSection";
+import { supportLazyElement } from "utils/util";
 
-export const contentRoutes: RouteObject[] = [
+const FormItemSection = () => import("pages/form/FormItemSection");
+const FormListSection = () => import("pages/form/FormListSection");
+const AntdTableSection = () => import("pages/table/AntdTableSection");
+const AliTableSection = () => import("pages/table/AliTableSection");
+
+const contentRoutes: Record<string, any>[] = [
   {
     path: "/form",
     children: [
       {
         path: "/form/formItemSection",
-        element: <FormItemSection />,
+        element: FormItemSection,
       },
       {
         path: "/form/formListSection",
-        element: <FormListSection />,
+        element: FormListSection,
       },
     ],
   },
@@ -25,15 +27,18 @@ export const contentRoutes: RouteObject[] = [
     children: [
       {
         path: "/table/antdTableSection",
-        element: <AntdTableSection />,
+        element: AntdTableSection,
       },
       {
         path: "/table/aliTableSection",
-        element: <AliTableSection />,
+        element: AliTableSection,
       },
     ],
   },
 ];
+
+supportLazyElement(contentRoutes);
+export { contentRoutes };
 
 const routes: RouteObject[] = [
   {
