@@ -4,24 +4,27 @@ import CanAddMultiple from "@/components/formItems/CanAddMultiple";
 import InputAndCheckbox from "@/components/formItems/InputAndCheckbox";
 import InputNumberAndSelect from "@/components/formItems/InputNumberAndSelect";
 
-const { Option } = Select;
-
 const Content = () => {
   const [form] = Form.useForm();
 
   const selectBefore = (
-    <Select defaultValue='http://'>
-      <Option value='http://'>http://</Option>
-      <Option value='https://'>https://</Option>
-    </Select>
+    <Select
+      defaultValue='http://'
+      options={[
+        { label: "http://", value: "http://" },
+        { label: "https://", value: "https://" },
+      ]}
+    />
   );
   const selectAfter = (
-    <Select defaultValue='.com'>
-      <Option value='.com'>.com</Option>
-      <Option value='.jp'>.jp</Option>
-      <Option value='.cn'>.cn</Option>
-      <Option value='.org'>.org</Option>
-    </Select>
+    <Select
+      defaultValue='.com'
+      options={[
+        { label: ".com", value: ".com" },
+        { label: ".cn", value: ".cn" },
+        { label: ".org", value: ".org" },
+      ]}
+    />
   );
 
   return (

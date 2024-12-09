@@ -4,6 +4,7 @@
 import React, { useMemo, ReactElement } from "react";
 import { Tooltip, type FormInstance } from "antd";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
+import classnams from "classnames";
 import styles from "./index.module.scss";
 import { indexTextCode, indexScssTextCode } from "./code";
 
@@ -52,7 +53,10 @@ const WithValidateMessage = (props: WithValidateMessageProps) => {
 
   return (
     <div
-      className={`${styles.container}${className ? ` ${className}` : ""}`}
+      className={classnams({
+        [styles.container]: true,
+        [className || ""]: !!className,
+      })}
       style={style}
     >
       <div

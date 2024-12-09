@@ -4,6 +4,7 @@
 import React, { useMemo, ReactElement } from "react";
 import { message } from "antd";
 import { PlusCircleOutlined, MinusCircleOutlined } from "@ant-design/icons";
+import classnams from "classnames";
 import useFormDisabled from "hooks/useFormDisabled";
 import styles from "./index.module.scss";
 import { indexTextCode, indexScssTextCode } from "./code";
@@ -96,9 +97,10 @@ const CanAddMultiple = (props: CanAddMultipleProps) => {
               <>
                 {index === 0 && (
                   <div
-                    className={`${styles.addBtn}${
-                      disabled ? ` ${styles.disabled}` : ""
-                    }`}
+                    className={classnams({
+                      [styles.addBtn]: true,
+                      [styles.disabled]: disabled,
+                    })}
                     onClick={onAdd}
                   >
                     <PlusCircleOutlined />
@@ -106,9 +108,10 @@ const CanAddMultiple = (props: CanAddMultipleProps) => {
                 )}
                 {index > 0 && (
                   <div
-                    className={`${styles.deleteBtn}${
-                      disabled ? ` ${styles.disabled}` : ""
-                    }`}
+                    className={classnams({
+                      [styles.deleteBtn]: true,
+                      [styles.disabled]: disabled,
+                    })}
                     onClick={() => onDelete(index)}
                   >
                     <MinusCircleOutlined />

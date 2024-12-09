@@ -9,6 +9,7 @@ import {
   VerticalAlignTopOutlined,
   MinusCircleOutlined,
 } from "@ant-design/icons";
+import classnams from "classnames";
 import styles from "./index.module.scss";
 
 type DraggableFormListRowProps = {
@@ -30,9 +31,10 @@ const DraggableFormListRow = (props: DraggableFormListRowProps) => {
           <div className={styles.draggableRow}>
             <div
               {...(!disabled ? provided.dragHandleProps : {})}
-              className={`${styles.defaultBtn}${
-                disabled ? ` ${styles.disabled}` : ""
-              }`}
+              className={classnams({
+                [styles.defaultBtn]: true,
+                [styles.disabled]: disabled,
+              })}
               style={{ marginRight: "8px" }}
             >
               <HolderOutlined />
@@ -40,9 +42,10 @@ const DraggableFormListRow = (props: DraggableFormListRowProps) => {
             {children}
             {remove && (
               <div
-                className={`${styles.removeBtn}${
-                  disabled ? ` ${styles.disabled}` : ""
-                }`}
+                className={classnams({
+                  [styles.removeBtn]: true,
+                  [styles.disabled]: disabled,
+                })}
                 style={{ marginLeft: "10px" }}
                 onClick={() => {
                   if (disabled) return;
@@ -54,9 +57,10 @@ const DraggableFormListRow = (props: DraggableFormListRowProps) => {
             )}
             {onToTop && (
               <div
-                className={`${styles.defaultBtn}${
-                  disabled ? ` ${styles.disabled}` : ""
-                }`}
+                className={classnams({
+                  [styles.defaultBtn]: true,
+                  [styles.disabled]: disabled,
+                })}
                 style={{ marginLeft: "10px" }}
                 onClick={() => {
                   if (index === 0) return;

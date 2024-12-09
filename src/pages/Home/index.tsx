@@ -1,5 +1,5 @@
 // @ts-nocheck
-import React, { useEffect, useRef } from "react";
+import React, { Suspense, useEffect, useRef } from "react";
 import { useRoutes, useLocation, useNavigate } from "react-router-dom";
 import { contentRoutes as contentRoutesConfig } from "@/routes/routes";
 import { useGlobalContext } from "@/hooks/useGlobalContext";
@@ -41,7 +41,7 @@ const Home = () => {
           onScroll={onScroll}
           ref={contentRef}
         >
-          {contentRoutes}
+            {contentRoutes}
         </div>
       </div>
     </div>

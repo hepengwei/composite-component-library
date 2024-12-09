@@ -4,6 +4,7 @@ export const indexTextCode = `/**
 import React, { useMemo } from "react";
 import { Input, Checkbox } from "antd";
 import { CheckboxChangeEvent } from "antd/es/checkbox";
+import classnams from "classnames";
 import useFormDisabled from "hooks/useFormDisabled";
 import styles from "./index.module.scss";
 
@@ -67,9 +68,10 @@ const InputAndCheckbox = (props: InputAndCheckboxProps) => {
         onChange={onInputChange}
       />
       <Checkbox
-        className={\`\${styles.checkbox}\${
-          !checkboxLabel ? \` \${styles.noLabel}\` : ""
-        }\`}
+        className={classnams({
+          [styles.checkbox]: true,
+          [styles.noLabel]: !checkboxLabel,
+        })}
         checked={value && value.length >= 2 ? value[1] : undefined}
         disabled={disabled}
         {...checkboxProps}

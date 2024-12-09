@@ -1,3 +1,5 @@
+import React, { Suspense } from "react";
+
 /**
  * 返回随机ID
  * @param {number} length 数据长度 默认6位
@@ -124,5 +126,34 @@ export const requestMockData = (
         total: 200,
       });
     }, 1200);
+  });
+};
+
+const LazyElement = (props: {
+  importFunc: () => Promise<{
+    default: React.ComponentType<any>;
+  }>;
+  path: string;
+}) => {
+  const { importFunc, path } = props;
+  const LazyComponent = React.lazy(importFunc);
+  return (
+    <Suspense>
+      <LazyComponent />
+    </Suspense>
+  );
+};
+
+export const supportLazyElement = (routes: Record<string, any>[]) => {
+  if (!routes || routes.length === 0) return;
+  routes.forEach((route) => {
+    if (typeof route.element === "function") {
+      route.element = (
+        <LazyElement importFunc={route.element as any} path={route.path} />
+      );
+    }
+    if (route.children) {
+      supportLazyElement(route.children);
+    }
   });
 };

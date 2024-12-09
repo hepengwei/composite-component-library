@@ -1,6 +1,7 @@
 import React, { useState, ReactNode, useMemo } from "react";
 import { message, Tabs, Tooltip } from "antd";
 import { CodeOutlined, CopyOutlined, UpOutlined } from "@ant-design/icons";
+import classnams from "classnames";
 import CodeBlock from "components/CodeBlock";
 import { saveTextToClip } from "utils/util";
 import styles from "./index.module.scss";
@@ -45,7 +46,12 @@ const SampleBox = (props: SampleBoxProps) => {
   }, [codeParams]);
 
   return (
-    <div className={`${styles.container}${className ? ` ${className}` : ""}`}>
+    <div
+      className={classnams({
+        [styles.container]: true,
+        [className || ""]: !!className,
+      })}
+    >
       {title && <div className={styles.title}>{title}</div>}
       <div className={styles.content}>{children}</div>
       {codeParams && (
