@@ -1,4 +1,4 @@
-/**
+export const indexTextCode = `/**
  * 下拉面板为表格的多选下拉组件
  */
 import React, { useRef } from "react";
@@ -8,7 +8,6 @@ import CustomMultiSelect from "@/components/formItems/CustomMultiSelect";
 import type { CustomMultiSelectProps } from "@/components/formItems/CustomMultiSelect";
 import AliTable from "@/components/AliTable";
 import type { ArtColumn2 } from "@/components/AliTable";
-import { indexTextCode } from "./code";
 
 type TablePanelMultiSelectProps = {
   value?: string[];
@@ -133,8 +132,4 @@ const TablePanelMultiSelect = (props: TablePanelMultiSelectProps) => {
   );
 };
 
-export default TablePanelMultiSelect;
-
-export const fileCodeList = [
-  { fileName: "TablePanelMultiSelect.tsx", code: indexTextCode },
-];
+export default TablePanelMultiSelect;`;

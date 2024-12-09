@@ -1,9 +1,9 @@
 import React from "react";
 import SampleBox from "@/components/SampleBox";
-import { fileCodeList } from "@/components/formItems/WithValidateMessage";
 import Content from "./Content";
-import { contentTextCode } from "./code";
 import styles from "./index.module.scss";
+import { fileCodeList } from "@/components/formItems/WithValidateMessage";
+import { contentTextCode } from "./code";
 
 const codeParams = [{ fileName: "index.tsx", code: contentTextCode }].concat(
   fileCodeList

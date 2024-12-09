@@ -1,7 +1,7 @@
 import React from "react";
 import SampleBox from "@/components/SampleBox";
-import { fileCodeList } from "@/components/formItems/TreeSelectBox";
 import Content from "./Content";
+import { fileCodeList } from "@/components/formItems/TreeSelectBox";
 import { contentTextCode, mockCode } from "./code";
 
 const codeParams = [
