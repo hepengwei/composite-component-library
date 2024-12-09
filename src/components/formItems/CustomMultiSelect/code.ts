@@ -1,4 +1,4 @@
-/**
+export const indexTextCode = `/**
  * 可自定义的多选下拉框组件
  */
 import React, {
@@ -11,7 +11,6 @@ import React, {
 import { Select, Popover, Checkbox, Spin } from "antd";
 import type { SelectProps } from "antd";
 import styles from "./index.module.scss";
-import { indexTextCode, indexScssTextCode } from "./code";
 
 export type CustomMultiSelectProps = {
   value?: string[];
@@ -204,7 +203,7 @@ const CustomMultiSelect = (props: CustomMultiSelectProps) => {
             }
           }}
         >
-          {`已选${value ? value.length : 0}个项目`}
+          {\`已选\${value ? value.length : 0}个项目\`}
         </div>
       </Popover>
     );
@@ -299,12 +298,54 @@ const CustomMultiSelect = (props: CustomMultiSelectProps) => {
   );
 };
 
-export default CustomMultiSelect;
+export default CustomMultiSelect;`;
 
-export const fileCodeList = [
-  { fileName: "CustomMultiSelect.tsx", code: indexTextCode },
-  {
-    fileName: "CustomMultiSelect.module.scss",
-    code: indexScssTextCode,
-  },
-];
+export const indexScssTextCode = `.customMultiSelect {
+  width: 100%;
+  :global {
+    .ant-select-selector {
+      .ant-select-selection-overflow {
+        .ant-select-selection-overflow-item {
+          height: 28px;
+        }
+      }
+    }
+  }
+}
+
+.customMultiSelectDropdown {
+  padding: 10px 4px;
+  .allCheck {
+    display: flex;
+    align-items: center;
+    height: 24px;
+    .allCheckbox {
+      padding-left: 0;
+      padding-bottom: 0;
+      display: flex;
+      align-items: center;
+    }
+    .clear {
+      cursor: pointer;
+      color: $globalPrimaryColor;
+    }
+    .checkCount {
+      margin-left: 6px;
+      color: #666;
+    }
+  }
+  .options {
+    :global {
+      .rc-virtual-list {
+        ::-webkit-scrollbar {
+          width: 8px !important;
+        }
+
+        ::-webkit-scrollbar-thumb {
+          border-radius: 4px !important;
+          background-color: #888 !important;
+        }
+      }
+    }
+  }
+}`;

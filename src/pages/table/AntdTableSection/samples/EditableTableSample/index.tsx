@@ -1,8 +1,8 @@
 import React from "react";
 import SampleBox from "@/components/SampleBox";
-import { fileCodeList } from "@/components/EditableTable";
 import Content from "./Content";
 import styles from "./index.module.scss";
+import { fileCodeList } from "@/components/EditableTable";
 import { contentTextCode } from "./code";
 
 const codeParams = [{ fileName: "index.tsx", code: contentTextCode }].concat(

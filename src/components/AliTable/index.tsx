@@ -21,7 +21,11 @@ import useTableHeight from "./useTableHeight";
 import useMultiSelect from "./useMultiSelect";
 import useSingleSelect from "./useSingleSelect";
 import styles from "./index.module.scss";
-
+import {
+  aliTableTextCode,
+  aliTableScssTextCode,
+  aliBaseTableTextCode,
+} from "./code";
 export interface ArtColumn2 extends Omit<ArtColumn, "lock"> {
   ellipsis?: boolean;
   lock?: boolean | "left" | "right";
@@ -283,3 +287,9 @@ const AliTable = (props: AliTableProps) => {
 };
 
 export default AliTable;
+
+export const fileCodeList = [
+  { fileName: "AliTable.tsx", code: aliTableTextCode },
+  { fileName: "AliTable.module.scss", code: aliTableScssTextCode },
+  { fileName: "AliBaseTable.tsx", code: aliBaseTableTextCode },
+];

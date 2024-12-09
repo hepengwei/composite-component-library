@@ -5,6 +5,8 @@ import AliTable from "./index";
 import type { ArtColumn2, AliTableProps } from "./index";
 import { createPagination } from "./TablePagination";
 import { getRandomId } from "utils/util";
+import { fileCodeList as aliTableFileCodeList } from "./index";
+import { aliMainTableTextCode } from "./code";
 
 interface AliMainTableProps extends Omit<AliTableProps, "rowKey" | "columns"> {
   rowKey?: string;
@@ -150,3 +152,7 @@ const AliMainTable = (props: AliMainTableProps) => {
 };
 
 export default AliMainTable;
+
+export const fileCodeList = [
+  { fileName: "AliMainTable.tsx", code: aliMainTableTextCode },
+].concat(aliTableFileCodeList);
