@@ -13,8 +13,8 @@ interface AliMainTableProps extends Omit<AliTableProps, "rowKey" | "columns"> {
   columns: ArtColumn2[] | ArtColumn[];
   dataSource: Record<string, any>[];
   getDataSource: (pagin?: Record<string, any>) => void;
-  selectedRows: Record<string, any>[];
-  setSelectedRows: (selectedRows: Record<string, any>[]) => void;
+  selectedRows?: Record<string, any>[];
+  setSelectedRows?: (selectedRows: Record<string, any>[]) => void;
   pagination?: PaginationProps;
   setPagination?: (pagination: Record<string, any>) => void;
 }
@@ -55,13 +55,13 @@ const AliMainTable = (props: AliMainTableProps) => {
   const proMultiSelectOptions = useMemo(() => {
     if (multiSelect) {
       return {
-        value: selectedRows?.map((item: Record<string, any>) => item[rowKey]),
+        value: selectedRows?.map((item: Record<string, any>) => item[rowKey]) || [],
         onChange: (selectedRowKeys: string) => {
           const newSelectedRows = dataSource.filter(
             (item: Record<string, any>) =>
               selectedRowKeys.includes(item[rowKey])
           );
-          setSelectedRows(newSelectedRows);
+          setSelectedRows?.(newSelectedRows);
         },
         sotpClickEventPropagation: true,
         ref: multiSelectOptionsRef,
@@ -79,7 +79,7 @@ const AliMainTable = (props: AliMainTableProps) => {
           const newSelectedRows = dataSource.filter(
             (item: Record<string, any>) => item[rowKey] === selectedRowKey
           );
-          setSelectedRows(newSelectedRows);
+          setSelectedRows?.(newSelectedRows);
         },
         ref: singleSelectOptionsRef,
         ...(singleSelectOptions || {}),

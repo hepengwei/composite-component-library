@@ -103,10 +103,9 @@ const useProTablePipeline = (
     },
   })
     .input({ dataSource, columns })
-    .primaryKey(rowKey);
-
-  pipeline = pipeline.use(supportEllipsis);
-  pipeline = pipeline.use(tableFilter);
+    .primaryKey(rowKey)
+    .use(supportEllipsis)
+    .use(tableFilter);
 
   if (multiSelect) {
     pipeline = pipeline.use(

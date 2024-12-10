@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Button, message } from "antd";
 import AliMainTable from "@/components/AliTable/AliMainTable";
 import type { ArtColumn2 } from "@/components/AliTable";
 import { requestMockData } from "utils/util";
 import styles from "./index.module.scss";
+import dayjs from "dayjs";
 
 const INIT_PAGINATION = {
   pageNum: 1,
@@ -14,7 +14,6 @@ const INIT_PAGINATION = {
 const Content = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [tableData, setTableData] = useState<Record<string, any>[]>([]);
-  const [selectedRows, setSelectedRows] = useState<Record<string, any>[]>([]);
   const [pagination, setPagin] = useState<Record<string, any>>(INIT_PAGINATION);
 
   const setPagination = (pagin: Record<string, any>) => {
@@ -29,7 +28,6 @@ const Content = () => {
       pageSize: pain.pageSize,
     });
     setLoading(false);
-    setSelectedRows([]);
     if (res) {
       setPagination({
         ...pain,
@@ -40,16 +38,6 @@ const Content = () => {
       setPagination({ ...pain, total: 0 });
       setTableData([]);
     }
-  };
-
-  const onEditClick = () => {
-    if (!selectedRows || selectedRows.length === 0) {
-      message.warning("请先选择一条数据");
-      return;
-    }
-    message.success(
-      `当前选择的数据序号为: ${selectedRows.map((item) => item.id).join(",")}`
-    );
   };
 
   const columns: ArtColumn2[] = [
@@ -68,11 +56,33 @@ const Content = () => {
       name: "日期",
       code: "date",
       width: 180,
+      features: {
+        // 自定义排序比较函数
+        sortable: (prev: any, next: any) => {
+          if (!prev) {
+            return -1; // 没有值的，降序时排最后，升序时排最前
+          } else if (!next) {
+            return 1; // 没有值的，降序时排最后，升序时排最前
+          } else {
+            const prevDate = dayjs(prev, "YYYY-MM-DD HH:mm:ss");
+            const nextDate = dayjs(next, "YYYY-MM-DD HH:mm:ss");
+            if (prevDate > nextDate) {
+              return 1;
+            } else if (prevDate < nextDate) {
+              return -1;
+            }
+          }
+          return 0;
+        },
+      },
     },
     {
       name: "日期类型",
       code: "dateType",
       width: 150,
+      features: {
+        sortable: true,
+      },
       render: (value: string) => {
         if (value === "workingDay") {
           return "工作日";
@@ -87,6 +97,9 @@ const Content = () => {
       code: "number",
       width: 180,
       align: "right",
+      features: {
+        sortable: true,
+      },
     },
     {
       name: "备注",
@@ -131,27 +144,20 @@ const Content = () => {
   }, []);
 
   return (
-    <>
-      <div className={styles.itemTitleRow}>
-        <Button type='primary' ghost onClick={onEditClick}>
-          编辑
-        </Button>
-      </div>
-      <div className={styles.content}>
-        <AliMainTable
-          rowKey='id'
-          isLoading={loading}
-          columns={columns}
-          dataSource={tableData}
-          getDataSource={getTableData}
-          selectedRows={selectedRows}
-          setSelectedRows={setSelectedRows}
-          pagination={pagination}
-          setPagination={setPagination}
-          multiSelect
-        />
-      </div>
-    </>
+    <div className={styles.content}>
+      <AliMainTable
+        isLoading={loading}
+        columns={columns}
+        dataSource={tableData}
+        getDataSource={getTableData}
+        pagination={pagination}
+        setPagination={setPagination}
+        sort
+        sortOptions={{
+          keepDataSource: false,
+        }}
+      />
+    </div>
   );
 };
 
