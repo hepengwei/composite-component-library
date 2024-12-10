@@ -81,6 +81,12 @@ const Content = () => {
       },
     },
     {
+      name: "数值",
+      code: "number",
+      width: 180,
+      align: "right",
+    },
+    {
       name: "备注",
       code: "remark",
       width: 300,

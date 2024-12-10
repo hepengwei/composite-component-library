@@ -5,12 +5,14 @@ import React from "react";
 import AliMainTableSample from "./samples/AliMainTableSample";
 import SingleSelectTableSample from "./samples/SingleSelectTableSample";
 import MultiSelectTableSample from "./samples/MultiSelectTableSample";
+import SortableTableSample from "./samples/SortableTableSample";
 import styles from "./index.module.scss";
 
 const sampleList = [
   <AliMainTableSample />,
   <SingleSelectTableSample />,
   <MultiSelectTableSample />,
+  <SortableTableSample />,
 ];
 
 const TableSection = () => {

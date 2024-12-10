@@ -1,4 +1,5 @@
 import React, { Suspense } from "react";
+import dayjs from "dayjs";
 
 /**
  * 返回随机ID
@@ -113,10 +114,21 @@ export const requestMockData = (
         data.push({
           id,
           email: "123456789@qq.com",
-          date: "2024-11-22 15:24:48",
+          date:
+            Math.random() < 0.9
+              ? dayjs()
+                  .add(
+                    Math.round(
+                      (Math.random() - 0.5) * (Math.random() * 100000000)
+                    ),
+                    "seconds"
+                  )
+                  .format("YYYY-MM-DD HH:mm:ss")
+              : "",
           dateType: Math.random() > 0.5 ? "workingDay" : "naturalDay",
           name: `名字${id}`,
           code: `code${id}`,
+          number: Math.random() * 1000,
           remark: new Array(10).fill("这是备注").join(""),
         });
       }
