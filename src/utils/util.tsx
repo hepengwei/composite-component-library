@@ -1,5 +1,6 @@
 import React, { Suspense } from "react";
 import dayjs from "dayjs";
+import SuspenseLoading from "components/SuspenseLoading";
 
 /**
  * 返回随机ID
@@ -150,7 +151,7 @@ const LazyElement = (props: {
   const { importFunc, path } = props;
   const LazyComponent = React.lazy(importFunc);
   return (
-    <Suspense>
+    <Suspense fallback={<SuspenseLoading />}>
       <LazyComponent />
     </Suspense>
   );
