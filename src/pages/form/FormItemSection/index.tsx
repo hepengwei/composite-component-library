@@ -12,6 +12,7 @@ import CanAddMultipleSample from "./samples/CanAddMultipleSample";
 import CustomMultiSelectSample from "./samples/CustomMultiSelectSample";
 import SelectBoxSample from "./samples/SelectBoxSample/index";
 import WithValidateMessageSample from "./samples/WithValidateMessageSample";
+import MoneyInputSample from "./samples/MoneyInputSample";
 import styles from "./index.module.scss";
 
 const sampleList = [
@@ -25,6 +26,7 @@ const sampleList = [
   <CustomMultiSelectSample />,
   <SelectBoxSample />,
   <WithValidateMessageSample />,
+  <MoneyInputSample />,
 ];
 
 const FormItemSection = () => {
