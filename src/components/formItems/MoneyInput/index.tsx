@@ -61,14 +61,10 @@ const MoneyInput = (props: MoneyInputProps) => {
                     fractionalValue.length > precision
                   ) {
                     // 将小数部分多出的precision限制的部分直接去掉
-                    const newValue = new BigNumber(
-                      `${valueArr[0].substring(1)}${
-                        precision > 0
-                          ? `.${fractionalValue.substring(0, precision)}`
-                          : ""
-                      }`
-                    );
-                    onChange?.(newValue.toString());
+                    const newValueStr = new BigNumber(v)
+                      .absoluteValue()
+                      .toFixed(precision, BigNumber.ROUND_DOWN);
+                    onChange?.(newValueStr);
                   } else {
                     onChange?.(new BigNumber(v).absoluteValue().toString());
                   }
@@ -83,14 +79,11 @@ const MoneyInput = (props: MoneyInputProps) => {
                 fractionalValue.length > precision
               ) {
                 // 将小数部分多出的precision限制的部分直接去掉
-                const newValue = new BigNumber(
-                  `${valueArr[0]}${
-                    precision > 0
-                      ? `.${fractionalValue.substring(0, precision)}`
-                      : ""
-                  }`
+                const newValueStr = new BigNumber(v).toFixed(
+                  precision,
+                  BigNumber.ROUND_DOWN
                 );
-                onChange?.(newValue.toString());
+                onChange?.(newValueStr);
                 return;
               }
             }
@@ -148,18 +141,15 @@ const MoneyInput = (props: MoneyInputProps) => {
         fractionalValue.length > precision
       ) {
         // 将小数部分多出的precision限制的部分直接去掉
-        const newValue2 = new BigNumber(
-          `${valueArr[0]}${
-            precision > 0 ? `.${fractionalValue.substring(0, precision)}` : ""
-          }`
+        newValueStr = new BigNumber(newValueStr).toFixed(
+          precision,
+          BigNumber.ROUND_DOWN
         );
-        newValueStr = newValue2.toString();
       }
 
       if ((min || min === 0) && new BigNumber(min).gte(0)) {
         // 如果min>=0，则去掉负号
-        const newValue2 = new BigNumber(newValueStr);
-        newValueStr = newValue2.absoluteValue().toString();
+        newValueStr = new BigNumber(newValueStr).absoluteValue().toString();
       }
 
       if (value !== newValueStr) {
