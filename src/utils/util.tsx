@@ -170,3 +170,12 @@ export const supportLazyElement = (routes: Record<string, any>[]) => {
     }
   });
 };
+
+/**
+ * 获取一个随机整数
+ * @param {number} min 最小整数
+ * @param {number} max 最大整数
+ */
+export const getRandomNumber = (min: number, max: number) => {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+};
