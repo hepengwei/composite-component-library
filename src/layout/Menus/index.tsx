@@ -17,6 +17,7 @@ import { useDebounceFn } from "ahooks";
 import { Button, Menu } from "antd";
 import type { MenuProps } from "antd";
 import { useGlobalContext } from "@/hooks/useGlobalContext";
+import welfareLottery from "images/welfareLottery.png";
 import styles from "./index.module.scss";
 
 type MenuItem = Required<MenuProps>["items"][number];
@@ -53,6 +54,16 @@ const Menus: React.FC = () => {
       getItem("Antd表格 部分", "antdTableSection"),
       getItem("Ali表格 部分", "aliTableSection"),
     ]),
+    getItem(
+      "中国福利彩票",
+      "welfareLottery",
+      <img src={welfareLottery} width={14} height={13} />,
+      [
+        getItem("双色球", "dualColouredBall"),
+        getItem("大乐透", "bigLotto"),
+        getItem("福彩3D", "3D"),
+      ]
+    ),
   ];
 
   const updateMenuWidth = useCallback(

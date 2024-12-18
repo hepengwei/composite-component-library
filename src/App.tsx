@@ -10,6 +10,7 @@ dayjs.locale("zh-cn");
 
 const App = () => {
   const routes = useRoutes(routesConfig);
+
   return (
     <div className='app_container' translate='no'>
       <ConfigProvider locale={zhCN}>{routes}</ConfigProvider>
