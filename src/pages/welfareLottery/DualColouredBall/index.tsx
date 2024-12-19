@@ -6,6 +6,7 @@ import { Button, message, Table } from "antd";
 import dayjs from "dayjs";
 import { useGlobalContext } from "@/hooks/useGlobalContext";
 import RandomOneModal from "./components/RandomOneModal";
+import OccurrenceFrequencyModal from "./components/OccurrenceFrequencyModal";
 import AddDataModal from "./components/AddDataModal";
 import styles from "./index.module.scss";
 import BigNumber from "bignumber.js";
@@ -15,6 +16,8 @@ const DualColouredBall = () => {
     useGlobalContext();
   const [tableData, setTableData] = useState<Record<string, any>[]>([]);
   const [randomOneModalOpen, setRandomOneModalOpen] = useState<boolean>(false);
+  const [occurrenceFrequencyModalOpen, setOccurrenceFrequencyModalOpen] =
+    useState<boolean>(false);
   const [addDataModalOpen, setAddDataModalOpen] = useState<boolean>(false);
 
   const getTableData = async () => {
@@ -89,6 +92,10 @@ const DualColouredBall = () => {
 
   const onRandomOneModalClose = () => {
     setRandomOneModalOpen(false);
+  };
+
+  const onOccurrenceFrequencyModalClose = () => {
+    setOccurrenceFrequencyModalOpen(false);
   };
 
   const onAddDataModalClose = () => {
@@ -348,8 +355,12 @@ const DualColouredBall = () => {
           >
             随机一个
           </Button>
-          <Button type='primary' ghost onClick={() => {}}>
-            查看各号码出现频次情况
+          <Button
+            type='primary'
+            ghost
+            onClick={() => setOccurrenceFrequencyModalOpen(true)}
+          >
+            各色球号码出现频次情况
           </Button>
           <Button
             type='primary'
@@ -377,6 +388,10 @@ const DualColouredBall = () => {
       <RandomOneModal
         open={randomOneModalOpen}
         onCancel={onRandomOneModalClose}
+      />
+      <OccurrenceFrequencyModal
+        open={occurrenceFrequencyModalOpen}
+        onCancel={onOccurrenceFrequencyModalClose}
       />
       <AddDataModal
         open={addDataModalOpen}
