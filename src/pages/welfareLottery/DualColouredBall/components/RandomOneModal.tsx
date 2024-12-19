@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Modal, Button } from "antd";
 import { getRandomNumber } from "utils/util";
+import { DashboardOutlined } from "@ant-design/icons";
 
 type RandomOneModalProps = {
   open: boolean;
@@ -63,6 +64,8 @@ const RandomOneModal = (props: RandomOneModalProps) => {
             justifyContent: "center",
             alignItems: "center",
             height: 100,
+            border: "2px dashed #cccccc",
+            marginTop: "8px",
           }}
         >
           {randomList && randomList.length > 0

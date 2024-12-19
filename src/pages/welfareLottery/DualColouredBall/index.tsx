@@ -3,11 +3,12 @@
  */
 import React, { useState, useEffect } from "react";
 import { Button, message, Table } from "antd";
-import type { TableColumnProps } from "antd";
+import dayjs from "dayjs";
 import { useGlobalContext } from "@/hooks/useGlobalContext";
 import RandomOneModal from "./components/RandomOneModal";
 import AddDataModal from "./components/AddDataModal";
 import styles from "./index.module.scss";
+import BigNumber from "bignumber.js";
 
 const DualColouredBall = () => {
   const { dualColouredBallDataSource, setDualColouredBallDataSource } =
@@ -18,7 +19,23 @@ const DualColouredBall = () => {
 
   const getTableData = async () => {
     if (dualColouredBallDataSource && dualColouredBallDataSource.length > 0) {
-      setTableData(dualColouredBallDataSource);
+      const finalDataSource = dualColouredBallDataSource.map(
+        (item: Record<string, any>) => {
+          const { prizegrades } = item;
+          let typenum1 = "";
+          let typenum2 = "";
+          let typemoney1 = "";
+          let typemoney2 = "";
+          if (prizegrades && prizegrades.length > 0) {
+            typenum1 = prizegrades[0].typenum || "";
+            typenum2 = prizegrades[1].typenum || "";
+            typemoney1 = prizegrades[0].typemoney || "";
+            typemoney2 = prizegrades[1].typemoney || "";
+          }
+          return { ...item, typenum1, typenum2, typemoney1, typemoney2 };
+        }
+      );
+      setTableData(finalDataSource);
     } else {
       setTableData([]);
     }
@@ -78,7 +95,7 @@ const DualColouredBall = () => {
     setAddDataModalOpen(false);
   };
 
-  const columns: TableColumnProps[] = [
+  const columns: Record<string, any>[] = [
     {
       title: "期号",
       dataIndex: "code",
@@ -88,15 +105,211 @@ const DualColouredBall = () => {
       title: "开奖日期",
       dataIndex: "date",
       width: 150,
+      sorter: (
+        prevRecord: Record<string, any>,
+        nextRecord: Record<string, any>
+      ) => {
+        if (!prevRecord?.date) {
+          return -1; // 没有值的，降序时排最后，升序时排最前
+        } else if (!nextRecord?.date) {
+          return 1; // 没有值的，降序时排最后，升序时排最前
+        } else {
+          const prevDate = dayjs(prevRecord.date.split("(")[0], "YYYY-MM-DD");
+          const nextDate = dayjs(nextRecord.date.split("(")[0], "YYYY-MM-DD");
+          if (prevDate > nextDate) {
+            return 1;
+          } else if (prevDate < nextDate) {
+            return -1;
+          }
+        }
+        return 0;
+      },
     },
     {
       title: "开奖号码",
       dataIndex: "number",
-      width: 200,
+      width: 224,
       render: (_: any, record: Record<string, any>) => {
         const { red, blue } = record;
-        const result = `${red},${blue}`;
-        return result;
+        const numberList = `${red},${blue}`.split(",");
+        return (
+          <div
+            style={{
+              width: "100%",
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            {numberList && numberList.length > 0
+              ? numberList.map((number: string, index: number) => (
+                  <div
+                    style={{
+                      width: 26,
+                      height: 26,
+                      marginRight: "6px",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      borderRadius: "50%",
+                      fontSize: "14px",
+                      fontWeight: "500",
+                      color: "#FFFFFF",
+                      backgroundColor:
+                        index === numberList.length - 1 ? "#0A5EB0" : "#F72C5B",
+                    }}
+                  >
+                    {number}
+                  </div>
+                ))
+              : null}
+          </div>
+        );
+      },
+    },
+    {
+      title: "一等奖",
+      width: 200,
+      children: [
+        {
+          title: "注数",
+          dataIndex: "typenum1",
+          key: "typenum1",
+          width: 80,
+        },
+        {
+          title: "金额",
+          dataIndex: "typemoney1",
+          key: "typemoney1",
+          width: 120,
+          sorter: (
+            prevRecord: Record<string, any>,
+            nextRecord: Record<string, any>
+          ) => {
+            if (!prevRecord?.typemoney1) {
+              return -1; // 没有值的，降序时排最后，升序时排最前
+            } else if (!nextRecord?.typemoney1) {
+              return 1; // 没有值的，降序时排最后，升序时排最前
+            } else {
+              const prevTypemoney = new BigNumber(prevRecord.typemoney1);
+              const nextTypemoney = new BigNumber(nextRecord.typemoney1);
+              if (prevTypemoney.gt(nextTypemoney)) {
+                return 1;
+              } else if (prevTypemoney.lt(nextTypemoney)) {
+                return -1;
+              }
+            }
+            return 0;
+          },
+          render: (value: string) => {
+            if (value) {
+              return value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            }
+            return "";
+          },
+        },
+      ],
+    },
+    {
+      title: "二等奖",
+      width: 200,
+      children: [
+        {
+          title: "注数",
+          dataIndex: "typenum2",
+          key: "typenum2",
+          width: 80,
+        },
+        {
+          title: "金额",
+          dataIndex: "typemoney2",
+          key: "typemoney2",
+          width: 120,
+          sorter: (
+            prevRecord: Record<string, any>,
+            nextRecord: Record<string, any>
+          ) => {
+            if (!prevRecord?.typemoney2) {
+              return -1; // 没有值的，降序时排最后，升序时排最前
+            } else if (!nextRecord?.typemoney2) {
+              return 1; // 没有值的，降序时排最后，升序时排最前
+            } else {
+              const prevTypemoney = new BigNumber(prevRecord.typemoney2);
+              const nextTypemoney = new BigNumber(nextRecord.typemoney2);
+              if (prevTypemoney.gt(nextTypemoney)) {
+                return 1;
+              } else if (prevTypemoney.lt(nextTypemoney)) {
+                return -1;
+              }
+            }
+            return 0;
+          },
+          render: (value: string) => {
+            if (value) {
+              return value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            }
+            return "";
+          },
+        },
+      ],
+    },
+    {
+      title: "销售额（元）",
+      dataIndex: "sales",
+      width: 150,
+      sorter: (
+        prevRecord: Record<string, any>,
+        nextRecord: Record<string, any>
+      ) => {
+        if (!prevRecord?.sales) {
+          return -1; // 没有值的，降序时排最后，升序时排最前
+        } else if (!nextRecord?.sales) {
+          return 1; // 没有值的，降序时排最后，升序时排最前
+        } else {
+          const prevSales = new BigNumber(prevRecord.sales);
+          const nextSales = new BigNumber(nextRecord.sales);
+          if (prevSales.gt(nextSales)) {
+            return 1;
+          } else if (prevSales.lt(nextSales)) {
+            return -1;
+          }
+        }
+        return 0;
+      },
+      render: (value: string) => {
+        if (value) {
+          return value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+        return "";
+      },
+    },
+    {
+      title: "奖池金额（元）",
+      dataIndex: "poolmoney",
+      width: 150,
+      sorter: (
+        prevRecord: Record<string, any>,
+        nextRecord: Record<string, any>
+      ) => {
+        if (!prevRecord?.poolmoney) {
+          return -1; // 没有值的，降序时排最后，升序时排最前
+        } else if (!nextRecord?.poolmoney) {
+          return 1; // 没有值的，降序时排最后，升序时排最前
+        } else {
+          const prevPoolmoney = new BigNumber(prevRecord.poolmoney);
+          const nextPoolmoney = new BigNumber(nextRecord.poolmoney);
+          if (prevPoolmoney.gt(nextPoolmoney)) {
+            return 1;
+          } else if (prevPoolmoney.lt(nextPoolmoney)) {
+            return -1;
+          }
+        }
+        return 0;
+      },
+      render: (value: string) => {
+        if (value) {
+          return value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+        return "";
       },
     },
   ];
@@ -159,6 +372,7 @@ const DualColouredBall = () => {
           showSizeChanger: true,
           showQuickJumper: true,
         }}
+        sortDirections={["descend", "ascend"]}
       />
       <RandomOneModal
         open={randomOneModalOpen}
