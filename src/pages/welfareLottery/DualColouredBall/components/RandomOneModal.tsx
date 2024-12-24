@@ -63,7 +63,7 @@ const RandomOneModal = (props: RandomOneModalProps) => {
             justifyContent: "center",
             alignItems: "center",
             height: 100,
-            border: "2px dashed #cccccc",
+            border: "2px dashed #bbbbbb",
             marginTop: "8px",
           }}
         >
@@ -84,6 +84,7 @@ const RandomOneModal = (props: RandomOneModalProps) => {
                     backgroundColor:
                       index === randomList.length - 1 ? "#0A5EB0" : "#F72C5B",
                   }}
+                  key={index}
                 >
                   {number}
                 </div>

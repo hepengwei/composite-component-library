@@ -77,7 +77,7 @@ const OccurrenceFrequencyModal = (props: OccurrenceFrequencyModalProps) => {
           alignItems: "center",
         }}
       >
-        {top5Data.map((numberList: string[], index: number) => (
+        {top5Data.map((numberList: string[], index1: number) => (
           <div
             style={{
               width: "100%",
@@ -85,13 +85,14 @@ const OccurrenceFrequencyModal = (props: OccurrenceFrequencyModalProps) => {
               flexDirection: "column",
               marginBottom: "20px",
             }}
+            key={index1}
           >
             <div
               style={{
                 fontSize: "15px",
               }}
             >
-              第{index + 1}个色球出现次数最多的前5个号码：
+              第{index1 + 1}个色球出现次数最多的前5个号码：
             </div>
             <div
               style={{
@@ -100,12 +101,12 @@ const OccurrenceFrequencyModal = (props: OccurrenceFrequencyModalProps) => {
                 justifyContent: "center",
                 alignItems: "center",
                 height: 40,
-                border: "2px dashed #cccccc",
+                border: "1px dashed #bbbbbb",
                 marginTop: "6px",
               }}
             >
               {numberList && numberList.length > 0
-                ? numberList.map((number: string) => (
+                ? numberList.map((number: string, index2: number) => (
                     <div
                       style={{
                         width: 28,
@@ -119,8 +120,11 @@ const OccurrenceFrequencyModal = (props: OccurrenceFrequencyModalProps) => {
                         fontWeight: "500",
                         color: "#FFFFFF",
                         backgroundColor:
-                          index === top5Data.length - 1 ? "#0A5EB0" : "#F72C5B",
+                          index1 === top5Data.length - 1
+                            ? "#0A5EB0"
+                            : "#F72C5B",
                       }}
+                      key={index2}
                     >
                       {number}
                     </div>

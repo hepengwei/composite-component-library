@@ -67,13 +67,32 @@ export const GlobalProvider = (props: PropsWithChildren<{}>) => {
       if (dualColouredBallDataSourceStr) {
         const dataSource = JSON.parse(dualColouredBallDataSourceStr);
         if (dataSource && dataSource.length > 0) {
-          setDualColouredBallDataSource(dataSource);
-          return;
+          const data = JSON.parse(dualColouredBallData);
+          if (data?.result) {
+            // 将localStorage中保存的数据与本地文件中的数据进行合并
+            let finalList: Record<string, any>[] = [];
+            dataSource.forEach((item: Record<string, any>) => {
+              const isExist = data.result.some((item2: Record<string, any>) => {
+                if (item2.name === item.name && item2.code === item.code)
+                  return true;
+                return false;
+              });
+              // 将原来不存在的放入finalList
+              if (!isExist) {
+                finalList.push(item);
+              }
+            });
+            finalList = finalList.concat(data.result);
+            setDualColouredBallDataSource(finalList);
+          } else {
+            setDualColouredBallDataSource(dataSource);
+          }
         }
-      }
-      const data = JSON.parse(dualColouredBallData);
-      if (data?.result) {
-        setDualColouredBallDataSource(data.result);
+      } else {
+        const data = JSON.parse(dualColouredBallData);
+        if (data?.result) {
+          setDualColouredBallDataSource(data.result);
+        }
       }
     } catch (e: any) {
       console.log("获取双色球开奖源数据失败：", e.message);

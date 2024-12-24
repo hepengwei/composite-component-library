@@ -8,6 +8,7 @@ import { useGlobalContext } from "@/hooks/useGlobalContext";
 import RandomOneModal from "./components/RandomOneModal";
 import OccurrenceFrequencyModal from "./components/OccurrenceFrequencyModal";
 import AddDataModal from "./components/AddDataModal";
+import RuleModal from "./components/RuleModal";
 import styles from "./index.module.scss";
 import BigNumber from "bignumber.js";
 
@@ -19,6 +20,7 @@ const DualColouredBall = () => {
   const [occurrenceFrequencyModalOpen, setOccurrenceFrequencyModalOpen] =
     useState<boolean>(false);
   const [addDataModalOpen, setAddDataModalOpen] = useState<boolean>(false);
+  const [ruleModalOpen, setRuleModalOpen] = useState<boolean>(false);
 
   const getTableData = async () => {
     if (dualColouredBallDataSource && dualColouredBallDataSource.length > 0) {
@@ -102,6 +104,10 @@ const DualColouredBall = () => {
     setAddDataModalOpen(false);
   };
 
+  const onRuleModalClose = () => {
+    setRuleModalOpen(false);
+  };
+
   const columns: Record<string, any>[] = [
     {
       title: "期号",
@@ -164,6 +170,7 @@ const DualColouredBall = () => {
                       backgroundColor:
                         index === numberList.length - 1 ? "#0A5EB0" : "#F72C5B",
                     }}
+                    key={index}
                   >
                     {number}
                   </div>
@@ -370,8 +377,8 @@ const DualColouredBall = () => {
             添加数据
           </Button>
         </div>
-        <Button type='link' onClick={() => {}}>
-          《中奖规则》
+        <Button type='link' onClick={() => setRuleModalOpen(true)}>
+          《游戏规则》
         </Button>
       </div>
       <Table
@@ -398,6 +405,7 @@ const DualColouredBall = () => {
         onOk={onAddDataModalOk}
         onCancel={onAddDataModalClose}
       />
+      <RuleModal open={ruleModalOpen} onCancel={onRuleModalClose} />
     </div>
   );
 };

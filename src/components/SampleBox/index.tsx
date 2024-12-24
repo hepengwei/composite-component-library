@@ -25,7 +25,7 @@ const SampleBox = (props: SampleBoxProps) => {
         key: index.toString(),
         label: item.fileName,
         children: (
-          <div className={styles.codeBlockContent}>
+          <div className={styles.codeBlockContent} key={index.toString()}>
             <CodeBlock code={item.code} />
             <div
               className={styles.copyBtn}
