@@ -42,7 +42,7 @@ const RuleModal = (props: RuleModalProps) => {
   return (
     <Modal
       title='游戏规则'
-      width={1240}
+      width={1270}
       open={open}
       onCancel={handleCancel}
       footer={null}

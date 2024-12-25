@@ -9,6 +9,7 @@ const FormListSection = () => import("pages/form/FormListSection");
 const AntdTableSection = () => import("pages/table/AntdTableSection");
 const AliTableSection = () => import("pages/table/AliTableSection");
 const DualColouredBall = () => import("pages/welfareLottery/DualColouredBall");
+const Lottery3D = () => import("pages/welfareLottery/Lottery3D");
 
 const contentRoutes: Record<string, any>[] = [
   {
@@ -45,11 +46,11 @@ const contentRoutes: Record<string, any>[] = [
         element: DualColouredBall,
       },
       {
-        path: "/welfareLottery/bigLotto",
-        element: <ComingSoon />,
+        path: "/welfareLottery/lottery3D",
+        element: Lottery3D,
       },
       {
-        path: "/welfareLottery/3D",
+        path: "/welfareLottery/bigLotto",
         element: <ComingSoon />,
       },
     ],

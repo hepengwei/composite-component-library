@@ -7,6 +7,7 @@ import React, {
   useEffect,
 } from "react";
 import dualColouredBallData from "@/pages/welfareLottery/dualColouredBallData";
+import lottery3DData from "@/pages/welfareLottery/lottery3DData";
 
 export interface GlobalContextProps {
   headHeight: number;
@@ -19,6 +20,8 @@ export interface GlobalContextProps {
   setScrollContentRef: (scrollRef: RefObject<HTMLDivElement>) => void;
   dualColouredBallDataSource: Record<string, any>[]; // 双色球开奖源数据
   setDualColouredBallDataSource: (dataSourec: Record<string, any>[]) => void;
+  lottery3DDataSource: Record<string, any>[]; // 福彩3D开奖源数据
+  setLottery3DDataSource: (dataSourec: Record<string, any>[]) => void;
 }
 
 const GlobalContext = React.createContext<GlobalContextProps>({
@@ -32,6 +35,8 @@ const GlobalContext = React.createContext<GlobalContextProps>({
   setScrollContentRef: () => {},
   dualColouredBallDataSource: [],
   setDualColouredBallDataSource: () => {},
+  lottery3DDataSource: [],
+  setLottery3DDataSource: () => {},
 });
 
 let scrollContentRef = React.createRef<HTMLDivElement | null>();
@@ -41,6 +46,9 @@ export const GlobalProvider = (props: PropsWithChildren<{}>) => {
   const [menuWidth, setMenuWidth] = useState<number>(0);
   const [scrollTop, setSTop] = useState<number>(0);
   const [dualColouredBallDataSource, setDualColouredBallDataSource] = useState<
+    Record<string, any>[]
+  >([]);
+  const [lottery3DDataSource, setLottery3DDataSource] = useState<
     Record<string, any>[]
   >([]);
 
@@ -99,6 +107,46 @@ export const GlobalProvider = (props: PropsWithChildren<{}>) => {
     }
   }, []);
 
+  useEffect(() => {
+    const lottery3DDataSourceStr = window.localStorage.getItem(
+      "lottery3DDataSource"
+    );
+    try {
+      if (lottery3DDataSourceStr) {
+        const dataSource = JSON.parse(lottery3DDataSourceStr);
+        if (dataSource && dataSource.length > 0) {
+          const data = JSON.parse(lottery3DData);
+          if (data?.result) {
+            // 将localStorage中保存的数据与本地文件中的数据进行合并
+            let finalList: Record<string, any>[] = [];
+            dataSource.forEach((item: Record<string, any>) => {
+              const isExist = data.result.some((item2: Record<string, any>) => {
+                if (item2.name === item.name && item2.code === item.code)
+                  return true;
+                return false;
+              });
+              // 将原来不存在的放入finalList
+              if (!isExist) {
+                finalList.push(item);
+              }
+            });
+            finalList = finalList.concat(data.result);
+            setLottery3DDataSource(finalList);
+          } else {
+            setLottery3DDataSource(dataSource);
+          }
+        }
+      } else {
+        const data = JSON.parse(lottery3DData);
+        if (data?.result) {
+          setLottery3DDataSource(data.result);
+        }
+      }
+    } catch (e: any) {
+      console.log("获取福彩3D开奖源数据失败：", e.message);
+    }
+  }, []);
+
   return (
     <GlobalContext.Provider
       value={{
@@ -112,6 +160,8 @@ export const GlobalProvider = (props: PropsWithChildren<{}>) => {
         setScrollContentRef,
         dualColouredBallDataSource,
         setDualColouredBallDataSource,
+        lottery3DDataSource,
+        setLottery3DDataSource,
       }}
     >
       {props.children}
