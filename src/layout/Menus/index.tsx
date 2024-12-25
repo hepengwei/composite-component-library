@@ -60,8 +60,8 @@ const Menus: React.FC = () => {
       <img src={welfareLottery} width={14} height={13} />,
       [
         getItem("双色球", "dualColouredBall"),
+        getItem("福彩3D", "lottery3D"),
         getItem("大乐透", "bigLotto"),
-        getItem("福彩3D", "3D"),
       ]
     ),
   ];
