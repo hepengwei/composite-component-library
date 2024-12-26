@@ -19,11 +19,20 @@ const RandomOneModal = (props: RandomOneModalProps) => {
     setRandomList([]);
   };
 
-  const randomNumber = () => {
-    const newRandomList = [];
+  const randomOneRedNumber = (min: number, max: number, randomList: string[]) => {
+    const number = getRandomNumber(min, max).toString().padStart(2, "00");
+    // 有重复的则必须重新生成一个
+    if (randomList.includes(number)) {
+      randomOneRedNumber(1, 33, randomList);
+    } else {
+      randomList.push(number);
+    }
+  };
+
+  const randomNumbers = () => {
+    const newRandomList: string[] = [];
     for (let i = 0; i < RED_NUMBER_NUM; i++) {
-      const number = getRandomNumber(1, 33).toString().padStart(2, "00");
-      newRandomList.push(number);
+      randomOneRedNumber(1, 33, newRandomList);
     }
     for (let i = 0; i < BLUE_NUMBER_NUM; i++) {
       const number = getRandomNumber(1, 16).toString().padStart(2, "00");
@@ -34,7 +43,7 @@ const RandomOneModal = (props: RandomOneModalProps) => {
 
   useEffect(() => {
     if (open) {
-      randomNumber();
+      randomNumbers();
     } else {
       setRandomList([]);
     }
@@ -42,7 +51,7 @@ const RandomOneModal = (props: RandomOneModalProps) => {
 
   return (
     <Modal
-      title='随机一个'
+      title='随机一注'
       width={600}
       open={open}
       onCancel={handleCancel}
@@ -94,7 +103,7 @@ const RandomOneModal = (props: RandomOneModalProps) => {
         <Button
           type='primary'
           size='large'
-          onClick={randomNumber}
+          onClick={randomNumbers}
           style={{ marginTop: "30px" }}
         >
           换一个
