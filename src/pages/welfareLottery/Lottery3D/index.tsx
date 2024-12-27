@@ -193,9 +193,7 @@ const Lottery3D = () => {
 
   useEffect(() => {
     getTableData();
-  }, [lottery3DDataSource]);
 
-  useEffect(() => {
     return () => {
       // 将福彩3D开奖源数据保存到localStorage中
       try {
@@ -209,7 +207,7 @@ const Lottery3D = () => {
         console.log("保存福彩3D开奖源数据失败：", e.message);
       }
     };
-  }, []);
+  }, [lottery3DDataSource]);
 
   return (
     <div className={styles.container}>

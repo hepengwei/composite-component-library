@@ -36,21 +36,24 @@ const OccurrenceFrequencyModal = (props: OccurrenceFrequencyModalProps) => {
         });
       });
       numberOccurrenceNum.forEach((occurrenceNum: Record<string, number>) => {
-        const top5Data: string[] = [];
-        Object.keys(occurrenceNum).forEach((number: string) => {
+        const sortData: string[] = [];
+        const occurrenceKeys = Object.keys(occurrenceNum);
+        for (let i = 0, l = occurrenceKeys.length; i < l; i++) {
+          const number = occurrenceKeys[i];
           const num = occurrenceNum[number];
-          for (let i = 0; i < 5; i++) {
-            if (top5Data[i]) {
-              if (num > occurrenceNum[top5Data[i]]) {
-                top5Data[i] = number;
+          for (let j = 0; j < 5; j++) {
+            if (sortData[j]) {
+              if (num > occurrenceNum[sortData[j]]) {
+                sortData.splice(j, 0, number);
                 break;
               }
             } else {
-              top5Data[i] = number;
+              sortData.push(number);
               break;
             }
           }
-        });
+        }
+        const top5Data = sortData.slice(0, 5);
         newTop5Data.push(top5Data);
       });
     }
