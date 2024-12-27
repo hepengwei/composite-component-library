@@ -330,9 +330,7 @@ const DualColouredBall = () => {
 
   useEffect(() => {
     getTableData();
-  }, [dualColouredBallDataSource]);
 
-  useEffect(() => {
     return () => {
       // 将双色球开奖源数据保存到localStorage中
       try {
@@ -349,7 +347,7 @@ const DualColouredBall = () => {
         console.log("保存双色球开奖源数据失败：", e.message);
       }
     };
-  }, []);
+  }, [dualColouredBallDataSource]);
 
   return (
     <div className={styles.container}>
