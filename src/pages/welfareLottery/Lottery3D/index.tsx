@@ -7,6 +7,7 @@ import dayjs from "dayjs";
 import { useGlobalContext } from "@/hooks/useGlobalContext";
 import RandomOneModal from "./components/RandomOneModal";
 import OccurrenceFrequencyModal from "./components/OccurrenceFrequencyModal";
+import EchartAnalyzeModal from "./components/EchartAnalyzeModal";
 import AddDataModal from "./components/AddDataModal";
 import RuleModal from "./components/RuleModal";
 import styles from "./index.module.scss";
@@ -17,6 +18,8 @@ const Lottery3D = () => {
   const [tableData, setTableData] = useState<Record<string, any>[]>([]);
   const [randomOneModalOpen, setRandomOneModalOpen] = useState<boolean>(false);
   const [occurrenceFrequencyModalOpen, setOccurrenceFrequencyModalOpen] =
+    useState<boolean>(false);
+  const [echartAnalyzeModalOpen, setEchartAnalyzeModalOpen] =
     useState<boolean>(false);
   const [addDataModalOpen, setAddDataModalOpen] = useState<boolean>(false);
   const [ruleModalOpen, setRuleModalOpen] = useState<boolean>(false);
@@ -218,7 +221,7 @@ const Lottery3D = () => {
             ghost
             onClick={() => setRandomOneModalOpen(true)}
           >
-            随机一个
+            随机一注
           </Button>
           <Button
             type='primary'
@@ -226,6 +229,13 @@ const Lottery3D = () => {
             onClick={() => setOccurrenceFrequencyModalOpen(true)}
           >
             各色球号码出现频次情况
+          </Button>
+          <Button
+            type='primary'
+            ghost
+            onClick={() => setEchartAnalyzeModalOpen(true)}
+          >
+            图表分析
           </Button>
           <Button
             type='primary'
@@ -257,6 +267,10 @@ const Lottery3D = () => {
       <OccurrenceFrequencyModal
         open={occurrenceFrequencyModalOpen}
         onCancel={onOccurrenceFrequencyModalClose}
+      />
+      <EchartAnalyzeModal
+        open={echartAnalyzeModalOpen}
+        onCancel={() => setEchartAnalyzeModalOpen(false)}
       />
       <AddDataModal
         open={addDataModalOpen}

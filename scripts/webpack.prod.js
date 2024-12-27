@@ -52,21 +52,6 @@ const prodConfig = {
           priority: 10,
           chunks: "initial", // only package third parties that are initially dependent
         },
-        tensorflow_models: {
-          name: "chunk-tensorflow_models",
-          test: /[\\/]node_modules[\\/]?@tensorflow-models/,
-          priority: 10,
-        },
-        tensorflow_tfjs_core: {
-          name: "chunk-tensorflow_tfjs_core",
-          test: /[\\/]node_modules[\\/]@tensorflow[\\/]tfjs-core(?:[\\/].*)?/,
-          priority: 10,
-        },
-        tensorflow_tfjs_webgl: {
-          name: "chunk-tensorflow_tfjs_webgl",
-          test: /node_modules[\\/]@tensorflow[\\/]tfjs-backend-webgl(?:[\\/].*)?/,
-          priority: 10,
-        },
       },
     },
   },
