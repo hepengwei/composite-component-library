@@ -7,6 +7,7 @@ import dayjs from "dayjs";
 import { useGlobalContext } from "@/hooks/useGlobalContext";
 import RandomOneModal from "./components/RandomOneModal";
 import OccurrenceFrequencyModal from "./components/OccurrenceFrequencyModal";
+import EchartAnalyzeModal from "./components/EchartAnalyzeModal";
 import AddDataModal from "./components/AddDataModal";
 import RuleModal from "./components/RuleModal";
 import styles from "./index.module.scss";
@@ -18,6 +19,8 @@ const DualColouredBall = () => {
   const [tableData, setTableData] = useState<Record<string, any>[]>([]);
   const [randomOneModalOpen, setRandomOneModalOpen] = useState<boolean>(false);
   const [occurrenceFrequencyModalOpen, setOccurrenceFrequencyModalOpen] =
+    useState<boolean>(false);
+  const [echartAnalyzeModalOpen, setEchartAnalyzeModalOpen] =
     useState<boolean>(false);
   const [addDataModalOpen, setAddDataModalOpen] = useState<boolean>(false);
   const [ruleModalOpen, setRuleModalOpen] = useState<boolean>(false);
@@ -83,29 +86,12 @@ const DualColouredBall = () => {
           }
         }
         message.success("添加成功");
-        onAddDataModalClose();
+        setAddDataModalOpen(false);
       } catch (e: any) {
         message.warning("解析数据失败");
         console.log("解析数据失败:", e.message);
       }
     }
-    setAddDataModalOpen(false);
-  };
-
-  const onRandomOneModalClose = () => {
-    setRandomOneModalOpen(false);
-  };
-
-  const onOccurrenceFrequencyModalClose = () => {
-    setOccurrenceFrequencyModalOpen(false);
-  };
-
-  const onAddDataModalClose = () => {
-    setAddDataModalOpen(false);
-  };
-
-  const onRuleModalClose = () => {
-    setRuleModalOpen(false);
   };
 
   const columns: Record<string, any>[] = [
@@ -358,7 +344,7 @@ const DualColouredBall = () => {
             ghost
             onClick={() => setRandomOneModalOpen(true)}
           >
-            随机一个
+            随机一注
           </Button>
           <Button
             type='primary'
@@ -366,6 +352,13 @@ const DualColouredBall = () => {
             onClick={() => setOccurrenceFrequencyModalOpen(true)}
           >
             各色球号码出现频次情况
+          </Button>
+          <Button
+            type='primary'
+            ghost
+            onClick={() => setEchartAnalyzeModalOpen(true)}
+          >
+            图表分析
           </Button>
           <Button
             type='primary'
@@ -392,18 +385,25 @@ const DualColouredBall = () => {
       />
       <RandomOneModal
         open={randomOneModalOpen}
-        onCancel={onRandomOneModalClose}
+        onCancel={() => setRandomOneModalOpen(false)}
       />
       <OccurrenceFrequencyModal
         open={occurrenceFrequencyModalOpen}
-        onCancel={onOccurrenceFrequencyModalClose}
+        onCancel={() => setOccurrenceFrequencyModalOpen(false)}
+      />
+      <EchartAnalyzeModal
+        open={echartAnalyzeModalOpen}
+        onCancel={() => setEchartAnalyzeModalOpen(false)}
       />
       <AddDataModal
         open={addDataModalOpen}
         onOk={onAddDataModalOk}
-        onCancel={onAddDataModalClose}
+        onCancel={() => setAddDataModalOpen(false)}
       />
-      <RuleModal open={ruleModalOpen} onCancel={onRuleModalClose} />
+      <RuleModal
+        open={ruleModalOpen}
+        onCancel={() => setRuleModalOpen(false)}
+      />
     </div>
   );
 };

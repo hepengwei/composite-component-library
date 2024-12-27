@@ -37,7 +37,7 @@ const RandomOneModal = (props: RandomOneModalProps) => {
 
   return (
     <Modal
-      title='随机一个'
+      title='随机一注'
       width={600}
       open={open}
       onCancel={handleCancel}
