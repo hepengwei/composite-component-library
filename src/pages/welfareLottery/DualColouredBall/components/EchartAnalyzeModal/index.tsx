@@ -17,9 +17,9 @@ const EchartAnalyzeModal = (props: EchartAnalyzeModalProps) => {
   const getTop6 = (dataSource: Record<string, any>[]) => {
     let redData: [string, number][] = [];
     let blueData: [string, number][] = [];
-    
+    const redNumberObj: Record<string, number> = {};
+
     if (dataSource && dataSource.length > 0) {
-      const redNumberObj: Record<string, number> = {};
       const blueNumberObj: Record<string, number> = {};
       dataSource.forEach((item: Record<string, any>) => {
         const { red, blue } = item;
@@ -85,10 +85,16 @@ const EchartAnalyzeModal = (props: EchartAnalyzeModalProps) => {
         .map((number) => [`${number} 号`, blueNumberObj[number]]);
     }
 
-    return { redData, blueData };
+    return { redData, blueData, redNumberObj };
   };
 
-  const { echartData1, echartData2, echartData3, echartData4 } = useMemo(() => {
+  const {
+    echartData1,
+    echartData2,
+    echartData3,
+    echartData4,
+    neverAppearRedData,
+  } = useMemo(() => {
     const { redData, blueData } = getTop6(dualColouredBallDataSource);
 
     let datSource = cloneDeep(dualColouredBallDataSource);
@@ -107,15 +113,28 @@ const EchartAnalyzeModal = (props: EchartAnalyzeModalProps) => {
         }
         return 0;
       })
-      .slice(0, 6);
-    const { redData: recentRedData, blueData: recentBlueData } =
-      getTop6(datSource);
+      .slice(0, 10);
+    const {
+      redData: recentRedData,
+      blueData: recentBlueData,
+      redNumberObj,
+    } = getTop6(datSource);
+
+    const redNumberList = Object.keys(redNumberObj);
+    const neverAppearRedData: string[] = [];
+    for (let i = 1; i <= 33; i++) {
+      const number = i.toString().padStart(2, "00");
+      if (!redNumberList.includes(number)) {
+        neverAppearRedData.push(number);
+      }
+    }
 
     return {
       echartData1: { dataSource: redData },
       echartData2: { dataSource: blueData },
       echartData3: { dataSource: recentRedData },
       echartData4: { dataSource: recentBlueData },
+      neverAppearRedData,
     };
   }, [dualColouredBallDataSource]);
 
@@ -185,7 +204,7 @@ const EchartAnalyzeModal = (props: EchartAnalyzeModalProps) => {
             borderTop: "1px dashed #bbbbbb",
           }}
         >
-          近6期红球出现频次最多的6个号码（红球热号）：
+          近10期红球出现频次最多的6个号码（红球热号）：
         </div>
         <div
           style={{
@@ -207,7 +226,7 @@ const EchartAnalyzeModal = (props: EchartAnalyzeModalProps) => {
             borderTop: "1px dashed #bbbbbb",
           }}
         >
-          近6期蓝球出现频次最多的6个号码（蓝球热号）：
+          近10期蓝球出现频次最多的6个号码（蓝球热号）：
         </div>
         <div
           style={{
@@ -218,6 +237,52 @@ const EchartAnalyzeModal = (props: EchartAnalyzeModalProps) => {
           }}
         >
           <ColumnBar data={echartData4} color='#0A5EB0' />
+        </div>
+        <div
+          style={{
+            display: "flex",
+            fontSize: "15px",
+            fontWeight: "600",
+            marginTop: "8px",
+            paddingTop: "12px",
+            borderTop: "1px dashed #bbbbbb",
+          }}
+        >
+          近10期红球一次都没出现的号码（红球冷号）：
+        </div>
+        <div
+          style={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: 80,
+            border: "1px dashed #bbbbbb",
+            marginTop: "8px",
+          }}
+        >
+          {neverAppearRedData && neverAppearRedData.length > 0
+            ? neverAppearRedData.map((number: string, index: number) => (
+                <div
+                  style={{
+                    width: 36,
+                    height: 36,
+                    margin: "0 20px",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    borderRadius: "50%",
+                    fontSize: "20px",
+                    fontWeight: "500",
+                    color: "#FFFFFF",
+                    backgroundColor: "#aaaaaa",
+                  }}
+                  key={index}
+                >
+                  {number}
+                </div>
+              ))
+            : null}
         </div>
       </div>
     </Modal>

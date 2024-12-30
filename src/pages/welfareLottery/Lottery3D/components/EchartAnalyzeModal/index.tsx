@@ -16,9 +16,9 @@ const EchartAnalyzeModal = (props: EchartAnalyzeModalProps) => {
 
   const getTop6 = (dataSource: Record<string, any>[]) => {
     let data: [string, number][] = [];
-    
+    const numberObj: Record<string, number> = {};
+
     if (dataSource && dataSource.length > 0) {
-      const numberObj: Record<string, number> = {};
       dataSource.forEach((item: Record<string, any>) => {
         const { red } = item;
         const numberList = red.split(",");
@@ -54,11 +54,11 @@ const EchartAnalyzeModal = (props: EchartAnalyzeModalProps) => {
         .map((number) => [`${number} 号`, numberObj[number]]);
     }
 
-    return data;
+    return { data, numberObj };
   };
 
-  const { echartData1, echartData2 } = useMemo(() => {
-    const data = getTop6(lottery3DDataSource);
+  const { echartData1, echartData2, neverAppearData } = useMemo(() => {
+    const { data } = getTop6(lottery3DDataSource);
 
     let datSource = cloneDeep(lottery3DDataSource);
     datSource = datSource
@@ -77,11 +77,21 @@ const EchartAnalyzeModal = (props: EchartAnalyzeModalProps) => {
         return 0;
       })
       .slice(0, 6);
-    const recentData = getTop6(datSource);
+    const { data: recentData, numberObj } = getTop6(datSource);
+
+    const numberList = Object.keys(numberObj);
+    const neverAppearData: string[] = [];
+    for (let i = 0; i <= 9; i++) {
+      const number = i.toString();
+      if (!numberList.includes(number)) {
+        neverAppearData.push(number);
+      }
+    }
 
     return {
       echartData1: { dataSource: data },
       echartData2: { dataSource: recentData },
+      neverAppearData,
     };
   }, [lottery3DDataSource]);
 
@@ -140,6 +150,52 @@ const EchartAnalyzeModal = (props: EchartAnalyzeModalProps) => {
           }}
         >
           <ColumnBar data={echartData2} color='#37AFE1' />
+        </div>
+        <div
+          style={{
+            display: "flex",
+            fontSize: "15px",
+            fontWeight: "600",
+            marginTop: "8px",
+            paddingTop: "12px",
+            borderTop: "1px dashed #bbbbbb",
+          }}
+        >
+          近6期一次都没出现的号码（冷号）：
+        </div>
+        <div
+          style={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: 80,
+            border: "1px dashed #bbbbbb",
+            marginTop: "8px",
+          }}
+        >
+          {neverAppearData && neverAppearData.length > 0
+            ? neverAppearData.map((number: string, index: number) => (
+                <div
+                  style={{
+                    width: 36,
+                    height: 36,
+                    margin: "0 20px",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    borderRadius: "50%",
+                    fontSize: "20px",
+                    fontWeight: "500",
+                    color: "#FFFFFF",
+                    backgroundColor: "#aaaaaa",
+                  }}
+                  key={index}
+                >
+                  {number}
+                </div>
+              ))
+            : null}
         </div>
       </div>
     </Modal>
