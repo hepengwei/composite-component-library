@@ -54,6 +54,13 @@ const Lottery3D = () => {
                 );
                 // 将原来不存在的放入finalList
                 if (!isExist) {
+                  // 添加号码和数字段
+                  item.sum = item.red
+                    ?.split(",")
+                    .reduce(
+                      (sum: number, next: string) => sum + Number(next),
+                      0
+                    );
                   finalList.push(item);
                 }
               }
@@ -95,7 +102,7 @@ const Lottery3D = () => {
     {
       title: "期号",
       dataIndex: "code",
-      width: 100,
+      width: 90,
     },
     {
       title: "开奖日期",
@@ -161,6 +168,11 @@ const Lottery3D = () => {
           </div>
         );
       },
+    },
+    {
+      title: "号码和数",
+      dataIndex: "sum",
+      width: 90,
     },
     {
       title: "销售额（元）",

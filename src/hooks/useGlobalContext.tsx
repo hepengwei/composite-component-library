@@ -90,6 +90,12 @@ export const GlobalProvider = (props: PropsWithChildren<{}>) => {
                 finalList.push(item);
               }
             });
+            data.result?.forEach((item: Record<string, any>) => {
+              // 添加红色号码和数字段
+              item.sum = item.red
+                ?.split(",")
+                .reduce((sum: number, next: string) => sum + Number(next), 0);
+            });
             finalList = finalList.concat(data.result);
             setDualColouredBallDataSource(finalList);
           } else {
@@ -99,6 +105,12 @@ export const GlobalProvider = (props: PropsWithChildren<{}>) => {
       } else {
         const data = JSON.parse(dualColouredBallData);
         if (data?.result) {
+          data.result.forEach((item: Record<string, any>) => {
+            // 添加红色号码和数字段
+            item.sum = item.red
+              ?.split(",")
+              .reduce((sum: number, next: string) => sum + Number(next), 0);
+          });
           setDualColouredBallDataSource(data.result);
         }
       }
@@ -130,6 +142,12 @@ export const GlobalProvider = (props: PropsWithChildren<{}>) => {
                 finalList.push(item);
               }
             });
+            data.result?.forEach((item: Record<string, any>) => {
+              // 添加号码和数字段
+              item.sum = item.red
+                ?.split(",")
+                .reduce((sum: number, next: string) => sum + Number(next), 0);
+            });
             finalList = finalList.concat(data.result);
             setLottery3DDataSource(finalList);
           } else {
@@ -139,6 +157,12 @@ export const GlobalProvider = (props: PropsWithChildren<{}>) => {
       } else {
         const data = JSON.parse(lottery3DData);
         if (data?.result) {
+          data.result.forEach((item: Record<string, any>) => {
+            // 添加号码和数字段
+            item.sum = item.red
+              ?.split(",")
+              .reduce((sum: number, next: string) => sum + Number(next), 0);
+          });
           setLottery3DDataSource(data.result);
         }
       }

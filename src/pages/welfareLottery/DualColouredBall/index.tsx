@@ -74,6 +74,13 @@ const DualColouredBall = () => {
                 );
                 // 将原来不存在的放入finalList
                 if (!isExist) {
+                  // 添加红色号码和数字段
+                  item.sum = item.red
+                    ?.split(",")
+                    .reduce(
+                      (sum: number, next: string) => sum + Number(next),
+                      0
+                    );
                   finalList.push(item);
                 }
               }
@@ -98,7 +105,7 @@ const DualColouredBall = () => {
     {
       title: "期号",
       dataIndex: "code",
-      width: 100,
+      width: 90,
     },
     {
       title: "开奖日期",
@@ -127,7 +134,7 @@ const DualColouredBall = () => {
     {
       title: "开奖号码",
       dataIndex: "number",
-      width: 224,
+      width: 256,
       render: (_: any, record: Record<string, any>) => {
         const { red, blue } = record;
         const numberList = `${red},${blue}`.split(",");
@@ -167,20 +174,25 @@ const DualColouredBall = () => {
       },
     },
     {
+      title: "红色号码和数",
+      dataIndex: "sum",
+      width: 110,
+    },
+    {
       title: "一等奖",
-      width: 200,
+      width: 170,
       children: [
         {
           title: "注数",
           dataIndex: "typenum1",
           key: "typenum1",
-          width: 80,
+          width: 70,
         },
         {
           title: "金额",
           dataIndex: "typemoney1",
           key: "typemoney1",
-          width: 120,
+          width: 100,
           sorter: (
             prevRecord: Record<string, any>,
             nextRecord: Record<string, any>
@@ -211,19 +223,19 @@ const DualColouredBall = () => {
     },
     {
       title: "二等奖",
-      width: 200,
+      width: 170,
       children: [
         {
           title: "注数",
           dataIndex: "typenum2",
           key: "typenum2",
-          width: 80,
+          width: 70,
         },
         {
           title: "金额",
           dataIndex: "typemoney2",
           key: "typemoney2",
-          width: 120,
+          width: 100,
           sorter: (
             prevRecord: Record<string, any>,
             nextRecord: Record<string, any>

@@ -114,7 +114,7 @@ const OccurrenceFrequencyModal = (props: OccurrenceFrequencyModalProps) => {
                       style={{
                         width: 28,
                         height: 28,
-                        margin: "0 20px",
+                        margin: "0 24px",
                         display: "flex",
                         justifyContent: "center",
                         alignItems: "center",

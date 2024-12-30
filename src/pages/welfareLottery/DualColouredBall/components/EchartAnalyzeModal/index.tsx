@@ -1,5 +1,7 @@
 import React, { useMemo } from "react";
 import { Modal } from "antd";
+import dayjs from "dayjs";
+import { cloneDeep } from "lodash-es";
 import ColumnBar from "components/Echarts/ColumnBar";
 import { useGlobalContext } from "@/hooks/useGlobalContext";
 
@@ -12,44 +14,109 @@ const EchartAnalyzeModal = (props: EchartAnalyzeModalProps) => {
   const { open, onCancel } = props;
   const { dualColouredBallDataSource } = useGlobalContext();
 
-  const echartData = useMemo(() => {
-    let data: [string, number][] = [];
-    if (dualColouredBallDataSource && dualColouredBallDataSource.length > 0) {
-      const numberObj: Record<string, number> = {};
-      dualColouredBallDataSource.forEach((item: Record<string, any>) => {
-        const { red } = item;
+  const getTop6 = (dataSource: Record<string, any>[]) => {
+    let redData: [string, number][] = [];
+    let blueData: [string, number][] = [];
+    
+    if (dataSource && dataSource.length > 0) {
+      const redNumberObj: Record<string, number> = {};
+      const blueNumberObj: Record<string, number> = {};
+      dataSource.forEach((item: Record<string, any>) => {
+        const { red, blue } = item;
+
         const numberList = red.split(",");
         numberList.forEach((number: string) => {
-          if (numberObj[number]) {
-            numberObj[number] += 1;
+          if (redNumberObj[number]) {
+            redNumberObj[number] += 1;
           } else {
-            numberObj[number] = 1;
+            redNumberObj[number] = 1;
           }
         });
+
+        if (blueNumberObj[blue]) {
+          blueNumberObj[blue] += 1;
+        } else {
+          blueNumberObj[blue] = 1;
+        }
       });
 
-      const sortData: string[] = [];
-      const numbers = Object.keys(numberObj);
-      for (let i = 0, l = numbers.length; i < l; i++) {
-        const number = numbers[i];
-        const num = numberObj[number];
+      const redSortData: string[] = [];
+      const redNumbers = Object.keys(redNumberObj);
+      for (let i = 0, l = redNumbers.length; i < l; i++) {
+        const number = redNumbers[i];
+        const num = redNumberObj[number];
         for (let j = 0; j < 6; j++) {
-          if (sortData[j]) {
-            if (num > numberObj[sortData[j]]) {
-              sortData.splice(j, 0, number);
+          if (redSortData[j]) {
+            if (num > redNumberObj[redSortData[j]]) {
+              redSortData.splice(j, 0, number);
               break;
             }
           } else {
-            sortData.push(number);
+            redSortData.push(number);
             break;
           }
         }
       }
-      data = sortData
+
+      redData = redSortData
         .slice(0, 6)
-        .map((number) => [`${number} 号`, numberObj[number]]);
+        .map((number) => [`${number} 号`, redNumberObj[number]]);
+
+      const blueSortData: string[] = [];
+      const blueNumbers = Object.keys(blueNumberObj);
+      for (let i = 0, l = blueNumbers.length; i < l; i++) {
+        const number = blueNumbers[i];
+        const num = blueNumberObj[number];
+        for (let j = 0; j < 6; j++) {
+          if (blueSortData[j]) {
+            if (num > blueNumberObj[blueSortData[j]]) {
+              blueSortData.splice(j, 0, number);
+              break;
+            }
+          } else {
+            blueSortData.push(number);
+            break;
+          }
+        }
+      }
+
+      blueData = blueSortData
+        .slice(0, 6)
+        .map((number) => [`${number} 号`, blueNumberObj[number]]);
     }
-    return { dataSource: data };
+
+    return { redData, blueData };
+  };
+
+  const { echartData1, echartData2, echartData3, echartData4 } = useMemo(() => {
+    const { redData, blueData } = getTop6(dualColouredBallDataSource);
+
+    let datSource = cloneDeep(dualColouredBallDataSource);
+    datSource = datSource
+      .sort((prev, next) => {
+        if (!prev.date || !next.date) {
+          return 1; // 没有值的，排最后
+        } else {
+          const prevDate = dayjs(prev.date.split("(")[0], "YYYY-MM-DD");
+          const nextDate = dayjs(next.date.split("(")[0], "YYYY-MM-DD");
+          if (prevDate > nextDate) {
+            return -1;
+          } else if (prevDate < nextDate) {
+            return 1;
+          }
+        }
+        return 0;
+      })
+      .slice(0, 6);
+    const { redData: recentRedData, blueData: recentBlueData } =
+      getTop6(datSource);
+
+    return {
+      echartData1: { dataSource: redData },
+      echartData2: { dataSource: blueData },
+      echartData3: { dataSource: recentRedData },
+      echartData4: { dataSource: recentBlueData },
+    };
   }, [dualColouredBallDataSource]);
 
   return (
@@ -71,9 +138,10 @@ const EchartAnalyzeModal = (props: EchartAnalyzeModalProps) => {
           style={{
             display: "flex",
             fontSize: "15px",
+            fontWeight: "600",
           }}
         >
-          所有红球出现频次最多的6个号码
+          所有红球出现频次最多的6个号码：
         </div>
         <div
           style={{
@@ -83,9 +151,73 @@ const EchartAnalyzeModal = (props: EchartAnalyzeModalProps) => {
             marginTop: "8px",
           }}
         >
-          <ColumnBar
-            data={echartData}
-          />
+          <ColumnBar data={echartData1} />
+        </div>
+        <div
+          style={{
+            display: "flex",
+            fontSize: "15px",
+            fontWeight: "600",
+            marginTop: "8px",
+            paddingTop: "12px",
+            borderTop: "1px dashed #bbbbbb",
+          }}
+        >
+          所有蓝球出现频次最多的6个号码：
+        </div>
+        <div
+          style={{
+            display: "flex",
+            width: "100%",
+            height: "400px",
+            marginTop: "8px",
+          }}
+        >
+          <ColumnBar data={echartData2} color='#0A5EB0' />
+        </div>
+        <div
+          style={{
+            display: "flex",
+            fontSize: "15px",
+            fontWeight: "600",
+            marginTop: "8px",
+            paddingTop: "12px",
+            borderTop: "1px dashed #bbbbbb",
+          }}
+        >
+          近6期红球出现频次最多的6个号码（红球热号）：
+        </div>
+        <div
+          style={{
+            display: "flex",
+            width: "100%",
+            height: "400px",
+            marginTop: "8px",
+          }}
+        >
+          <ColumnBar data={echartData3} />
+        </div>
+        <div
+          style={{
+            display: "flex",
+            fontSize: "15px",
+            fontWeight: "600",
+            marginTop: "8px",
+            paddingTop: "12px",
+            borderTop: "1px dashed #bbbbbb",
+          }}
+        >
+          近6期蓝球出现频次最多的6个号码（蓝球热号）：
+        </div>
+        <div
+          style={{
+            display: "flex",
+            width: "100%",
+            height: "400px",
+            marginTop: "8px",
+          }}
+        >
+          <ColumnBar data={echartData4} color='#0A5EB0' />
         </div>
       </div>
     </Modal>
