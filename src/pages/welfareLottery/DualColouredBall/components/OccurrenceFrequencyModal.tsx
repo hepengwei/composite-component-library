@@ -41,7 +41,7 @@ const OccurrenceFrequencyModal = (props: OccurrenceFrequencyModalProps) => {
         for (let i = 0, l = occurrenceKeys.length; i < l; i++) {
           const number = occurrenceKeys[i];
           const num = occurrenceNum[number];
-          for (let j = 0; j < 5; j++) {
+          for (let j = 0; j < 6; j++) {
             if (sortData[j]) {
               if (num > occurrenceNum[sortData[j]]) {
                 sortData.splice(j, 0, number);
@@ -53,7 +53,7 @@ const OccurrenceFrequencyModal = (props: OccurrenceFrequencyModalProps) => {
             }
           }
         }
-        const top5Data = sortData.slice(0, 5);
+        const top5Data = sortData.slice(0, 6);
         newTop5Data.push(top5Data);
       });
     }
@@ -95,7 +95,7 @@ const OccurrenceFrequencyModal = (props: OccurrenceFrequencyModalProps) => {
                 fontSize: "15px",
               }}
             >
-              第{index1 + 1}个色球出现次数最多的前5个号码：
+              第{index1 + 1}个色球出现次数最多的前6个号码：
             </div>
             <div
               style={{
@@ -114,7 +114,7 @@ const OccurrenceFrequencyModal = (props: OccurrenceFrequencyModalProps) => {
                       style={{
                         width: 28,
                         height: 28,
-                        margin: "0 20px",
+                        margin: "0 24px",
                         display: "flex",
                         justifyContent: "center",
                         alignItems: "center",
