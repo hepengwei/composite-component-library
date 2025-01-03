@@ -96,7 +96,7 @@ export const GlobalProvider = (props: PropsWithChildren<{}>) => {
                 ?.split(",")
                 .reduce((sum: number, next: string) => sum + Number(next), 0);
             });
-            finalList = finalList.concat(data.result);
+            finalList = data.result.concat(finalList);
             setDualColouredBallDataSource(finalList);
           } else {
             setDualColouredBallDataSource(dataSource);
@@ -148,7 +148,7 @@ export const GlobalProvider = (props: PropsWithChildren<{}>) => {
                 ?.split(",")
                 .reduce((sum: number, next: string) => sum + Number(next), 0);
             });
-            finalList = finalList.concat(data.result);
+            finalList = data.result.concat(finalList);
             setLottery3DDataSource(finalList);
           } else {
             setLottery3DDataSource(dataSource);

@@ -3,15 +3,15 @@
  */
 import React, { useState, useEffect } from "react";
 import { Button, message, Table } from "antd";
-import dayjs from "dayjs";
 import { useGlobalContext } from "@/hooks/useGlobalContext";
 import RandomOneModal from "./components/RandomOneModal";
 import OccurrenceFrequencyModal from "./components/OccurrenceFrequencyModal";
 import EchartAnalyzeModal from "./components/EchartAnalyzeModal";
+import ForecastModal from "./components/ForecastModal";
 import AddDataModal from "./components/AddDataModal";
 import RuleModal from "./components/RuleModal";
+import { dateSorter, moneySorter } from "utils/welfareLottery";
 import styles from "./index.module.scss";
-import BigNumber from "bignumber.js";
 
 const DualColouredBall = () => {
   const { dualColouredBallDataSource, setDualColouredBallDataSource } =
@@ -22,6 +22,7 @@ const DualColouredBall = () => {
     useState<boolean>(false);
   const [echartAnalyzeModalOpen, setEchartAnalyzeModalOpen] =
     useState<boolean>(false);
+  const [forecastModalOpen, setForecastModalOpen] = useState<boolean>(false);
   const [addDataModalOpen, setAddDataModalOpen] = useState<boolean>(false);
   const [ruleModalOpen, setRuleModalOpen] = useState<boolean>(false);
 
@@ -86,7 +87,7 @@ const DualColouredBall = () => {
               }
             });
             // 将新增的和原来的数据合并
-            finalList = finalList.concat(dualColouredBallDataSource);
+            finalList = dualColouredBallDataSource.concat(finalList);
             setDualColouredBallDataSource(finalList);
           } else {
             setDualColouredBallDataSource(newArr);
@@ -114,22 +115,7 @@ const DualColouredBall = () => {
       sorter: (
         prevRecord: Record<string, any>,
         nextRecord: Record<string, any>
-      ) => {
-        if (!prevRecord?.date) {
-          return -1; // 没有值的，降序时排最后，升序时排最前
-        } else if (!nextRecord?.date) {
-          return 1; // 没有值的，降序时排最后，升序时排最前
-        } else {
-          const prevDate = dayjs(prevRecord.date.split("(")[0], "YYYY-MM-DD");
-          const nextDate = dayjs(nextRecord.date.split("(")[0], "YYYY-MM-DD");
-          if (prevDate > nextDate) {
-            return 1;
-          } else if (prevDate < nextDate) {
-            return -1;
-          }
-        }
-        return 0;
-      },
+      ) => dateSorter("date", prevRecord, nextRecord),
     },
     {
       title: "开奖号码",
@@ -196,22 +182,7 @@ const DualColouredBall = () => {
           sorter: (
             prevRecord: Record<string, any>,
             nextRecord: Record<string, any>
-          ) => {
-            if (!prevRecord?.typemoney1) {
-              return -1; // 没有值的，降序时排最后，升序时排最前
-            } else if (!nextRecord?.typemoney1) {
-              return 1; // 没有值的，降序时排最后，升序时排最前
-            } else {
-              const prevTypemoney = new BigNumber(prevRecord.typemoney1);
-              const nextTypemoney = new BigNumber(nextRecord.typemoney1);
-              if (prevTypemoney.gt(nextTypemoney)) {
-                return 1;
-              } else if (prevTypemoney.lt(nextTypemoney)) {
-                return -1;
-              }
-            }
-            return 0;
-          },
+          ) => moneySorter("typemoney1", prevRecord, nextRecord),
           render: (value: string) => {
             if (value) {
               return value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -239,22 +210,7 @@ const DualColouredBall = () => {
           sorter: (
             prevRecord: Record<string, any>,
             nextRecord: Record<string, any>
-          ) => {
-            if (!prevRecord?.typemoney2) {
-              return -1; // 没有值的，降序时排最后，升序时排最前
-            } else if (!nextRecord?.typemoney2) {
-              return 1; // 没有值的，降序时排最后，升序时排最前
-            } else {
-              const prevTypemoney = new BigNumber(prevRecord.typemoney2);
-              const nextTypemoney = new BigNumber(nextRecord.typemoney2);
-              if (prevTypemoney.gt(nextTypemoney)) {
-                return 1;
-              } else if (prevTypemoney.lt(nextTypemoney)) {
-                return -1;
-              }
-            }
-            return 0;
-          },
+          ) => moneySorter("typemoney2", prevRecord, nextRecord),
           render: (value: string) => {
             if (value) {
               return value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -271,22 +227,7 @@ const DualColouredBall = () => {
       sorter: (
         prevRecord: Record<string, any>,
         nextRecord: Record<string, any>
-      ) => {
-        if (!prevRecord?.sales) {
-          return -1; // 没有值的，降序时排最后，升序时排最前
-        } else if (!nextRecord?.sales) {
-          return 1; // 没有值的，降序时排最后，升序时排最前
-        } else {
-          const prevSales = new BigNumber(prevRecord.sales);
-          const nextSales = new BigNumber(nextRecord.sales);
-          if (prevSales.gt(nextSales)) {
-            return 1;
-          } else if (prevSales.lt(nextSales)) {
-            return -1;
-          }
-        }
-        return 0;
-      },
+      ) => moneySorter("sales", prevRecord, nextRecord),
       render: (value: string) => {
         if (value) {
           return value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -301,22 +242,7 @@ const DualColouredBall = () => {
       sorter: (
         prevRecord: Record<string, any>,
         nextRecord: Record<string, any>
-      ) => {
-        if (!prevRecord?.poolmoney) {
-          return -1; // 没有值的，降序时排最后，升序时排最前
-        } else if (!nextRecord?.poolmoney) {
-          return 1; // 没有值的，降序时排最后，升序时排最前
-        } else {
-          const prevPoolmoney = new BigNumber(prevRecord.poolmoney);
-          const nextPoolmoney = new BigNumber(nextRecord.poolmoney);
-          if (prevPoolmoney.gt(nextPoolmoney)) {
-            return 1;
-          } else if (prevPoolmoney.lt(nextPoolmoney)) {
-            return -1;
-          }
-        }
-        return 0;
-      },
+      ) => moneySorter("poolmoney", prevRecord, nextRecord),
       render: (value: string) => {
         if (value) {
           return value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -375,6 +301,13 @@ const DualColouredBall = () => {
           <Button
             type='primary'
             ghost
+            onClick={() => setForecastModalOpen(true)}
+          >
+            预测往期号码及其中奖情况
+          </Button>
+          <Button
+            type='primary'
+            ghost
             onClick={() => setAddDataModalOpen(true)}
           >
             添加数据
@@ -406,6 +339,10 @@ const DualColouredBall = () => {
       <EchartAnalyzeModal
         open={echartAnalyzeModalOpen}
         onCancel={() => setEchartAnalyzeModalOpen(false)}
+      />
+      <ForecastModal
+        open={forecastModalOpen}
+        onCancel={() => setForecastModalOpen(false)}
       />
       <AddDataModal
         open={addDataModalOpen}
