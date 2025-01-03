@@ -10,14 +10,14 @@ type OccurrenceFrequencyModalProps = {
 const OccurrenceFrequencyModal = (props: OccurrenceFrequencyModalProps) => {
   const { dualColouredBallDataSource } = useGlobalContext();
   const { open, onCancel } = props;
-  const [top5Data, setTop5Data] = useState<string[][]>([]);
+  const [top6Data, setTop6Data] = useState<string[][]>([]);
 
   const handleCancel = () => {
     onCancel();
   };
 
-  const computeTop5Data = () => {
-    const newTop5Data: string[][] = [];
+  const computeTop6Data = () => {
+    const newTop6Data: string[][] = [];
     const numberOccurrenceNum: Record<string, number>[] = [];
     if (dualColouredBallDataSource && dualColouredBallDataSource.length > 0) {
       dualColouredBallDataSource.forEach((item: Record<string, any>) => {
@@ -53,15 +53,15 @@ const OccurrenceFrequencyModal = (props: OccurrenceFrequencyModalProps) => {
             }
           }
         }
-        const top5Data = sortData.slice(0, 6);
-        newTop5Data.push(top5Data);
+        const top6Data = sortData.slice(0, 6);
+        newTop6Data.push(top6Data);
       });
     }
-    setTop5Data(newTop5Data);
+    setTop6Data(newTop6Data);
   };
 
   useEffect(() => {
-    computeTop5Data();
+    computeTop6Data();
   }, [dualColouredBallDataSource]);
 
   return (
@@ -80,7 +80,7 @@ const OccurrenceFrequencyModal = (props: OccurrenceFrequencyModalProps) => {
           alignItems: "center",
         }}
       >
-        {top5Data.map((numberList: string[], index1: number) => (
+        {top6Data.map((numberList: string[], index1: number) => (
           <div
             style={{
               width: "100%",
@@ -123,7 +123,7 @@ const OccurrenceFrequencyModal = (props: OccurrenceFrequencyModalProps) => {
                         fontWeight: "500",
                         color: "#FFFFFF",
                         backgroundColor:
-                          index1 === top5Data.length - 1
+                          index1 === top6Data.length - 1
                             ? "#0A5EB0"
                             : "#F72C5B",
                       }}

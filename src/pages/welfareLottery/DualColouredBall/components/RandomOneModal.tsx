@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Modal, Button } from "antd";
-import { getRandomNumber } from "utils/util";
+import { getRandomNumber, sortRedNumber } from "utils/welfareLottery";
 
 type RandomOneModalProps = {
   open: boolean;
@@ -19,7 +19,11 @@ const RandomOneModal = (props: RandomOneModalProps) => {
     setRandomList([]);
   };
 
-  const randomOneRedNumber = (min: number, max: number, randomList: string[]) => {
+  const randomOneRedNumber = (
+    min: number,
+    max: number,
+    randomList: string[]
+  ) => {
     const number = getRandomNumber(min, max).toString().padStart(2, "00");
     // 有重复的则必须重新生成一个
     if (randomList.includes(number)) {
@@ -30,10 +34,11 @@ const RandomOneModal = (props: RandomOneModalProps) => {
   };
 
   const randomNumbers = () => {
-    const newRandomList: string[] = [];
+    let newRandomList: string[] = [];
     for (let i = 0; i < RED_NUMBER_NUM; i++) {
       randomOneRedNumber(1, 33, newRandomList);
     }
+    newRandomList = sortRedNumber(newRandomList);
     for (let i = 0; i < BLUE_NUMBER_NUM; i++) {
       const number = getRandomNumber(1, 16).toString().padStart(2, "00");
       newRandomList.push(number);

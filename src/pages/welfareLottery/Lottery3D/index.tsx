@@ -3,15 +3,14 @@
  */
 import React, { useState, useEffect } from "react";
 import { Button, message, Table } from "antd";
-import dayjs from "dayjs";
 import { useGlobalContext } from "@/hooks/useGlobalContext";
 import RandomOneModal from "./components/RandomOneModal";
 import OccurrenceFrequencyModal from "./components/OccurrenceFrequencyModal";
 import EchartAnalyzeModal from "./components/EchartAnalyzeModal";
 import AddDataModal from "./components/AddDataModal";
 import RuleModal from "./components/RuleModal";
+import { dateSorter, moneySorter } from "utils/welfareLottery";
 import styles from "./index.module.scss";
-import BigNumber from "bignumber.js";
 
 const Lottery3D = () => {
   const { lottery3DDataSource, setLottery3DDataSource } = useGlobalContext();
@@ -66,7 +65,7 @@ const Lottery3D = () => {
               }
             });
             // 将新增的和原来的数据合并
-            finalList = finalList.concat(lottery3DDataSource);
+            finalList = lottery3DDataSource.concat(finalList);
             setLottery3DDataSource(finalList);
           } else {
             setLottery3DDataSource(newArr);
@@ -111,22 +110,7 @@ const Lottery3D = () => {
       sorter: (
         prevRecord: Record<string, any>,
         nextRecord: Record<string, any>
-      ) => {
-        if (!prevRecord?.date) {
-          return -1; // 没有值的，降序时排最后，升序时排最前
-        } else if (!nextRecord?.date) {
-          return 1; // 没有值的，降序时排最后，升序时排最前
-        } else {
-          const prevDate = dayjs(prevRecord.date.split("(")[0], "YYYY-MM-DD");
-          const nextDate = dayjs(nextRecord.date.split("(")[0], "YYYY-MM-DD");
-          if (prevDate > nextDate) {
-            return 1;
-          } else if (prevDate < nextDate) {
-            return -1;
-          }
-        }
-        return 0;
-      },
+      ) => dateSorter("date", prevRecord, nextRecord),
     },
     {
       title: "开奖号码",
@@ -181,22 +165,7 @@ const Lottery3D = () => {
       sorter: (
         prevRecord: Record<string, any>,
         nextRecord: Record<string, any>
-      ) => {
-        if (!prevRecord?.sales) {
-          return -1; // 没有值的，降序时排最后，升序时排最前
-        } else if (!nextRecord?.sales) {
-          return 1; // 没有值的，降序时排最后，升序时排最前
-        } else {
-          const prevSales = new BigNumber(prevRecord.sales);
-          const nextSales = new BigNumber(nextRecord.sales);
-          if (prevSales.gt(nextSales)) {
-            return 1;
-          } else if (prevSales.lt(nextSales)) {
-            return -1;
-          }
-        }
-        return 0;
-      },
+      ) => moneySorter("sales", prevRecord, nextRecord),
       render: (value: string) => {
         if (value) {
           return value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");

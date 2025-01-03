@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Modal, Button } from "antd";
-import { getRandomNumber } from "utils/util";
+import { getRandomNumber } from "utils/welfareLottery";
 
 type RandomOneModalProps = {
   open: boolean;
