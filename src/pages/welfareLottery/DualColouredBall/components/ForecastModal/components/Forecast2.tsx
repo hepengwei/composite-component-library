@@ -10,7 +10,7 @@ import {
   getForecastWinPrize,
 } from "utils/welfareLottery";
 
-const Forecast1 = () => {
+const Forecast2 = () => {
   const { dualColouredBallDataSource } = useGlobalContext();
   const [tableData, setTableData] = useState<Record<string, any>[]>([]);
 
@@ -132,7 +132,7 @@ const Forecast1 = () => {
       </div>
       <Table
         bordered
-        scroll={{ y: 480 }}
+        scroll={{ y: 540 }}
         dataSource={tableData}
         columns={columns}
         pagination={{
@@ -145,4 +145,4 @@ const Forecast1 = () => {
   );
 };
 
-export default Forecast1;
+export default Forecast2;

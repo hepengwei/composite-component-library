@@ -4,13 +4,9 @@ import dayjs from "dayjs";
 import { cloneDeep } from "lodash-es";
 import { useGlobalContext } from "@/hooks/useGlobalContext";
 import { columns } from "../index.data";
-import {
-  sortRedNumber,
-  removeDuplicateRed,
-  getForecastWinPrize,
-} from "utils/welfareLottery";
+import { sortRedNumber, getForecastWinPrize } from "utils/welfareLottery";
 
-const Forecast1 = () => {
+const Forecast6 = () => {
   const { dualColouredBallDataSource } = useGlobalContext();
   const [tableData, setTableData] = useState<Record<string, any>[]>([]);
 
@@ -32,70 +28,85 @@ const Forecast1 = () => {
     });
 
     const newTableData: Record<string, any>[] = [];
-    const numberOccurrenceNum: Record<string, number>[] = [];
+    const redNumberObj: Record<string, number> = {};
+    const blueNumberObj: Record<string, number> = {};
     for (let i = Math.floor(datSource.length / 2); i >= 0; i--) {
       if (i === Math.floor(datSource.length / 2)) {
         const data = datSource.slice(i + 1);
         data.forEach((item: Record<string, any>) => {
           const { red, blue } = item;
-          const numberList = `${red},${blue}`.split(",");
-          numberList.forEach((number: string, index: number) => {
-            if (numberOccurrenceNum[index]) {
-              if (numberOccurrenceNum[index][number]) {
-                numberOccurrenceNum[index][number] += 1;
-              } else {
-                numberOccurrenceNum[index][number] = 1;
-              }
+
+          const numberList = red.split(",");
+          numberList.forEach((number: string) => {
+            if (redNumberObj[number]) {
+              redNumberObj[number] += 1;
             } else {
-              numberOccurrenceNum[index] = { [number]: 1 };
+              redNumberObj[number] = 1;
             }
           });
+
+          if (blueNumberObj[blue]) {
+            blueNumberObj[blue] += 1;
+          } else {
+            blueNumberObj[blue] = 1;
+          }
         });
       } else {
         const { red, blue } = datSource[i + 1];
-        const numberList = `${red},${blue}`.split(",");
-        numberList.forEach((number: string, index: number) => {
-          if (numberOccurrenceNum[index]) {
-            if (numberOccurrenceNum[index][number]) {
-              numberOccurrenceNum[index][number] += 1;
-            } else {
-              numberOccurrenceNum[index][number] = 1;
-            }
+        const numberList = red.split(",");
+        numberList.forEach((number: string) => {
+          if (redNumberObj[number]) {
+            redNumberObj[number] += 1;
           } else {
-            numberOccurrenceNum[index] = { [number]: 1 };
+            redNumberObj[number] = 1;
           }
         });
+
+        if (blueNumberObj[blue]) {
+          blueNumberObj[blue] += 1;
+        } else {
+          blueNumberObj[blue] = 1;
+        }
       }
 
-      let numberList: string[] = [];
-      numberOccurrenceNum.forEach(
-        (occurrenceNum: Record<string, number>, index: number) => {
-          const sortData: string[] = [];
-          const occurrenceKeys = Object.keys(occurrenceNum);
-          for (let i = 0, l = occurrenceKeys.length; i < l; i++) {
-            const number = occurrenceKeys[i];
-            const num = occurrenceNum[number];
-            for (let j = 0; j < 6; j++) {
-              if (sortData[j]) {
-                if (num > occurrenceNum[sortData[j]]) {
-                  sortData.splice(j, 0, number);
-                  break;
-                }
-              } else {
-                sortData.push(number);
-                break;
-              }
+      const redMoreSortData: string[] = [];
+      const redNumbers = Object.keys(redNumberObj);
+      for (let i = 0, l = redNumbers.length; i < l; i++) {
+        const number = redNumbers[i];
+        const num = redNumberObj[number];
+        for (let j = 0; j < 10; j++) {
+          if (redMoreSortData[j]) {
+            if (num > redNumberObj[redMoreSortData[j]]) {
+              redMoreSortData.splice(j, 0, number);
+              break;
             }
-          }
-          const top6Data = sortData.slice(0, 6);
-          numberList.push(top6Data[0]);
-          if (index === 5) {
-            numberList = sortRedNumber(numberList);
+          } else {
+            redMoreSortData.push(number);
+            break;
           }
         }
-      );
+      }
+      const blueMoreSortData: string[] = [];
+      const blueNumbers = Object.keys(blueNumberObj);
+      for (let i = 0, l = blueNumbers.length; i < l; i++) {
+        const number = blueNumbers[i];
+        const num = blueNumberObj[number];
+        for (let j = 0; j < 6; j++) {
+          if (blueMoreSortData[j]) {
+            if (num > blueNumberObj[blueMoreSortData[j]]) {
+              blueMoreSortData.splice(j, 0, number);
+              break;
+            }
+          } else {
+            blueMoreSortData.push(number);
+            break;
+          }
+        }
+      }
 
-      numberList = removeDuplicateRed(numberList);
+      let numberList: string[] = sortRedNumber(
+        redMoreSortData.slice(3, 9)
+      ).concat(blueMoreSortData.slice(0, 1));
 
       const dataItem = datSource[i];
       const forecastWinPrize = getForecastWinPrize(
@@ -124,7 +135,7 @@ const Forecast1 = () => {
     <div style={{ display: "flex", flexDirection: "column" }}>
       <div style={{ marginBottom: "4px" }}>
         <span style={{ color: "#FF4D4F" }}>预测号码方法：</span>
-        将第1个红球到第6个红球分别计算出其所在位置红球出现次数最多的前6个号码，然后每个位置的号码取出现次数最多的那个号码；计算出所有蓝球出现次数最多的前6个号码，取第1个号码作为预测的蓝球号码；最后给红球去重，不够的随机生成号码
+        计算出往期所有开奖号码中出现红球号码最多的前10个号码,取其中第3到第8个号码，以次取到6个号码作为预测的红球号码；计算出往期所有开奖号码中出现蓝球号码最多的前6个号码，取第1个号码作为预测的蓝球号码
       </div>
       <Table
         bordered
@@ -141,4 +152,4 @@ const Forecast1 = () => {
   );
 };
 
-export default Forecast1;
+export default Forecast6;

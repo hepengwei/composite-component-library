@@ -1,6 +1,6 @@
 import BigNumber from "bignumber.js";
 import dayjs from "dayjs";
-import { number } from "echarts";
+import { cloneDeep } from "lodash-es";
 
 /**
  * 获取一个随机整数
@@ -131,4 +131,27 @@ export const getForecastWinPrize = (
     }
   }
   return forecastWinPrize;
+};
+
+/**
+ * 从一组号码中随机返回n个号码
+ * @param numberList 原号码数组
+ * @param num 返回多少个号码(num如果大于等于numberList.length, 则返回原号码)
+ */
+export const getNumNumber = (numberList: string[], num: number) => {
+  if (numberList && numberList.length > 0 && num >= 1) {
+    const originList = cloneDeep(numberList);
+    if (num >= numberList.length) {
+      return originList;
+    }
+    const indexList: number[] = [];
+    while (indexList.length < num) {
+      const index = getRandomNumber(0, numberList.length - 1);
+      if (!indexList.includes(index)) {
+        indexList.push(index);
+      }
+    }
+    return indexList.map((index: number) => numberList[index]);
+  }
+  return [];
 };
