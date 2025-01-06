@@ -3,6 +3,9 @@ import { Modal, Tabs } from "antd";
 import Forecast1 from "./components/Forecast1";
 import Forecast2 from "./components/Forecast2";
 import Forecast3 from "./components/Forecast3";
+import Forecast4 from "./components/Forecast4";
+import Forecast5 from "./components/Forecast5";
+import Forecast6 from "./components/Forecast6";
 import ComingSoon from "@/components/ComingSoon";
 
 type ForecastModalProps = {
@@ -20,9 +23,10 @@ const ForecastModal = (props: ForecastModalProps) => {
       open={open}
       onCancel={onCancel}
       footer={null}
+      centered
     >
       <Tabs
-        style={{ height: "700px" }}
+        style={{ height: "760px" }}
         items={[
           {
             key: "1",
@@ -42,11 +46,21 @@ const ForecastModal = (props: ForecastModalProps) => {
           {
             key: "4",
             label: "方法四",
-            children: <ComingSoon />,
+            children: <Forecast4 />,
           },
           {
             key: "5",
             label: "方法五",
+            children: <Forecast5 />,
+          },
+          {
+            key: "6",
+            label: "方法六",
+            children: <Forecast6 />,
+          },
+          {
+            key: "7",
+            label: "方法七",
             children: <ComingSoon />,
           },
         ]}

@@ -26,6 +26,7 @@ const AddDataModal = (props: AddDataModalProps) => {
     if (text && text.trim()) {
       const newText = text.trim().replaceAll(/\\n/g, "");
       onOk(newText);
+      setText("");
     } else {
       message.warning("没有数据");
     }

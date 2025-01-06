@@ -93,7 +93,7 @@ const EchartAnalyzeModal = (props: EchartAnalyzeModalProps) => {
     echartData2,
     echartData3,
     echartData4,
-    neverAppearRedData,
+    bottom6RedData,
   } = useMemo(() => {
     const { redData, blueData } = getTop6(dualColouredBallDataSource);
 
@@ -120,21 +120,32 @@ const EchartAnalyzeModal = (props: EchartAnalyzeModalProps) => {
       redNumberObj,
     } = getTop6(datSource);
 
-    const redNumberList = Object.keys(redNumberObj);
-    const neverAppearRedData: string[] = [];
-    for (let i = 1; i <= 33; i++) {
-      const number = i.toString().padStart(2, "00");
-      if (!redNumberList.includes(number)) {
-        neverAppearRedData.push(number);
+
+    const redLessSortData: string[] = [];
+    const redNumbers = Object.keys(redNumberObj);
+    for (let i = 0, l = redNumbers.length; i < l; i++) {
+      const number = redNumbers[i];
+      const num = redNumberObj[number];
+      for (let j = 0; j < 6; j++) {
+        if (redLessSortData[j]) {
+          if (num < redNumberObj[redLessSortData[j]]) {
+            redLessSortData.splice(j, 0, number);
+            break;
+          }
+        } else {
+          redLessSortData.push(number);
+          break;
+        }
       }
     }
+    const bottom6RedData = redLessSortData.slice(0, 6)
 
     return {
       echartData1: { dataSource: redData },
       echartData2: { dataSource: blueData },
       echartData3: { dataSource: recentRedData },
       echartData4: { dataSource: recentBlueData },
-      neverAppearRedData,
+      bottom6RedData,
     };
   }, [dualColouredBallDataSource]);
 
@@ -248,7 +259,7 @@ const EchartAnalyzeModal = (props: EchartAnalyzeModalProps) => {
             borderTop: "1px dashed #bbbbbb",
           }}
         >
-          近10期红球一次都没出现的号码（红球冷号）：
+          近10期红球出现次数最少的6个号码（红球冷号）：
         </div>
         <div
           style={{
@@ -261,8 +272,8 @@ const EchartAnalyzeModal = (props: EchartAnalyzeModalProps) => {
             marginTop: "8px",
           }}
         >
-          {neverAppearRedData && neverAppearRedData.length > 0
-            ? neverAppearRedData.map((number: string, index: number) => (
+          {bottom6RedData && bottom6RedData.length > 0
+            ? bottom6RedData.map((number: string, index: number) => (
                 <div
                   style={{
                     width: 36,
