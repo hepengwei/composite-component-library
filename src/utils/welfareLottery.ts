@@ -155,3 +155,26 @@ export const getNumNumber = (numberList: string[], num: number) => {
   }
   return [];
 };
+
+/**
+ * 将源数据进行按时间从大到小排序
+ * @param dataSource 源数据
+ */
+export const getSortDataSource = (dataSource: Record<string, any>[]) => {
+  let newDatSource = cloneDeep(dataSource);
+  newDatSource = newDatSource.sort((prev, next) => {
+    if (!prev.date || !next.date) {
+      return 1; // 没有值的，排最后
+    } else {
+      const prevDate = dayjs(prev.date.split("(")[0], "YYYY-MM-DD");
+      const nextDate = dayjs(next.date.split("(")[0], "YYYY-MM-DD");
+      if (prevDate > nextDate) {
+        return -1;
+      } else if (prevDate < nextDate) {
+        return 1;
+      }
+    }
+    return 0;
+  });
+  return newDatSource;
+};
