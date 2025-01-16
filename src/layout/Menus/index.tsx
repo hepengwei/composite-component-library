@@ -12,6 +12,7 @@ import {
   MenuUnfoldOutlined,
   FormOutlined,
   TableOutlined,
+  AppstoreOutlined,
 } from "@ant-design/icons";
 import { useDebounceFn } from "ahooks";
 import { Button, Menu } from "antd";
@@ -54,6 +55,7 @@ const Menus: React.FC = () => {
       getItem("Antd表格 部分", "antdTableSection"),
       getItem("Ali表格 部分", "aliTableSection"),
     ]),
+    getItem("其他", "others", <AppstoreOutlined />),
     getItem(
       "中国福利彩票",
       "welfareLottery",
