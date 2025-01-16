@@ -1,0 +1,73 @@
+$fontSize: 14px;
+.baseModal {
+  $leftRightPadding: 10px;
+
+  :global {
+    .ant-modal-content {
+      padding: 0 !important;
+      overflow: hidden;
+      .ant-modal-close {
+        top: 6px;
+        right: $leftRightPadding;
+        width: 20px !important;
+        height: 20px !important;
+        svg {
+          width: 14px;
+          height: 14px;
+        }
+      }
+    }
+  }
+
+  $headerHeight: 34px;
+  $footerHeight: 36px;
+  $border: 1px solid rgb(229, 230, 235);
+  .modalHeader {
+    box-sizing: border-box;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: $headerHeight;
+    padding: 0px $leftRightPadding;
+    border-bottom: $border;
+    cursor: move;
+
+    .title {
+      color: #000000d8;
+      font-size: $fontSize;
+      font-weight: 600;
+    }
+  }
+
+  .modalContent {
+    box-sizing: border-box;
+    font-size: $fontSize;
+    width: 100%;
+    min-height: 40px;
+    max-height: calc(86vh - $headerHeight - $footerHeight);
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .modalFooter {
+    box-sizing: border-box;
+    width: 100%;
+    height: $footerHeight;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0px $leftRightPadding;
+    border-top: $border;
+
+    button {
+      height: 26px;
+      display: inline-flex;
+      align-items: center;
+      font-size: $fontSize;
+      &:not(:last-child) {
+        margin-right: 12px;
+      }
+    }
+  }
+}

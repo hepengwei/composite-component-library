@@ -8,6 +8,7 @@ const FormItemSection = () => import("pages/form/FormItemSection");
 const FormListSection = () => import("pages/form/FormListSection");
 const AntdTableSection = () => import("pages/table/AntdTableSection");
 const AliTableSection = () => import("pages/table/AliTableSection");
+const Others = () => import("pages/others");
 const DualColouredBall = () => import("pages/welfareLottery/DualColouredBall");
 const Lottery3D = () => import("pages/welfareLottery/Lottery3D");
 
@@ -37,6 +38,10 @@ const contentRoutes: Record<string, any>[] = [
         element: AliTableSection,
       },
     ],
+  },
+  {
+    path: "/others",
+    element: Others,
   },
   {
     path: "/welfareLottery",
