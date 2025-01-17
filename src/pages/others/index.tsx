@@ -3,9 +3,10 @@
  */
 import React from "react";
 import BaseModalSample from "./samples/BaseModalSample";
+import SearchFormSample from "./samples/SearchFormSample";
 import styles from "./index.module.scss";
 
-const sampleList = [<BaseModalSample />];
+const sampleList = [<BaseModalSample />, <SearchFormSample />];
 
 const Others = () => {
   return (
