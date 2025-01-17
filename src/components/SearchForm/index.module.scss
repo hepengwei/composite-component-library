@@ -1,0 +1,118 @@
+.searchForm {
+  $fontSize: 14px;
+  $formItemLabelWidth: 86px;
+  $formItemComponentWidth: 230px;
+  $formItemComponentHeight: 32px;
+  $formItemMarginBottom: 10px;
+
+  display: flex;
+  justify-content: space-between;
+  .rightBox {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    .actionButtons {
+      display: flex;
+      align-items: center;
+
+      :global {
+        button {
+          display: inline-flex;
+          height: $formItemComponentHeight !important;
+          align-items: center;
+          justify-content: center;
+          margin-left: 8px;
+        }
+      }
+    }
+    .expandAll {
+      display: inline-flex !important;
+      height: 32px;
+      margin-top: 8px;
+      color: #1677ff;
+      align-items: center;
+      font-size: 14px;
+      cursor: pointer;
+
+      svg {
+        padding-left: 4px;
+        margin-right: 4px;
+      }
+    }
+  }
+
+  :global {
+    .ant-form-item {
+      margin-bottom: $formItemMarginBottom !important;
+      .ant-form-item-label {
+        min-width: $formItemLabelWidth;
+        width: $formItemLabelWidth;
+        label {
+          height: $formItemComponentHeight !important;
+          font-size: $fontSize !important;
+        }
+      }
+      .ant-form-item-control-input {
+        min-width: $formItemComponentWidth;
+        min-height: $formItemComponentHeight !important;
+        .ant-input:not(textarea),
+        .ant-input-number,
+        .ant-select,
+        .ant-picker {
+          width: $formItemComponentWidth;
+          height: $formItemComponentHeight !important;
+          font-size: $fontSize !important;
+        }
+        .ant-input-affix-wrapper {
+          box-sizing: border-box;
+          height: $formItemComponentHeight !important;
+          line-height: $formItemComponentHeight !important;
+          // padding: 0px 11px !important;
+          .ant-input {
+            height: calc($formItemComponentHeight - 2px) !important;
+          }
+        }
+        textarea.ant-input {
+          width: $formItemComponentWidth;
+          font-size: $fontSize !important;
+          min-height: $formItemComponentHeight !important;
+          // padding: 2px 11px;
+        }
+        // .ant-input-number {
+        //   .ant-input-number-input {
+        //     padding: 2px 7px;
+        //   }
+        // }
+        .ant-select {
+          .ant-select-selector {
+            font-size: $fontSize !important;
+            .ant-select-selection-placeholder {
+              font-size: $fontSize !important;
+            }
+            .ant-select-selection-search {
+              margin: auto;
+              .ant-select-selection-search-input {
+                font-size: $fontSize !important;
+                height: 100%;
+              }
+            }
+          }
+        }
+        // .ant-select-multiple{
+        //   .ant-select-selection-item{
+        //     height: 18px;
+        //     line-height: 16px;
+        //   }
+        // }
+        .ant-picker {
+          .ant-picker-input {
+            font-size: $fontSize !important;
+            input {
+              font-size: $fontSize !important;
+            }
+          }
+        }
+      }
+    }
+  }
+}
