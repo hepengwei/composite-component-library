@@ -6,6 +6,7 @@ import AliMainTableSample from "./samples/AliMainTableSample";
 import SingleSelectTableSample from "./samples/SingleSelectTableSample";
 import MultiSelectTableSample from "./samples/MultiSelectTableSample";
 import SortableTableSample from "./samples/SortableTableSample";
+import WithFooterTableSample from "./samples/WithFooterTableSample";
 import styles from "./index.module.scss";
 
 const sampleList = [
@@ -13,6 +14,7 @@ const sampleList = [
   <SingleSelectTableSample />,
   <MultiSelectTableSample />,
   <SortableTableSample />,
+  <WithFooterTableSample />,
 ];
 
 const TableSection = () => {

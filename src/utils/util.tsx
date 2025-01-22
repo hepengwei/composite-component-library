@@ -114,6 +114,7 @@ export const requestMockData = (
         const id = ((pageNum - 1) * pageSize + i + 1).toString();
         data.push({
           id,
+          num: id,
           email: "123456789@qq.com",
           date:
             Math.random() < 0.9
