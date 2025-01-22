@@ -22,13 +22,13 @@
       --row-height: 26px;
 
       .art-loading-wrapper {
-        height: 100%;
         .art-loading-content-wrapper {
           height: 100%;
           .art-table {
             height: 100%;
             .art-table-header {
               border-right: 7px solid #e9edf2;
+              overflow: visible !important;
               .art-table-header-row {
                 .art-table-header-cell {
                   height: $tableRowHeight !important;
@@ -40,8 +40,9 @@
             }
 
             .art-table-body {
-              height: calc(100% - $tableRowHeight);
-              overflow-y: scroll;
+              // height: calc(100% - $tableRowHeight);
+              // overflow-y: scroll;
+              overflow: visible;
               table {
                 .art-table-row {
                   color: var(--color);
@@ -82,6 +83,30 @@
                 }
               }
             }
+
+            .art-table-footer {
+              overflow: visible !important;
+              table {
+                border-bottom: var(--cell-border-horizontal) !important;
+                .art-table-row {
+                  color: var(--color);
+
+                  td.art-table-cell {
+                    box-sizing: border-box;
+                    height: $tableRowHeight !important;
+                    max-height: $tableRowHeight !important;
+                    min-height: $fontSize !important;
+                    line-height: 16px !important;
+                    padding: 3px 9px !important;
+                    vertical-align: middle !important;
+                  }
+                }
+              }
+            }
+          }
+
+          .art-sticky-scroll {
+            display: none !important;
           }
         }
       }
@@ -128,6 +153,14 @@
       }
     }
   }
+}
+
+.tipTextArea {
+  padding: 0 !important;
+  border: none !important;
+  font-size: 12px !important;
+  color: #ffffff !important;
+  pointer-events: none !important;
 }
 
 .ellipsisText {

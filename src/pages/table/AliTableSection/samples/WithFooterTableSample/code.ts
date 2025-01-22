@@ -1,7 +1,7 @@
-import React, { useEffect, useState, useMemo } from "react";
+export const contentTextCode = `import React, { useEffect, useState } from "react";
 import { Button, message } from "antd";
 import AliMainTable from "@/components/AliTable/AliMainTable";
-import { ArtColumn2 } from "@/components/AliTable";
+import type { ArtColumn2 } from "@/components/AliTable";
 import { requestMockData } from "utils/util";
 import styles from "./index.module.scss";
 
@@ -14,6 +14,9 @@ const INIT_PAGINATION = {
 const Content = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [tableData, setTableData] = useState<Record<string, any>[]>([]);
+  const [footerDataSource, setFooterDataSource] = useState<
+    Record<string, any>[]
+  >([]);
   const [selectedRows, setSelectedRows] = useState<Record<string, any>[]>([]);
   const [pagination, setPagin] = useState<Record<string, any>>(INIT_PAGINATION);
 
@@ -31,14 +34,22 @@ const Content = () => {
     setLoading(false);
     setSelectedRows([]);
     if (res) {
+      // 汇总数值
+      const sum = res.data.reduce(
+        (result: number, record: Record<string, any>) => result + record.number,
+        0
+      );
       setPagination({
         ...pain,
         total: res.total,
       });
       setTableData(res.data);
+      setFooterDataSource([{ id: "footer", num: "汇总行", number: sum }]);
+      footerDataSource;
     } else {
       setPagination({ ...pain, total: 0 });
       setTableData([]);
+      setFooterDataSource([]);
     }
   };
 
@@ -47,13 +58,13 @@ const Content = () => {
       message.warning("请先选择一条数据");
       return;
     }
-    message.success(`当前选择的数据序号为: ${selectedRows[0].id}`);
+    message.success(\`当前选择的数据序号为: \${selectedRows[0].num}\`);
   };
 
   const columns: ArtColumn2[] = [
     {
       name: "序号",
-      code: "id",
+      code: "num",
       width: 80,
       lock: "left",
     },
@@ -138,7 +149,6 @@ const Content = () => {
       <div className={styles.content}>
         <AliMainTable
           rowKey='id'
-          autoHeight
           isLoading={loading}
           columns={columns}
           dataSource={tableData}
@@ -147,13 +157,12 @@ const Content = () => {
           setSelectedRows={setSelectedRows}
           pagination={pagination}
           setPagination={setPagination}
-          singleSelect
-          footerDataSource={[{ email: "sdljlkfsdld" }]}
-          isStickyFooter={false}
+          footerDataSource={footerDataSource}
+          isStickyFooter
         />
       </div>
     </>
   );
 };
 
-export default Content;
+export default Content;`

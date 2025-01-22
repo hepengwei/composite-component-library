@@ -3,7 +3,6 @@ export const indexTextCode = `/**
  */
 import React, {
   useState,
-  useEffect,
   ReactNode,
   forwardRef,
   useImperativeHandle,

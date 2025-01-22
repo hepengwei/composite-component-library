@@ -28,6 +28,8 @@ import {
 } from "./code";
 export interface ArtColumn2 extends Omit<ArtColumn, "lock"> {
   ellipsis?: boolean;
+  ellipsis2?: boolean; // 支持显示包含/n换行符的文本
+  tipWidth?: number; // 限制hover后显示的Tooltip中文本宽度，默认为"auto"
   lock?: boolean | "left" | "right";
 }
 
@@ -270,7 +272,10 @@ const AliTable = (props: AliTableProps) => {
               : {},
             className: selected ? "selected" : "",
             onClick() {
-              onRowClick?.(record);
+              // 如果表格底部有汇总行，则汇总行对应的record数据中的rowKey字段值应设置为"footer"，这样就不能选择表格底部的汇总行
+              if (record[rowKey] !== "footer") {
+                onRowClick?.(record);
+              }
             },
           };
         }}
