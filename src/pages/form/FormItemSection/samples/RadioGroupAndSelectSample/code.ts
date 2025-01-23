@@ -18,6 +18,7 @@ const Content = () => {
   return (
     <Form
       form={form}
+      name='radioGroupAndSelectSampleForm'
       labelAlign='right'
       initialValues={{ field1: [0, undefined] }}
     >

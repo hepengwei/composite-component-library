@@ -13,7 +13,7 @@ const Content = () => {
   };
 
   return (
-    <Form form={form} layout='vertical'>
+    <Form form={form} name='moneyInputSampleForm' layout='vertical'>
       <Row gutter={16}>
         <Col span={12}>
           <Form.Item label='无限制输入' name='field1'>
