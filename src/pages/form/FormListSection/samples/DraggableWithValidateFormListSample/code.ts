@@ -49,6 +49,7 @@ const Content = () => {
   return (
     <Form
       form={form}
+      name='draggableWithValidateFormListSampleForm'
       labelAlign='right'
       initialValues={{
         fieldList: [{}],

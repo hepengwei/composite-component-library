@@ -8,6 +8,7 @@ const Content = () => {
   return (
     <Form
       form={form}
+      name='inputNumberAndSelectSampleForm'
       labelAlign='right'
     >
       <Row gutter={16}>

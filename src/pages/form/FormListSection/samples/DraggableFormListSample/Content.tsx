@@ -38,97 +38,98 @@ const Content = () => {
   };
 
   return (
-      <Form
-        form={form}
-        labelAlign='right'
-        initialValues={{
-          fieldList: [
-            {
-              id: "1",
-              field1: "默认值",
-              field2: "workingDay",
-              field3: ["默认值", true],
-              field4: [dayjs(), dayjs(), false],
-            },
-          ],
-        }}
-      >
-        <Form.List name='fieldList'>
-          {(fields, { add, move, remove }) => (
-            <>
-              <div className={styles.itemTitleRow}>
-                <Button
-                  type='primary'
-                  icon={<PlusOutlined />}
-                  ghost
-                  onClick={() => onAddClick(add)}
-                >
-                  新增
-                </Button>
-              </div>
-              <div
-                style={{
-                  width: "100%",
-                  height: droppableHeight > 0 ? `${droppableHeight}px` : "auto",
-                }}
-                ref={containerRef}
+    <Form
+      form={form}
+      name='draggableFormListSampleForm'
+      labelAlign='right'
+      initialValues={{
+        fieldList: [
+          {
+            id: "1",
+            field1: "默认值",
+            field2: "workingDay",
+            field3: ["默认值", true],
+            field4: [dayjs(), dayjs(), false],
+          },
+        ],
+      }}
+    >
+      <Form.List name='fieldList'>
+        {(fields, { add, move, remove }) => (
+          <>
+            <div className={styles.itemTitleRow}>
+              <Button
+                type='primary'
+                icon={<PlusOutlined />}
+                ghost
+                onClick={() => onAddClick(add)}
               >
-                <DraggableFormListContext
-                  droppableId='fieldList'
-                  fields={fields}
-                  showToTop
-                  move={move}
-                  remove={(index) => onRemoveClick(remove, index as number)}
-                >
-                  {(quote) => (
-                    <div className={styles.formListRow}>
-                      <Form.Item
-                        {...quote}
-                        name={[quote.name, "id"]}
-                        hidden
-                      ></Form.Item>
-                      <Form.Item
-                        {...quote}
-                        label='字段1'
-                        name={[quote.name, "field1"]}
-                      >
-                        <Input />
-                      </Form.Item>
-                      <Form.Item
-                        {...quote}
-                        label='字段2'
-                        name={[quote.name, "field2"]}
-                      >
-                        <Select
-                          options={[
-                            { label: "工作日", value: "workingDay" },
-                            { label: "自然日", value: "naturalDay" },
-                          ]}
-                          style={{ width: "200px" }}
-                        />
-                      </Form.Item>
-                      <Form.Item
-                        {...quote}
-                        label='字段3'
-                        name={[quote.name, "field3"]}
-                      >
-                        <InputAndCheckbox />
-                      </Form.Item>
-                      <Form.Item
-                        {...quote}
-                        label='字段4'
-                        name={[quote.name, "field4"]}
-                      >
-                        <RangePickerAndCheckbox />
-                      </Form.Item>
-                    </div>
-                  )}
-                </DraggableFormListContext>
-              </div>
-            </>
-          )}
-        </Form.List>
-      </Form>
+                新增
+              </Button>
+            </div>
+            <div
+              style={{
+                width: "100%",
+                height: droppableHeight > 0 ? `${droppableHeight}px` : "auto",
+              }}
+              ref={containerRef}
+            >
+              <DraggableFormListContext
+                droppableId='fieldList'
+                fields={fields}
+                showToTop
+                move={move}
+                remove={(index) => onRemoveClick(remove, index as number)}
+              >
+                {(quote) => (
+                  <div className={styles.formListRow}>
+                    <Form.Item
+                      {...quote}
+                      name={[quote.name, "id"]}
+                      hidden
+                    ></Form.Item>
+                    <Form.Item
+                      {...quote}
+                      label='字段1'
+                      name={[quote.name, "field1"]}
+                    >
+                      <Input />
+                    </Form.Item>
+                    <Form.Item
+                      {...quote}
+                      label='字段2'
+                      name={[quote.name, "field2"]}
+                    >
+                      <Select
+                        options={[
+                          { label: "工作日", value: "workingDay" },
+                          { label: "自然日", value: "naturalDay" },
+                        ]}
+                        style={{ width: "200px" }}
+                      />
+                    </Form.Item>
+                    <Form.Item
+                      {...quote}
+                      label='字段3'
+                      name={[quote.name, "field3"]}
+                    >
+                      <InputAndCheckbox />
+                    </Form.Item>
+                    <Form.Item
+                      {...quote}
+                      label='字段4'
+                      name={[quote.name, "field4"]}
+                    >
+                      <RangePickerAndCheckbox />
+                    </Form.Item>
+                  </div>
+                )}
+              </DraggableFormListContext>
+            </div>
+          </>
+        )}
+      </Form.List>
+    </Form>
   );
 };
 

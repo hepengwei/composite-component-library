@@ -72,7 +72,7 @@ const Content = () => {
   };
 
   return (
-    <Form form={form} labelAlign='right'>
+    <Form form={form} name='withValidateMessageSampleForm' labelAlign='right'>
       <Row gutter={16}>
         <Col span={12}>
           <Form.Item

@@ -7,7 +7,7 @@ const Content = () => {
   const [form] = Form.useForm();
 
   return (
-    <Form form={form} labelAlign='right'>
+    <Form form={form} name='customRangePickerSampleForm' labelAlign='right'>
       <Row gutter={16}>
         <Col span={12}>
           <Form.Item label='字段标题' name='field1'>
