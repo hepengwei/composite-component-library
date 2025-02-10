@@ -1,5 +1,6 @@
 import React from "react";
 import { Form, Row, Col } from "antd";
+import FocusableFormItem from "@/components/formItems/FocusableFormItem";
 import RangePickerAndCheckbox from "@/components/formItems/RangePickerAndCheckbox";
 
 const Content = () => {
@@ -13,16 +14,16 @@ const Content = () => {
     >
       <Row gutter={16}>
         <Col span={12}>
-          <Form.Item label='字段标题' name='field1'>
+          <FocusableFormItem label='字段标题' name='field1'>
             <RangePickerAndCheckbox checkboxLabel='复选框标题' />
-          </Form.Item>
+          </FocusableFormItem>
         </Col>
         <Col span={12}>
-          <Form.Item label='字段标题' name='field2'>
+          <FocusableFormItem label='字段标题' name='field2'>
             <RangePickerAndCheckbox
               rangePickerProps={{ format: "YYYY/MM/DD" }}
             />
-          </Form.Item>
+          </FocusableFormItem>
         </Col>
       </Row>
     </Form>

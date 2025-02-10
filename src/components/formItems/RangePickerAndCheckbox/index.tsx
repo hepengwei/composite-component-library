@@ -1,7 +1,13 @@
 /**
  * 左边日期范围选择框右边复选框的复合组件
  */
-import React, { useMemo } from "react";
+import React, {
+  useMemo,
+  useImperativeHandle,
+  useRef,
+  forwardRef,
+  Ref,
+} from "react";
 import { DatePicker, Checkbox } from "antd";
 import { CheckboxChangeEvent } from "antd/es/checkbox";
 import { Dayjs } from "dayjs";
@@ -31,79 +37,89 @@ type RangePickerAndCheckboxProps = {
   style?: Record<string, any>;
 };
 
-const RangePickerAndCheckbox = (props: RangePickerAndCheckboxProps) => {
-  const {
-    value,
-    checkboxLabel = "",
-    disabled: selfDisabled,
-    rangePickerProps = {},
-    checkboxProps = {},
-    onChange,
-    ["aria-invalid"]: invalid,
-    setRangePickerStatus,
-    style = {},
-  } = props;
-  const disabled = useFormDisabled(selfDisabled);
+const RangePickerAndCheckbox = forwardRef(
+  (props: RangePickerAndCheckboxProps, ref: Ref<{ focus: () => void }>) => {
+    const {
+      value,
+      checkboxLabel = "",
+      disabled: selfDisabled,
+      rangePickerProps = {},
+      checkboxProps = {},
+      onChange,
+      ["aria-invalid"]: invalid,
+      setRangePickerStatus,
+      style = {},
+    } = props;
+    const disabled = useFormDisabled(selfDisabled);
+    const focusRef = useRef<any>(null);
 
-  const onRangePickerChange = (dates: [Dayjs, Dayjs] | null) => {
-    let newValue: Value =
-      value && value.length >= 3
-        ? [undefined, undefined, value[2]]
-        : [undefined, undefined, undefined];
-    if (dates && dates.length >= 2) {
-      newValue =
+    useImperativeHandle(ref, () => ({
+      focus: () => {
+        focusRef.current?.focus();
+      },
+    }));
+
+    const onRangePickerChange = (dates: [Dayjs, Dayjs] | null) => {
+      let newValue: Value =
         value && value.length >= 3
-          ? [dates[0], dates[1], value[2]]
-          : [dates[0], dates[1], undefined];
-    }
-    onChange?.(newValue);
-  };
+          ? [undefined, undefined, value[2]]
+          : [undefined, undefined, undefined];
+      if (dates && dates.length >= 2) {
+        newValue =
+          value && value.length >= 3
+            ? [dates[0], dates[1], value[2]]
+            : [dates[0], dates[1], undefined];
+      }
+      onChange?.(newValue);
+    };
 
-  const onCheckboxChange = (e: CheckboxChangeEvent) => {
-    const checked = e?.target?.checked || false;
-    const newValue: Value =
-      value && value.length >= 2
-        ? [value[0], value[1], checked]
-        : [undefined, undefined, checked];
-    onChange?.(newValue);
-  };
+    const onCheckboxChange = (e: CheckboxChangeEvent) => {
+      const checked = e?.target?.checked || false;
+      const newValue: Value =
+        value && value.length >= 2
+          ? [value[0], value[1], checked]
+          : [undefined, undefined, checked];
+      onChange?.(newValue);
+    };
 
-  const rangePickerStatus = useMemo(() => {
-    if (setRangePickerStatus && invalid === "true") {
-      return setRangePickerStatus(value);
-    }
-    return undefined;
-  }, [invalid, value]);
+    const rangePickerStatus = useMemo(() => {
+      if (setRangePickerStatus && invalid === "true") {
+        return setRangePickerStatus(value);
+      }
+      return undefined;
+    }, [invalid, value]);
 
-  return (
-    <div className={styles.container} style={style}>
-      <RangePicker
-        value={
-          value && value.length >= 2
-            ? [value[0], value[1]]
-            : [undefined, undefined]
-        }
-        disabled={disabled}
-        status={rangePickerStatus}
-        {...rangePickerProps}
-        // @ts-ignore
-        onChange={onRangePickerChange}
-      />
-      <Checkbox
-        className={classnams({
-          [styles.checkbox]: true,
-          [styles.noLabel]: !checkboxLabel,
-        })}
-        checked={value && value.length >= 3 ? value[2] : false}
-        disabled={disabled}
-        {...checkboxProps}
-        onChange={onCheckboxChange}
-      >
-        {checkboxLabel}
-      </Checkbox>
-    </div>
-  );
-};
+    return (
+      <div className={styles.container} style={style}>
+        <RangePicker
+          value={
+            value && value.length >= 2
+              ? [value[0], value[1]]
+              : [undefined, undefined]
+          }
+          disabled={disabled}
+          status={rangePickerStatus}
+          {...rangePickerProps}
+          // @ts-ignore
+          onChange={onRangePickerChange}
+          ref={focusRef}
+        />
+        <Checkbox
+          className={classnams({
+            [styles.checkbox]: true,
+            [styles.noLabel]: !checkboxLabel,
+          })}
+          checked={value && value.length >= 3 ? value[2] : false}
+          disabled={disabled}
+          {...checkboxProps}
+          onChange={onCheckboxChange}
+        >
+          {checkboxLabel}
+        </Checkbox>
+      </div>
+    );
+  }
+);
 
 export default RangePickerAndCheckbox;
 

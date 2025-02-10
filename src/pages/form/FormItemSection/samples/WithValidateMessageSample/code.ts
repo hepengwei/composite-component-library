@@ -1,5 +1,6 @@
 export const contentTextCode = `import React from "react";
 import { Form, Row, Col, Input, Select, Button } from "antd";
+import FocusableFormItem from "@/components/formItems/FocusableFormItem";
 import WithValidateMessage from "@/components/formItems/WithValidateMessage";
 import CanAddMultiple from "@/components/formItems/CanAddMultiple";
 import InputAndCheckbox from "@/components/formItems/InputAndCheckbox";
@@ -75,7 +76,7 @@ const Content = () => {
     <Form form={form} name='withValidateMessageSampleForm' labelAlign='right'>
       <Row gutter={16}>
         <Col span={12}>
-          <Form.Item
+          <FocusableFormItem
             label='字段标题'
             name='field1'
             rules={REQUIRED_FORM_ITEM_RULES}
@@ -83,10 +84,14 @@ const Content = () => {
             <WithValidateMessage form={form}>
               <Input />
             </WithValidateMessage>
-          </Form.Item>
+          </FocusableFormItem>
         </Col>
         <Col span={12}>
-          <Form.Item label='字段标题' name='field2' rules={CUSTOM_SELECT_RULES}>
+          <FocusableFormItem
+            label='字段标题'
+            name='field2'
+            rules={CUSTOM_SELECT_RULES}
+          >
             <WithValidateMessage form={form}>
               <Select
                 options={[
@@ -95,10 +100,10 @@ const Content = () => {
                 ]}
               />
             </WithValidateMessage>
-          </Form.Item>
+          </FocusableFormItem>
         </Col>
         <Col span={12}>
-          <Form.Item
+          <FocusableFormItem
             label='字段标题'
             name='field3'
             rules={INPUTNUMBER_SELECT_RULES}
@@ -134,10 +139,10 @@ const Content = () => {
                 }}
               />
             </WithValidateMessage>
-          </Form.Item>
+          </FocusableFormItem>
         </Col>
         <Col span={12}>
-          <Form.Item
+          <FocusableFormItem
             label='字段标题'
             name='field4'
             rules={REQUIRED_FORM_ITEM_RULES}
@@ -145,10 +150,10 @@ const Content = () => {
             <WithValidateMessage form={form}>
               <InputAndCheckbox checkboxLabel='复选框标题' />
             </WithValidateMessage>
-          </Form.Item>
+          </FocusableFormItem>
         </Col>
         <Col span={12}>
-          <Form.Item
+          <FocusableFormItem
             label='邮箱'
             name='field5'
             rules={MULTIPLE_EMAIL_RULES}
@@ -175,7 +180,7 @@ const Content = () => {
                 />
               </CanAddMultiple>
             </WithValidateMessage>
-          </Form.Item>
+          </FocusableFormItem>
         </Col>
         <Col
           span={24}

@@ -1,5 +1,6 @@
 import React from "react";
 import { Form, Row, Col, Select } from "antd";
+import FocusableFormItem from "@/components/formItems/FocusableFormItem";
 import InputAndCheckbox from "@/components/formItems/InputAndCheckbox";
 
 const Content = () => {
@@ -31,7 +32,7 @@ const Content = () => {
     <Form form={form} name='inputAndCheckboxSampleForm' labelAlign='right'>
       <Row gutter={16}>
         <Col span={12}>
-          <Form.Item label='字段标题' name='field1'>
+          <FocusableFormItem label='字段标题' name='field1'>
             <InputAndCheckbox
               inputProps={{
                 addonBefore: selectBefore,
@@ -39,12 +40,12 @@ const Content = () => {
               }}
               checkboxLabel='复选框标题'
             />
-          </Form.Item>
+          </FocusableFormItem>
         </Col>
         <Col span={12}>
-          <Form.Item label='字段标题' name='field2'>
+          <FocusableFormItem label='字段标题' name='field2'>
             <InputAndCheckbox />
-          </Form.Item>
+          </FocusableFormItem>
         </Col>
       </Row>
     </Form>
