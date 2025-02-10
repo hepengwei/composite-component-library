@@ -90,6 +90,7 @@ type EditableTableProps = {
     allValues?: Record<string, any>
   ) => void;
   deleteRowCallback?: (record: Record<string, any>) => void; // 删除一行后的回调
+  onAddClick?: () => void; // 新增一行的回调
 } & TableProps;
 
 const EditableContext = React.createContext<FormInstance<any> | null>(null);
@@ -310,6 +311,7 @@ const EditableTable = ({
   disabled = false,
   onFormValuesChange,
   deleteRowCallback,
+  onAddClick,
   ...restProps
 }: EditableTableProps) => {
   const components = useMemo(
@@ -373,7 +375,13 @@ const EditableTable = ({
   const finalColumns = [
     ...newColumns,
     {
-      title: "操作",
+      title: onAddClick ? (
+        <Button type='link' onClick={onAddClick}>
+          新增
+        </Button>
+      ) : (
+        "操作"
+      ),
       key: "action",
       dataIndex: "action",
       align: "center",
@@ -420,8 +428,7 @@ const EditableTable = ({
   );
 };
 
-export default EditableTable;
-`;
+export default EditableTable;`;
 
 export const indexScssTextCode = `.editableTable {
   :global {
