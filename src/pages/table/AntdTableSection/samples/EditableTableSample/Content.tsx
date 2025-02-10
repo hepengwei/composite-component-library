@@ -31,15 +31,25 @@ const INPUTNUMBER_SELECT_RULES = [
 ];
 
 const Content = () => {
-  const [tableData, setTableData] = useState<Record<string, any>[]>([]);
+  const [tableData1, setTableData1] = useState<Record<string, any>[]>([]);
+  const [tableData2, setTableData2] = useState<Record<string, any>[]>([]);
 
-  const onAddClick = () => {
-    if (tableData.length >= 5) {
+  const onAddClick1 = () => {
+    if (tableData1.length >= 5) {
       message.warning("最多可增加5条数据");
       return;
     }
-    const newDataSource = [...tableData, { id: `ROW_ID_${getRandomId()}` }];
-    setTableData(newDataSource);
+    const newDataSource = [...tableData1, { id: `ROW_ID_${getRandomId()}` }];
+    setTableData1(newDataSource);
+  };
+
+  const onAddClick2 = () => {
+    if (tableData2.length >= 5) {
+      message.warning("最多可增加5条数据");
+      return;
+    }
+    const newDataSource = [...tableData2, { id: `ROW_ID_${getRandomId()}` }];
+    setTableData2(newDataSource);
   };
 
   const columns: EditableTableColumnProps[] = [
@@ -155,15 +165,29 @@ const Content = () => {
           type='primary'
           icon={<PlusOutlined />}
           ghost
-          onClick={onAddClick}
+          onClick={onAddClick1}
         >
           新增
         </Button>
       </div>
       <EditableTable
         columns={columns}
-        dataSource={tableData}
-        setDataSource={setTableData}
+        dataSource={tableData1}
+        setDataSource={setTableData1}
+      />
+      <div
+        style={{
+          width: "100%",
+          height: 0,
+          borderTop: "1px dashed rgba(5, 5, 5, 0.2)",
+          margin: "20px 0",
+        }}
+      />
+      <EditableTable
+        columns={columns}
+        dataSource={tableData2}
+        setDataSource={setTableData2}
+        onAddClick={onAddClick2}
       />
     </>
   );
