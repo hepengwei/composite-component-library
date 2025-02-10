@@ -1,5 +1,6 @@
 export const contentTextCode = `import React from "react";
 import { Form, Row, Col } from "antd";
+import FocusableFormItem from "@/components/formItems/FocusableFormItem";
 import DatePickerAndCheckbox from "@/components/formItems/DatePickerAndCheckbox";
 import styles from "./index.module.scss";
 
@@ -7,7 +8,7 @@ const Content = () => {
   const [form] = Form.useForm();
 
   return (
-    <Form 
+    <Form
       form={form}
       name='datePickerAndCheckboxSampleForm'
       labelAlign='right'
@@ -15,14 +16,14 @@ const Content = () => {
     >
       <Row gutter={16}>
         <Col span={12}>
-          <Form.Item label='字段标题' name='field1'>
+          <FocusableFormItem label='字段标题' name='field1'>
             <DatePickerAndCheckbox checkboxLabel='复选框标题' />
-          </Form.Item>
+          </FocusableFormItem>
         </Col>
         <Col span={12}>
-          <Form.Item label='字段标题' name='field2'>
+          <FocusableFormItem label='字段标题' name='field2'>
             <DatePickerAndCheckbox datePickerProps={{ format: "YYYY/MM/DD" }} />
-          </Form.Item>
+          </FocusableFormItem>
         </Col>
       </Row>
     </Form>

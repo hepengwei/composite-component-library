@@ -1,7 +1,13 @@
 /**
  * 左边日期选择框右边复选框的复合组件
  */
-import React, { useMemo } from "react";
+import React, {
+  useMemo,
+  useImperativeHandle,
+  useRef,
+  forwardRef,
+  Ref,
+} from "react";
 import { DatePicker, Checkbox } from "antd";
 import { CheckboxChangeEvent } from "antd/es/checkbox";
 import { Dayjs } from "dayjs";
@@ -25,66 +31,76 @@ type DatePickerAndCheckboxProps = {
   style?: Record<string, any>;
 };
 
-const DatePickerAndCheckbox = (props: DatePickerAndCheckboxProps) => {
-  const {
-    value,
-    checkboxLabel = null,
-    disabled: selfDisabled,
-    datePickerProps = {},
-    checkboxProps = {},
-    onChange,
-    ["aria-invalid"]: invalid,
-    setDatePickerStatus,
-    style = {},
-  } = props;
-  const disabled = useFormDisabled(selfDisabled);
+const DatePickerAndCheckbox = forwardRef(
+  (props: DatePickerAndCheckboxProps, ref: Ref<{ focus: () => void }>) => {
+    const {
+      value,
+      checkboxLabel = null,
+      disabled: selfDisabled,
+      datePickerProps = {},
+      checkboxProps = {},
+      onChange,
+      ["aria-invalid"]: invalid,
+      setDatePickerStatus,
+      style = {},
+    } = props;
+    const disabled = useFormDisabled(selfDisabled);
+    const focusRef = useRef<any>(null);
 
-  const onDatePickerChange = (date: Dayjs | null) => {
-    const newValue: Value =
-      value && value.length >= 2
-        ? [date || undefined, value[1]]
-        : [date || undefined, undefined];
-    onChange?.(newValue);
-  };
+    useImperativeHandle(ref, () => ({
+      focus: () => {
+        focusRef.current?.focus();
+      },
+    }));
 
-  const onCheckboxChange = (e: CheckboxChangeEvent) => {
-    const checked = e?.target?.checked || false;
-    const newValue: Value =
-      value && value.length >= 1 ? [value[0], checked] : [undefined, checked];
-    onChange?.(newValue);
-  };
+    const onDatePickerChange = (date: Dayjs | null) => {
+      const newValue: Value =
+        value && value.length >= 2
+          ? [date || undefined, value[1]]
+          : [date || undefined, undefined];
+      onChange?.(newValue);
+    };
 
-  const datePickerStatus = useMemo(() => {
-    if (setDatePickerStatus && invalid === "true") {
-      return setDatePickerStatus(value);
-    }
-    return undefined;
-  }, [invalid, value]);
+    const onCheckboxChange = (e: CheckboxChangeEvent) => {
+      const checked = e?.target?.checked || false;
+      const newValue: Value =
+        value && value.length >= 1 ? [value[0], checked] : [undefined, checked];
+      onChange?.(newValue);
+    };
 
-  return (
-    <div className={styles.container} style={style}>
-      <DatePicker
-        value={value && value.length >= 1 ? value[0] : undefined}
-        disabled={disabled}
-        status={datePickerStatus}
-        {...datePickerProps}
-        onChange={onDatePickerChange}
-      />
-      <Checkbox
-        className={classnams({
-          [styles.checkbox]: true,
-          [styles.noLabel]: !checkboxLabel,
-        })}
-        checked={value && value.length >= 2 ? value[1] : undefined}
-        disabled={disabled}
-        {...checkboxProps}
-        onChange={onCheckboxChange}
-      >
-        {checkboxLabel}
-      </Checkbox>
-    </div>
-  );
-};
+    const datePickerStatus = useMemo(() => {
+      if (setDatePickerStatus && invalid === "true") {
+        return setDatePickerStatus(value);
+      }
+      return undefined;
+    }, [invalid, value]);
+
+    return (
+      <div className={styles.container} style={style}>
+        <DatePicker
+          value={value && value.length >= 1 ? value[0] : undefined}
+          disabled={disabled}
+          status={datePickerStatus}
+          {...datePickerProps}
+          onChange={onDatePickerChange}
+          ref={focusRef}
+        />
+        <Checkbox
+          className={classnams({
+            [styles.checkbox]: true,
+            [styles.noLabel]: !checkboxLabel,
+          })}
+          checked={value && value.length >= 2 ? value[1] : undefined}
+          disabled={disabled}
+          {...checkboxProps}
+          onChange={onCheckboxChange}
+        >
+          {checkboxLabel}
+        </Checkbox>
+      </div>
+    );
+  }
+);
 
 export default DatePickerAndCheckbox;
 

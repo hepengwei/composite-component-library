@@ -40,8 +40,6 @@
             }
 
             .art-table-body {
-              // height: calc(100% - $tableRowHeight);
-              // overflow-y: scroll;
               overflow: visible;
               table {
                 .art-table-row {
@@ -49,8 +47,7 @@
 
                   td.art-table-cell {
                     box-sizing: border-box;
-                    height: $tableRowHeight !important;
-                    max-height: $tableRowHeight !important;
+                    height: $tableRowHeight;
                     min-height: $fontSize !important;
                     line-height: 16px !important;
                     padding: 3px 9px !important;
@@ -93,8 +90,7 @@
 
                   td.art-table-cell {
                     box-sizing: border-box;
-                    height: $tableRowHeight !important;
-                    max-height: $tableRowHeight !important;
+                    height: $tableRowHeight;
                     min-height: $fontSize !important;
                     line-height: 16px !important;
                     padding: 3px 9px !important;

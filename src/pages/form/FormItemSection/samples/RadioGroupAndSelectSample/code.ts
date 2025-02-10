@@ -1,5 +1,6 @@
 export const contentTextCode = `import React from "react";
 import { Form, Row, Col } from "antd";
+import FocusableFormItem from "@/components/formItems/FocusableFormItem";
 import RadioGroupAndSelect from "@/components/formItems/RadioGroupAndSelect";
 
 const RADIO_GROUP_OPTIONS = [
@@ -24,19 +25,19 @@ const Content = () => {
     >
       <Row gutter={16}>
         <Col span={12}>
-          <Form.Item label='字段标题' name='field1'>
+          <FocusableFormItem label='字段标题' name='field1'>
             <RadioGroupAndSelect selectOptions={SELECT_OPTIONS} />
-          </Form.Item>
+          </FocusableFormItem>
         </Col>
         <Col span={12}>
-          <Form.Item label='字段标题' name='field2'>
+          <FocusableFormItem label='字段标题' name='field2'>
             <RadioGroupAndSelect
               radioGroupOptions={RADIO_GROUP_OPTIONS}
               whenShowSelect='workingDay'
               reserveSelectValue
               selectOptions={SELECT_OPTIONS}
             />
-          </Form.Item>
+          </FocusableFormItem>
         </Col>
       </Row>
     </Form>

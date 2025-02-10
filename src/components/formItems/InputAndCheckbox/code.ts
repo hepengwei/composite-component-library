@@ -1,7 +1,13 @@
 export const indexTextCode = `/**
  * 左边输入框右边复选框的复合组件
  */
-import React, { useMemo } from "react";
+import React, {
+  useMemo,
+  useImperativeHandle,
+  useRef,
+  forwardRef,
+  Ref,
+} from "react";
 import { Input, Checkbox } from "antd";
 import { CheckboxChangeEvent } from "antd/es/checkbox";
 import classnams from "classnames";
@@ -23,65 +29,75 @@ type InputAndCheckboxProps = {
   style?: Record<string, any>;
 };
 
-const InputAndCheckbox = (props: InputAndCheckboxProps) => {
-  const {
-    value,
-    checkboxLabel = null,
-    disabled: selfDisabled,
-    inputProps = {},
-    checkboxProps = {},
-    onChange,
-    ["aria-invalid"]: invalid,
-    setInputStatus,
-    style = {},
-  } = props;
-  const disabled = useFormDisabled(selfDisabled);
+const InputAndCheckbox = forwardRef(
+  (props: InputAndCheckboxProps, ref: Ref<{ focus: () => void }>) => {
+    const {
+      value,
+      checkboxLabel = null,
+      disabled: selfDisabled,
+      inputProps = {},
+      checkboxProps = {},
+      onChange,
+      ["aria-invalid"]: invalid,
+      setInputStatus,
+      style = {},
+    } = props;
+    const disabled = useFormDisabled(selfDisabled);
+    const focusRef = useRef<any>(null);
 
-  const onInputChange = (e: any) => {
-    const v = e?.target?.value;
-    const newValue: Value =
-      value && value.length >= 2 ? [v, value[1]] : [v, undefined];
-    onChange?.(newValue);
-  };
+    useImperativeHandle(ref, () => ({
+      focus: () => {
+        focusRef.current?.focus();
+      },
+    }));
 
-  const onCheckboxChange = (e: CheckboxChangeEvent) => {
-    const checked = e?.target?.checked || false;
-    const newValue: Value =
-      value && value.length >= 1 ? [value[0], checked] : [undefined, checked];
-    onChange?.(newValue);
-  };
+    const onInputChange = (e: any) => {
+      const v = e?.target?.value;
+      const newValue: Value =
+        value && value.length >= 2 ? [v, value[1]] : [v, undefined];
+      onChange?.(newValue);
+    };
 
-  const inputStatus = useMemo(() => {
-    if (setInputStatus && invalid === "true") {
-      return setInputStatus(value);
-    }
-    return undefined;
-  }, [invalid, value]);
+    const onCheckboxChange = (e: CheckboxChangeEvent) => {
+      const checked = e?.target?.checked || false;
+      const newValue: Value =
+        value && value.length >= 1 ? [value[0], checked] : [undefined, checked];
+      onChange?.(newValue);
+    };
 
-  return (
-    <div className={styles.container} style={style}>
-      <Input
-        value={value && value.length >= 1 ? value[0] : undefined}
-        disabled={disabled}
-        status={inputStatus}
-        {...inputProps}
-        onChange={onInputChange}
-      />
-      <Checkbox
-        className={classnams({
-          [styles.checkbox]: true,
-          [styles.noLabel]: !checkboxLabel,
-        })}
-        checked={value && value.length >= 2 ? value[1] : undefined}
-        disabled={disabled}
-        {...checkboxProps}
-        onChange={onCheckboxChange}
-      >
-        {checkboxLabel}
-      </Checkbox>
-    </div>
-  );
-};
+    const inputStatus = useMemo(() => {
+      if (setInputStatus && invalid === "true") {
+        return setInputStatus(value);
+      }
+      return undefined;
+    }, [invalid, value]);
+
+    return (
+      <div className={styles.container} style={style}>
+        <Input
+          value={value && value.length >= 1 ? value[0] : undefined}
+          disabled={disabled}
+          status={inputStatus}
+          {...inputProps}
+          onChange={onInputChange}
+          ref={focusRef}
+        />
+        <Checkbox
+          className={classnams({
+            [styles.checkbox]: true,
+            [styles.noLabel]: !checkboxLabel,
+          })}
+          checked={value && value.length >= 2 ? value[1] : undefined}
+          disabled={disabled}
+          {...checkboxProps}
+          onChange={onCheckboxChange}
+        >
+          {checkboxLabel}
+        </Checkbox>
+      </div>
+    );
+  }
+);
 
 export default InputAndCheckbox;`;
 

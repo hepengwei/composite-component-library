@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Form, Row, Col, Checkbox } from "antd";
+import FocusableFormItem from "@/components/formItems/FocusableFormItem";
 import CustomMultiSelect from "@/components/formItems/CustomMultiSelect";
 import TablePanelMultiSelect from "./TablePanelMultiSelect";
 import { requestMockData } from "utils/util";
@@ -68,17 +69,17 @@ const Content = () => {
     <Form form={form} name='customMultiSelectSampleForm' labelAlign='right'>
       <Row gutter={16}>
         <Col span={12}>
-          <Form.Item label='字段标题' name='field1'>
+          <FocusableFormItem label='字段标题' name='field1'>
             <CustomMultiSelect
               options={options}
               loading={loading}
               fieldNames={{ label: "name", value: "code" }}
               searchKeys={["name"]}
             />
-          </Form.Item>
+          </FocusableFormItem>
         </Col>
         <Col span={12}>
-          <Form.Item label='字段标题' name='field2'>
+          <FocusableFormItem label='字段标题' name='field2'>
             <CustomMultiSelect
               options={options}
               loading={loading}
@@ -86,10 +87,10 @@ const Content = () => {
               searchKeys={["name"]}
               showSimplePlaceholder
             />
-          </Form.Item>
+          </FocusableFormItem>
         </Col>
         <Col span={12}>
-          <Form.Item label='字段标题' name='field3'>
+          <FocusableFormItem label='字段标题' name='field3'>
             <CustomMultiSelect
               options={options}
               customOptionLabel={customOptionLabel}
@@ -98,16 +99,16 @@ const Content = () => {
               searchKeys={["name"]}
               popupMatchSelectWidth={false}
             />
-          </Form.Item>
+          </FocusableFormItem>
         </Col>
         <Col span={12}>
-          <Form.Item label='字段标题' name='field4'>
+          <FocusableFormItem label='字段标题' name='field4'>
             <TablePanelMultiSelect
               options={options}
               loading={loading}
               showSimplePlaceholder
             />
-          </Form.Item>
+          </FocusableFormItem>
         </Col>
       </Row>
     </Form>

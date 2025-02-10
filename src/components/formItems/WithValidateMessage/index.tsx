@@ -1,7 +1,14 @@
 /**
  * 用于显示自定义校验信息的FormItem组件的包装组件(注意：如果子组件需要传onChange属性，则必须由该包装组件进行传递，不能写在子组件里；要在外层组件中将.ant-form-item-explain类样式的display属性覆盖为none)
  */
-import React, { useMemo, ReactElement } from "react";
+import React, {
+  useMemo,
+  ReactElement,
+  useImperativeHandle,
+  useRef,
+  forwardRef,
+  Ref,
+} from "react";
 import { Tooltip, type FormInstance } from "antd";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import classnams from "classnames";
@@ -18,69 +25,79 @@ type WithValidateMessageProps = {
   style?: Record<string, any>;
 } & { [key in string]: any };
 
-const WithValidateMessage = (props: WithValidateMessageProps) => {
-  const {
-    form,
-    nevervalidate = false,
-    id = "",
-    ["aria-invalid"]: invalid,
-    children,
-    className,
-    style = {},
-    ...restProps
-  } = props;
+const WithValidateMessage = forwardRef(
+  (props: WithValidateMessageProps, ref: Ref<{ focus: () => void }>) => {
+    const {
+      form,
+      nevervalidate = false,
+      id = "",
+      ["aria-invalid"]: invalid,
+      children,
+      className,
+      style = {},
+      ...restProps
+    } = props;
+    const focusRef = useRef<any>(null);
 
-  // 获取校验信息
-  const errorMessage = useMemo(() => {
-    let str = "";
-    if (!nevervalidate && form && id && invalid === "true") {
-      const namePath = id.split("_");
-      let errorList = [];
-      // 兼容Form.List
-      if (namePath.length >= 3) {
-        errorList = form.getFieldError([
-          namePath[0],
-          Number(namePath[1]),
-          namePath[2],
-        ]);
-      } else {
-        errorList = form.getFieldError(namePath[0]);
+    useImperativeHandle(ref, () => ({
+      focus: () => {
+        focusRef.current?.focus();
+      },
+    }));
+
+    // 获取校验信息
+    const errorMessage = useMemo(() => {
+      let str = "";
+      if (!nevervalidate && form && id && invalid === "true") {
+        const namePath = id.split("_");
+        let errorList = [];
+        // 兼容Form.List
+        if (namePath.length >= 3) {
+          errorList = form.getFieldError([
+            namePath[namePath.length - 3],
+            Number(namePath[namePath.length - 2]),
+            namePath[namePath.length - 1],
+          ]);
+        } else {
+          errorList = form.getFieldError(namePath[namePath.length - 1]);
+        }
+        str = errorList[0];
       }
-      str = errorList[0];
-    }
-    return str;
-  }, [form, nevervalidate, id, invalid]);
+      return str;
+    }, [form, nevervalidate, id, invalid]);
 
-  return (
-    <div
-      className={classnams({
-        [styles.container]: true,
-        [className || ""]: !!className,
-      })}
-      style={style}
-    >
+    return (
       <div
-        className={styles.componentBox}
-        style={{ width: nevervalidate ? "100%" : "calc(100% - 28px)" }}
+        className={classnams({
+          [styles.container]: true,
+          [className || ""]: !!className,
+        })}
+        style={style}
       >
-        {children
-          ? React.cloneElement(children, {
-              ...restProps,
-              "aria-invalid": invalid,
-              id,
-            })
-          : null}
-      </div>
-      {!nevervalidate && !!errorMessage && (
-        <div className={styles.messageBox}>
-          <Tooltip title={errorMessage}>
-            <ExclamationCircleOutlined />
-          </Tooltip>
+        <div
+          className={styles.componentBox}
+          style={{ width: nevervalidate ? "100%" : "calc(100% - 28px)" }}
+        >
+          {children
+            ? React.cloneElement(children, {
+                ...restProps,
+                "aria-invalid": invalid,
+                id,
+                ref: focusRef,
+              })
+            : null}
         </div>
-      )}
-    </div>
-  );
-};
+        {!nevervalidate && !!errorMessage && (
+          <div className={styles.messageBox}>
+            <Tooltip title={errorMessage}>
+              <ExclamationCircleOutlined />
+            </Tooltip>
+          </div>
+        )}
+      </div>
+    );
+  }
+);
 
 export default WithValidateMessage;
 

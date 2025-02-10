@@ -1,7 +1,13 @@
 export const indexTextCode = `/**
  * 左边单选框右边下拉框的复合组件
  */
-import React, { useMemo } from "react";
+import React, {
+  useMemo,
+  useImperativeHandle,
+  useRef,
+  forwardRef,
+  Ref,
+} from "react";
 import { Radio, Select } from "antd";
 import type { RadioChangeEvent } from "antd";
 import useFormDisabled from "hooks/useFormDisabled";
@@ -30,71 +36,84 @@ const DEFAULT_RADIO_GROUP_OPTIONS = [
   { label: "否", value: 0 },
 ];
 
-const RadioGroupAndSelect = (props: RadioGroupAndSelectProps) => {
-  const {
-    value,
-    selectOptions = [],
-    radioGroupOptions = DEFAULT_RADIO_GROUP_OPTIONS,
-    disabled: selfDisabled,
-    radioGroupProps = {},
-    selectProps = {},
-    onChange,
-    ["aria-invalid"]: invalid,
-    setSelectStatus,
-    whenShowSelect = 0,
-    reserveSelectValue = false,
-    style = {},
-  } = props;
-  const disabled = useFormDisabled(selfDisabled);
+const RadioGroupAndSelect = forwardRef(
+  (props: RadioGroupAndSelectProps, ref: Ref<{ focus: () => void }>) => {
+    const {
+      value,
+      selectOptions = [],
+      radioGroupOptions = DEFAULT_RADIO_GROUP_OPTIONS,
+      disabled: selfDisabled,
+      radioGroupProps = {},
+      selectProps = {},
+      onChange,
+      ["aria-invalid"]: invalid,
+      setSelectStatus,
+      whenShowSelect = 0,
+      reserveSelectValue = false,
+      style = {},
+    } = props;
+    const disabled = useFormDisabled(selfDisabled);
+    const focusRef = useRef<any>(null);
 
-  const onRadioGroupChange = (e: RadioChangeEvent) => {
-    const v = e.target?.value;
-    const newValue: Value =
-      value && value.length >= 2
-        ? [v, reserveSelectValue || v === whenShowSelect ? value[1] : undefined]
-        : [v, undefined];
-    onChange?.(newValue);
-  };
+    useImperativeHandle(ref, () => ({
+      focus: () => {
+        focusRef.current?.focus();
+      },
+    }));
 
-  const onSelectChange = (v: string, option: Record<string, any>) => {
-    const newValue: Value =
-      value && value.length >= 1 ? [value[0], v] : [undefined, v];
-    onChange?.(newValue, option);
-  };
+    const onRadioGroupChange = (e: RadioChangeEvent) => {
+      const v = e.target?.value;
+      const newValue: Value =
+        value && value.length >= 2
+          ? [
+              v,
+              reserveSelectValue || v === whenShowSelect ? value[1] : undefined,
+            ]
+          : [v, undefined];
+      onChange?.(newValue);
+    };
 
-  const selectStatus = useMemo(() => {
-    if (setSelectStatus && invalid === "true") {
-      return setSelectStatus(value);
-    }
-    return undefined;
-  }, [invalid, value]);
+    const onSelectChange = (v: string, option: Record<string, any>) => {
+      const newValue: Value =
+        value && value.length >= 1 ? [value[0], v] : [undefined, v];
+      onChange?.(newValue, option);
+    };
 
-  return (
-    <div className={styles.container} style={style}>
-      <Radio.Group
-        className={styles.radioGroup}
-        value={value && value.length >= 1 ? value[0] : undefined}
-        options={radioGroupOptions as any[]}
-        disabled={disabled}
-        {...radioGroupProps}
-        onChange={onRadioGroupChange}
-      />
-      <div className={styles.selectBox}>
-        {value?.[0] === whenShowSelect && (
-          <Select
-            className={styles.select}
-            value={value && value.length >= 2 ? value[1] : undefined}
-            options={selectOptions as any[]}
-            disabled={disabled}
-            status={selectStatus}
-            {...selectProps}
-            onChange={onSelectChange}
-          />
-        )}
+    const selectStatus = useMemo(() => {
+      if (setSelectStatus && invalid === "true") {
+        return setSelectStatus(value);
+      }
+      return undefined;
+    }, [invalid, value]);
+
+    return (
+      <div className={styles.container} style={style}>
+        <Radio.Group
+          className={styles.radioGroup}
+          value={value && value.length >= 1 ? value[0] : undefined}
+          options={radioGroupOptions as any[]}
+          disabled={disabled}
+          {...radioGroupProps}
+          onChange={onRadioGroupChange}
+          ref={focusRef}
+        />
+        <div className={styles.selectBox}>
+          {value?.[0] === whenShowSelect && (
+            <Select
+              className={styles.select}
+              value={value && value.length >= 2 ? value[1] : undefined}
+              options={selectOptions as any[]}
+              disabled={disabled}
+              status={selectStatus}
+              {...selectProps}
+              onChange={onSelectChange}
+            />
+          )}
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+);
 
 export default RadioGroupAndSelect;`;
 

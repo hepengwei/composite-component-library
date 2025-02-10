@@ -52,7 +52,7 @@ const useMultiSelect = (props: UseMultiSelectProps) => {
 
   useMemo(() => {
     const allDataSource = [...selectRowsRef.current, ...dataSource];
-    const keysObj = keyBy(allDataSource, (row) => row[rowKey]);
+    const keysObj = keyBy(allDataSource, (row) => row?.[rowKey]);
     selectRowsRef.current = selectValue.map((key) => keysObj[key]);
   }, [selectValue, dataSource]);
 
@@ -77,7 +77,7 @@ const useMultiSelect = (props: UseMultiSelectProps) => {
       setSelectValue(rows.map((row) => row[rowKey]));
     },
     setPassDataSource: (passDataSource: Record<string, any>[]) => {
-      const map = keyBy(passDataSource, (row) => row[rowKey]);
+      const map = keyBy(passDataSource, (row) => row?.[rowKey]);
       const noPassDataSource = selectRowsRef.current.filter(
         (item) => !map[item[rowKey]]
       );

@@ -1,7 +1,13 @@
 export const indexTextCode = `/**
  * 左边数值输入框右边下拉框的复合组件
  */
-import React, { useMemo } from "react";
+import React, {
+  useMemo,
+  useImperativeHandle,
+  useRef,
+  forwardRef,
+  Ref,
+} from "react";
 import { InputNumber, Select } from "antd";
 import useFormDisabled from "hooks/useFormDisabled";
 import styles from "./index.module.scss";
@@ -22,69 +28,79 @@ type InputNumberAndSelectProps = {
   style?: Record<string, any>;
 };
 
-const InputNumberAndSelect = (props: InputNumberAndSelectProps) => {
-  const {
-    value,
-    options = [],
-    disabled: selfDisabled,
-    inputNumberProps = {},
-    selectProps = {},
-    onChange,
-    ["aria-invalid"]: invalid,
-    setInputNumberStatus,
-    setSelectStatus,
-    style = {},
-  } = props;
-  const disabled = useFormDisabled(selfDisabled);
+const InputNumberAndSelect = forwardRef(
+  (props: InputNumberAndSelectProps, ref: Ref<{ focus: () => void }>) => {
+    const {
+      value,
+      options = [],
+      disabled: selfDisabled,
+      inputNumberProps = {},
+      selectProps = {},
+      onChange,
+      ["aria-invalid"]: invalid,
+      setInputNumberStatus,
+      setSelectStatus,
+      style = {},
+    } = props;
+    const disabled = useFormDisabled(selfDisabled);
+    const focusRef = useRef<any>(null);
 
-  const onInputNumberChange = (v: number | string | null) => {
-    const newValue: Value =
-      value && value.length >= 2 ? [v, value[1]] : [v, undefined];
-    onChange?.(newValue);
-  };
+    useImperativeHandle(ref, () => ({
+      focus: () => {
+        focusRef.current?.focus();
+      },
+    }));
 
-  const onSelectChange = (v: string, option: Record<string, any>) => {
-    const newValue: Value =
-      value && value.length >= 1 ? [value[0], v] : [undefined, v];
-    onChange?.(newValue, option);
-  };
+    const onInputNumberChange = (v: number | string | null) => {
+      const newValue: Value =
+        value && value.length >= 2 ? [v, value[1]] : [v, undefined];
+      onChange?.(newValue);
+    };
 
-  const inputNumberStatus = useMemo(() => {
-    if (setInputNumberStatus && invalid === "true") {
-      return setInputNumberStatus(value);
-    }
-    return undefined;
-  }, [invalid, value]);
+    const onSelectChange = (v: string, option: Record<string, any>) => {
+      const newValue: Value =
+        value && value.length >= 1 ? [value[0], v] : [undefined, v];
+      onChange?.(newValue, option);
+    };
 
-  const selectStatus = useMemo(() => {
-    if (setSelectStatus && invalid === "true") {
-      return setSelectStatus(value);
-    }
-    return undefined;
-  }, [invalid, value]);
+    const inputNumberStatus = useMemo(() => {
+      if (setInputNumberStatus && invalid === "true") {
+        return setInputNumberStatus(value);
+      }
+      return undefined;
+    }, [invalid, value]);
 
-  return (
-    <div className={styles.container} style={style}>
-      <InputNumber
-        className={styles.inputNumber}
-        value={value && value.length >= 1 ? value[0] : undefined}
-        disabled={disabled}
-        status={inputNumberStatus}
-        {...inputNumberProps}
-        onChange={onInputNumberChange}
-      />
-      <Select
-        className={styles.select}
-        value={value && value.length >= 2 ? value[1] : undefined}
-        options={options as any[]}
-        disabled={disabled}
-        status={selectStatus}
-        {...selectProps}
-        onChange={onSelectChange}
-      />
-    </div>
-  );
-};
+    const selectStatus = useMemo(() => {
+      if (setSelectStatus && invalid === "true") {
+        return setSelectStatus(value);
+      }
+      return undefined;
+    }, [invalid, value]);
+
+    return (
+      <div className={styles.container} style={style}>
+        <InputNumber
+          className={styles.inputNumber}
+          value={value && value.length >= 1 ? value[0] : undefined}
+          disabled={disabled}
+          status={inputNumberStatus}
+          {...inputNumberProps}
+          onChange={onInputNumberChange}
+          ref={focusRef}
+        />
+        <Select
+          className={styles.select}
+          value={value && value.length >= 2 ? value[1] : undefined}
+          options={options as any[]}
+          disabled={disabled}
+          status={selectStatus}
+          {...selectProps}
+          onChange={onSelectChange}
+        />
+      </div>
+    );
+  }
+);
 
 export default InputNumberAndSelect;`;
 

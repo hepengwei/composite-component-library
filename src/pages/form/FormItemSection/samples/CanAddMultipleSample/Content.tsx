@@ -1,5 +1,6 @@
 import React from "react";
 import { Form, Row, Col, Select } from "antd";
+import FocusableFormItem from "@/components/formItems/FocusableFormItem";
 import CanAddMultiple from "@/components/formItems/CanAddMultiple";
 import InputAndCheckbox from "@/components/formItems/InputAndCheckbox";
 import InputNumberAndSelect from "@/components/formItems/InputNumberAndSelect";
@@ -33,7 +34,7 @@ const Content = () => {
     <Form form={form} name='canAddMultipleSampleForm' labelAlign='right'>
       <Row gutter={16}>
         <Col span={12}>
-          <Form.Item label='字段标题' name='field1'>
+          <FocusableFormItem label='字段标题' name='field1'>
             <CanAddMultiple maxRows={5}>
               <InputAndCheckbox
                 inputProps={{
@@ -43,10 +44,10 @@ const Content = () => {
                 checkboxLabel='复选框标题'
               />
             </CanAddMultiple>
-          </Form.Item>
+          </FocusableFormItem>
         </Col>
         <Col span={12}>
-          <Form.Item label='字段标题' name='field2'>
+          <FocusableFormItem label='字段标题' name='field2'>
             <CanAddMultiple maxRows={6}>
               <InputNumberAndSelect
                 style={{ marginRight: "8px" }}
@@ -60,7 +61,7 @@ const Content = () => {
                 }}
               />
             </CanAddMultiple>
-          </Form.Item>
+          </FocusableFormItem>
         </Col>
       </Row>
     </Form>
