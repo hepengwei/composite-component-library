@@ -355,23 +355,48 @@ const EditableTable = ({
     deleteRowCallback?.(record);
   };
 
-  const newColumns = useMemo(() => {
-    return columns.map((col) => ({
-      ...col,
-      onCell: (record: Record<string, any>) => ({
-        editable: col.editable,
-        editType: col.editType,
-        editProps: col.editProps,
-        component: col.component,
-        disabled,
-        dataIndex: col.dataIndex,
-        record,
-        ruleOptions: col.ruleOptions,
-        rules: col.rules,
-        handleSave,
+  const newColumns = useMemo(
+    () =>
+      columns.map((col) => {
+        // 支持表头分组
+        if (col.children && (col.children as any[]).length > 0) {
+          return {
+            ...col,
+            children: (col.children as any[]).map((col2) => ({
+              ...col2,
+              onCell: (record: Record<string, any>) => ({
+                editable: col2.editable,
+                editType: col2.editType,
+                editProps: col2.editProps,
+                component: col2.component,
+                disabled,
+                dataIndex: col2.dataIndex,
+                record,
+                ruleOptions: col2.ruleOptions,
+                rules: col2.rules,
+                handleSave,
+              }),
+            })),
+          };
+        }
+        return {
+          ...col,
+          onCell: (record: Record<string, any>) => ({
+            editable: col.editable,
+            editType: col.editType,
+            editProps: col.editProps,
+            component: col.component,
+            disabled,
+            dataIndex: col.dataIndex,
+            record,
+            ruleOptions: col.ruleOptions,
+            rules: col.rules,
+            handleSave,
+          }),
+        };
       }),
-    }));
-  }, [columns, disabled, handleSave]);
+    [columns, disabled, handleSave]
+  );
 
   const finalColumns = [
     ...newColumns,
