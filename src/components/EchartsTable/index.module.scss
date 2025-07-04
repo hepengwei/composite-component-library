@@ -1,0 +1,24 @@
+.mOy {
+  margin-bottom: 24px;
+  display: flex;
+  justify-content: center;
+}
+.renderContentBox {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  overflow: hidden;
+   .renderContentBoxItem {
+     display: flex;
+     height: 300px;
+     overflow: auto;
+     margin-bottom: 20px;
+     .minEmptsysm {
+       display: flex;
+       flex-direction: column;
+       justify-content: center;
+      padding: 0 !important;
+     }
+  }
+}
+
