@@ -1,3 +1,4 @@
+import { Spin } from "antd";
 import React, { useMemo } from "react";
 import { defaultChart } from "./components/Charts/helper";
 import Default from "./components/Default/index";
@@ -75,6 +76,9 @@ const EchartsTable: React.FC<EchartsTableProps> = ({
   };
 
   const RenderContent = useMemo(() => {
+    if (loading) return <Spin />;
+    if (!staticData)
+      return <Default className={styles.minEmptsysm} type="emptysm" />;
     const { contentBoxTable, contentBoxChart } = staticData;
     const itemContent = itemContentInfo(state.totalOpenEnergy);
     return itemContent.map((item: any) => (

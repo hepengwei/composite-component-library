@@ -446,75 +446,8 @@ export function itemContentInfo(totalOpenEnergy: any) {
 }
 `;
 
-export const useStaticState = `
-import React from "react";
-
-/**
- *  *******************  用法  *********************
- *   import { useStaticState } from "@/hooks/useStaticState"; //导入方法
- *   const staticState = useStaticState({
- *     'name':'小明'
- *   });
- *   console.log(staticState.name)  // 输出内容为小明
- *   staticState.name = '小西';
- *   console.log(staticState.name)  // 输出内容为小西
- */
-
-/**
- * 通用静态数据存放方式
- * @param initValue  任意类型初始化数据
- * @returns {any}  返回任何类型数据对象
- */
-export const useStaticState = (initValue: any) => {
-  const formRef = React.useRef();
-  if (!formRef.current) {
-    formRef.current = initValue;
-  }
-  return formRef.current;
-};
-`;
-
-export const useTRState = `import React from "react";
-
-/**
- *  *******************  用法  *********************
- *  import { useTRState } from "@/hooks/useTRState"; // 导入方法
- *  const [state, setState] = useTRState({
- *    name: '小明'
- *  });
- *  console.log(state.name);  // 输出内容为小明
- *  setState({ name: '小西' });
- *  console.log(state.name);  // 此时 state.name 已变为小西（需在组件内使用最新 state）
- */
-
-/**
- * 通用可变数据状态管理 Hook
- * @param initValue  任意类型的初始化数据对象
- * @param reduce     可选，自定义 reducer 处理函数
- * @returns {[any, Function]}  返回 [state, setState]，state 为当前状态，setState 用于更新状态
- */
-
-export const useTRState = (initValue = {}, reduce?: any) => {
-  const reduceHandle = React.useCallback((data: any, action: any) => {
-    if (action.type === "changeData") {
-      return { ...data, ...action.data };
-    }
-    reduce && reduce(data, action);
-  }, []);
-  const [state, dispatch] = React.useReducer(reduceHandle, {
-    isLoading: false,
-    errorMsg: "",
-    ...initValue,
-  });
-
-  const setState = React.useCallback((m: any, type = "changeData") => {
-    dispatch({ type: type, data: m });
-  }, []);
-  return [state, setState];
-};
-`;
-
 export const EchartsTable = `
+import { Spin } from "antd";
 import React, { useMemo } from "react";
 import { defaultChart } from "./components/Charts/helper";
 import Default from "./components/Default/index";
@@ -592,6 +525,9 @@ const EchartsTable: React.FC<EchartsTableProps> = ({
   };
 
   const RenderContent = useMemo(() => {
+    if (loading) return <Spin />;
+    if (!staticData)
+      return <Default className={styles.minEmptsysm} type="emptysm" />;
     const { contentBoxTable, contentBoxChart } = staticData;
     const itemContent = itemContentInfo(state.totalOpenEnergy);
     return itemContent.map((item: any) => (

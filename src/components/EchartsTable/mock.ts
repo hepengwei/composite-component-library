@@ -5049,27 +5049,27 @@ export const mockData = (date: string) => {
             rows: [
               {
                 date: "00:15",
-                cabinPrice: "2.27",
+                cabinPrice: "10.27",
               },
               {
                 date: "00:30",
-                cabinPrice: "2.29",
+                cabinPrice: "20.29",
               },
               {
                 date: "00:45",
-                cabinPrice: "1.99",
+                cabinPrice: "10.99",
               },
               {
                 date: "01:00",
-                cabinPrice: "2.54",
+                cabinPrice: "20.54",
               },
               {
                 date: "01:15",
-                cabinPrice: "1.88",
+                cabinPrice: "10.88",
               },
               {
                 date: "01:30",
-                cabinPrice: "2.00",
+                cabinPrice: "20.00",
               },
               {
                 date: "01:45",
@@ -5081,11 +5081,11 @@ export const mockData = (date: string) => {
               },
               {
                 date: "02:15",
-                cabinPrice: "--",
+                cabinPrice: "4.67",
               },
               {
                 date: "02:30",
-                cabinPrice: "--",
+                cabinPrice: "33.33",
               },
               {
                 date: "02:45",
@@ -5439,17 +5439,17 @@ export const mockData = (date: string) => {
               {
                 title: "数据3",
                 values: [
-                  "2.27",
-                  "2.29",
-                  "1.99",
-                  "2.54",
-                  "1.88",
-                  "2.00",
+                  "10.27",
+                  "20.29",
+                  "10.99",
+                  "20.54",
+                  "10.88",
+                  "20.00",
+                  "50.00",
                   "--",
                   "--",
-                  "--",
-                  "--",
-                  "--",
+                  "4.67",
+                  "33.33",
                   "--",
                   "--",
                   "--",

@@ -4,8 +4,6 @@
 import {
   mockCode,
   EchartsTable,
-  useTRState,
-  useStaticState,
   EchartsTableHelper,
   EchartsTableScss,
   EchartsTableCompIndex,
@@ -23,8 +21,6 @@ export const fileCodeList = [
   { fileName: "EchartsTable.tsx", code: EchartsTable },
   { fileName: "EchartsTable.scss", code: EchartsTableScss },
   { fileName: "mock.ts", code: mockCode },
-  { fileName: "useTRState.ts", code: useTRState },
-  { fileName: "useStaticState.ts", code: useStaticState },
   { fileName: "EchartsTableHelper.ts", code: EchartsTableHelper },
   { fileName: "EchartsTableCompIndex.tsx", code: EchartsTableCompIndex },
   { fileName: "EchartsTableChartsIndex.tsx", code: EchartsTableChartsIndex },
@@ -48,5 +44,3 @@ export const fileCodeList = [
     code: EchartsTableTitleIndexScss,
   },
 ];
-
-// export const EchartsTableScss =
