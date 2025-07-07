@@ -1,0 +1,27 @@
+.segmented {
+  display: flex;
+  align-items: center;
+  height: 32px;
+  padding: 6px;
+  color: #3c3c3c;
+  border: 1px solid rgba(229, 229, 229, 0.7);
+  border-radius: 5px;
+  > div {
+    height: 20px;
+    padding: 0 6px;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 20px;
+    word-break: keep-all;
+    border-radius: 5px;
+    cursor: pointer;
+    &.active {
+      color: #ffffff;
+      font-weight: 500;
+      background: #3b7ee0;
+    }
+  }
+  > div + div {
+    margin-left: 6px;
+  }
+}
