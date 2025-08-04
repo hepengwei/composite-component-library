@@ -7,7 +7,6 @@ import SingleSelectTableSample from "./samples/SingleSelectTableSample";
 import MultiSelectTableSample from "./samples/MultiSelectTableSample";
 import SortableTableSample from "./samples/SortableTableSample";
 import WithFooterTableSample from "./samples/WithFooterTableSample";
-import EchartsTableSample from "./samples/EchartsTableSample";
 import styles from "./index.module.scss";
 
 const sampleList = [
@@ -16,7 +15,6 @@ const sampleList = [
   <MultiSelectTableSample />,
   <SortableTableSample />,
   <WithFooterTableSample />,
-  <EchartsTableSample />,
 ];
 
 const TableSection = () => {
