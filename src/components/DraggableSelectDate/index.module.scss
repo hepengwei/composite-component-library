@@ -1,0 +1,70 @@
+.draggableSelectDate {
+  width: 100%;
+  user-select: none;
+
+  .weekdays,
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    align-items: center;
+  }
+
+  .weekdays {
+    color: #909399;
+    font-size: 14px;
+    text-align: center;
+    margin-bottom: 6px;
+  }
+
+  .grid {
+    position: relative;
+
+    .overlay {
+      position: absolute;
+      background: #1677ff;
+      color: #ffffff;
+      border-radius: 8px;
+      pointer-events: none;
+      transition:
+        left 0.15s ease,
+        top 0.15s ease,
+        width 0.15s ease,
+        height 0.15s ease;
+      z-index: 0;
+    }
+
+    .dayBox {
+      position: relative;
+      z-index: 1;
+      border: 0;
+      background: transparent;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 36px;
+      font-size: 14px;
+      transition:
+        background-color 0.15s ease,
+        color 0.15s ease;
+    }
+    .dayBox:hover {
+      background: #1677ff80;
+    }
+    .dayBox.isSelected {
+      background: #1677ff;
+      color: #ffffff;
+    }
+    .dayBox.isEmpty {
+      pointer-events: none;
+    }
+    .dayBox.disabled {
+      cursor: not-allowed;
+      color: #909399;
+    }
+    .dayBox.isToday {
+      font-weight: bold;
+    }
+  }
+}
